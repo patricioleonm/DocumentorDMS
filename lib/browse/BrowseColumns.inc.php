@@ -426,7 +426,7 @@ class DownloadColumn extends BrowseColumn {
 
         // FIXME at some point we may want to hide this if the user doens't have the download action, but its OK for now.
         $link = KTUtil::ktLink('action.php','ktcore.actions.document.view', 'fDocumentId=' . $aDataRow['document']->getId());
-        $outStr = sprintf('<a href="%s" class="ktAction ktDownload" title="%s">%s</a>', $link, _kt('Download Document'), _kt('Download Document'));
+        $outStr = sprintf('<a href="%s" class="ktAction ktDownload" title="%s"><i class="fa fa-cloud-download"></i> <span class="sr-only">%s</span></a>', $link, _kt('Download Document'), _kt('Download Document'));
         return $outStr;
     }
 }

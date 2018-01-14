@@ -1,0 +1,23 @@
+body {
+    background-color: #f8f3f3;
+}
+
+.fa-2 {
+    font-size: 2em;
+}
+
+.actionlist {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.actionlist li:before {
+    font-family: FontAwesome;
+    font-size: 9px;
+    content: "\f054";
+    color: #F5B54B;
+    position: relative;
+    margin-right: 5px;
+    bottom: 2px;
+    }

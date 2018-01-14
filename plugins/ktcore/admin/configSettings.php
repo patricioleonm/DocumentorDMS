@@ -132,8 +132,8 @@ class BaseConfigDispatcher extends KTAdminDispatcher
                 $defaultValue = preg_replace('/\$\{([^}]+)\}/', $var, $defaultValue);
             }
 
-            $defaultValue = "<i>{$defaultValue}</i>";
-            $input .= '<span class="descriptiveText">'.sprintf(_kt("The default value is %s") , $defaultValue).'</span><br>';
+            //$defaultValue = "<span>{$defaultValue}</span>";
+            $input .= '<p class="text-primary">'.sprintf(_kt("The default value is <b>%s</b>") , $defaultValue).'</p>';
         }
 
 	    /*
@@ -172,13 +172,13 @@ class BaseConfigDispatcher extends KTAdminDispatcher
 	            $value = ($value == 'default') ? $defaultValue : $value;
 
 	            // Prepend a label if set
-	            $input .= isset($options['label']) ? "<label for='{$id}'>{$options['label']}</label>&nbsp;&nbsp;" : '';
+	            $input .= isset($options['label']) ? "<label for='{$id}'>{$options['label']}</label>" : '';
 
 	            // Create dropdown
-	            $input .= "<select id='{$id}' name='configArray[{$id}]'>&nbsp;&nbsp;";
+	            $input .= "<select id=\"{$id}\" name=\"configArray[{$id}]\" class=\"form-control\">";
 	            foreach ($optionValues as $item){
 	                $selected = ($item['value'] == $value) ? 'selected' : '';
-    	            $input .= "<option value='{$item['value']}' $selected>{$item['label']}</option>";
+    	            $input .= "<option value=\"{$item['value']}\" $selected>{$item['label']}</option>";
 	            }
 	            $input .= '</select>';
 	            break;
@@ -194,9 +194,11 @@ class BaseConfigDispatcher extends KTAdminDispatcher
 
 	            foreach ($optionValues as $item){
 	                $checked = ($item == $value) ? 'checked ' : '';
-
-    	            $input .= "<input type='radio' id='{$id}_{$item}' name='configArray[{$id}]' value='{$item}' {$checked}>&nbsp;&nbsp;";
-    	            $input .= "<label for={$id}>".ucwords($item).'</label>&nbsp;&nbsp;';
+					$input .= "
+					<div class=\"custom-control custom-radio custom-control-inline\">
+    	            	<input type=\"radio\" id=\"{$id}_{$item}\" name=\"configArray[{$id}]\" value=\"{$item}\" {$checked} class=\"custom-control-input\">
+						<label class=\"custom-control-label\" for=\"{$id}_{$item}\">".ucwords($item)."</label>
+					</div>";
 	            }
 	            break;
 
@@ -204,19 +206,19 @@ class BaseConfigDispatcher extends KTAdminDispatcher
 	        // For input where the number may be anything like a Port or the number may be a float instead of an integer
 	        case 'numeric_string':
 	            // Prepend a label if set
-	            $input .= isset($options['label']) ? "<label for='{$id}'>{$options['label']}</label>&nbsp;&nbsp;" : '';
-	            $input .= "<input name='configArray[{$id}]' value='{$value}' size = '5'>";
+	            $input .= isset($options['label']) ? "<label for=\"{$id}\">{$options['label']}</label>" : '';
+	            $input .= "<input name=\"configArray[{$id}]\" value=\"{$value}\" class=\"form-control\">";
 	            break;
 
 	        case 'string':
             default:
 	            // Prepend a label if set
-	            $input .= isset($options['label']) ? "<label for='{$id}'>{$options['label']}</label>&nbsp;&nbsp;" : '';
-                $input .= "<input name='configArray[{$id}]' value='{$value}' size = '60'>";
+	            $input .= isset($options['label']) ? "<label for='{$id}'>{$options['label']}</label>" : '';
+                $input .= "<input name=\"configArray[{$id}]\" value=\"{$value}\" class=\"form-control\">";
 	    }
 
 	    // Append any text
-        $input .= isset($options['append']) ? '&nbsp;&nbsp;'.sprintf(_kt('%s') , $options['append']) : '';
+        $input .= isset($options['append']) ? sprintf(_kt('%s') , $options['append']) : '';
 
 	    return $input;
 	}

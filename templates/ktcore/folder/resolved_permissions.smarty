@@ -11,7 +11,7 @@ assigned are shown.{/i18n}</p>
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="fFolderId" value="{$iFolderId}">
-<table  class="kt_collection narrow" cellspacing="0" cellpadding="0" border="0">
+<table  class="table table-bordered table-striped table-hover" cellspacing="0" cellpadding="0" border="0">
 <thead>
 <tr>
 <th width="40%">{i18n}Role or Group{/i18n}</th>
@@ -39,9 +39,9 @@ value="{$iRoleId}"></td>
 { /if }
 {else}
 { if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
+<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
 { else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
+<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
 { /if }
 {/if}
   { /foreach }
@@ -66,9 +66,9 @@ value="{$iGroupId}"></td>
 { /if }
 {else}
 { if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
+<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
 { else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
+<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
 { /if }
 {/if}
 
@@ -95,9 +95,9 @@ value="{$iGroupId}"></td>
 { /if }
 {else}
 { if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
+<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
 { else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
+<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
 { /if }
 {/if}
 

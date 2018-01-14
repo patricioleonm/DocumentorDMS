@@ -214,8 +214,8 @@ class schedulerEntity extends KTEntity
         $sId = $this->getId();
         $sStatus = $this->getStatus();
 
-        $sLink = "<input type='button' id='freqLink{$this->getId()}' onclick='javascript: showFrequencyDiv(\"{$sId}\");'";
-        $sLink .= " value='"._kt('Change Frequency')."' ";
+        $sLink = "<input type=\"button\" class=\"btn btn-primary btn-sm\" id=\"freqLink{$this->getId()}' onclick='javascript: showFrequencyDiv(\"{$sId}\");\"";
+        //$sLink .= " value=\""._kt('Change Frequency')."\" ";
         $sLink .= ($sStatus == 'disabled') ? 'style="visibility: hidden;" />' : ' />';
 
         return $sLink;
@@ -230,7 +230,7 @@ class schedulerEntity extends KTEntity
         $sUrl = KTUtil::ktLink('admin.php', 'misc/scheduler', 'action=updateRunTime');
 
         $sTitle = _kt('This task will run the next time the Scheduler runs'); //, and then revert to the frequency you set on this page');
-        $sLink = "<input type='button' id='runnowLink{$this->getId()}' onclick='javascript: runOnNext(\"{$sId}\", \"{$sUrl}\");'";
+        $sLink = "<input type='button' class=\"btn btn-warning btn-sm\" id='runnowLink{$this->getId()}' onclick='javascript: runOnNext(\"{$sId}\", \"{$sUrl}\");'";
         $sLink .= " title='$sTitle' value='"._kt('Run on Next Iteration')."' ";
         $sLink .= ($sStatus == 'disabled') ? 'style="visibility: hidden;" />' : ' />';
 
@@ -252,8 +252,8 @@ class schedulerEntity extends KTEntity
 
         $sLinkText = ($sStatus == 'enabled') ? $sDisableText : $sEnableText;
         $sUrl = KTUtil::ktLink('admin.php', 'misc/scheduler', 'action=updateStatus');
-        $sLink = "<input type='button' id='statusLink{$this->getId()}'
-            onclick='javascript: toggleStatus(\"{$sId}\", \"{$sUrl}\", \"{$sDisableText}\", \"{$sEnableText}\");' value='{$sLinkText}' />";
+        $sLink = "<input type=\"button\" class=\"btn btn-danger btn-sm\" id=\"statusLink{$this->getId()}\"
+            onclick=\"javascript: toggleStatus(\"{$sId}\", \"{$sUrl}\", \"{$sDisableText}\", \"{$sEnableText}\");\" value=\"{$sLinkText}\" />";
         return $sLink;
     }
 }

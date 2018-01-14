@@ -218,8 +218,6 @@ class BrowseDispatcher extends KTStandardDispatcher {
 
 		} else if ($this->browse_mode == 'document_type') {
 			// browsing by document type
-
-
 			$this->editable = false;
 			$doctype = KTUtil::arrayGet($_REQUEST, 'fType',null);
 			$oDocType = DocumentType::get($doctype);
@@ -235,8 +233,6 @@ class BrowseDispatcher extends KTStandardDispatcher {
 			$this->aBreadcrumbs[] = array('name' => $oDocType->getName(), 'url' => KTUtil::addQueryString($_SERVER['PHP_SELF'], 'fBrowseMode=document_type&fType=' . $oDocType->getId()));
 
 			$this->resultURL = KTUtil::addQueryString($_SERVER['PHP_SELF'], sprintf('fType=%s&fBrowseMode=document_type', $doctype));;
-
-
 		} else {
 			// FIXME what should we do if we can't initiate the browse?  we "pretend" to have no perms.
 			return false;

@@ -107,10 +107,10 @@ class KTPage {
 
         /* default css files initialisation */
         $aCSS = Array(
-           "thirdpartyjs/extjs/resources/css/ext-all.css",
+/*           "thirdpartyjs/extjs/resources/css/ext-all.css",
            "resources/css/kt-framing.css",
            "resources/css/kt-contenttypes.css",
-           "resources/css/kt-headings.css"
+           "resources/css/kt-headings.css"*/
         );
         $this->requireCSSResources($aCSS);
 
@@ -120,25 +120,25 @@ class KTPage {
         	$this->requireThemeCSSResource('skins/kts_'.$oConfig->get('ui/morphTo').'/kt-ie-morph.css', true);
         }
         // IE only
-        $this->requireCSSResource("resources/css/kt-ie-icons.css", true);
+        //$this->requireCSSResource("resources/css/kt-ie-icons.css", true);
 
         /* default js files initialisation */
         $aJS = Array();
 
-		$aJS[] = 'thirdpartyjs/MochiKit/MochiKitPacked.js';
-        $aJS[] = 'resources/js/kt-utility.js';
-        $aJS[] = 'presentation/i18nJavascript.php';
+		//$aJS[] = 'thirdpartyjs/MochiKit/MochiKitPacked.js';
+        //$aJS[] = 'resources/js/kt-utility.js';
+       // $aJS[] = 'presentation/i18nJavascript.php';
         //$aJS[] = 'thirdpartyjs/curvycorners/rounded_corners.inc.js';
         //$aJS[] = 'resources/js/loader.js';
 
-        $aJS[] = 'thirdpartyjs/extjs/adapter/ext/ext-base.js';
-        $aJS[] = 'thirdpartyjs/extjs/ext-all.js';
-        $aJS[] = 'resources/js/search2widget.js';
+       // $aJS[] = 'thirdpartyjs/extjs/adapter/ext/ext-base.js';
+       // $aJS[] = 'thirdpartyjs/extjs/ext-all.js';
+       // $aJS[] = 'resources/js/search2widget.js';
 
         $this->requireJSResources($aJS);
 
         // this is horrid, but necessary.
-		$this->requireJSStandalone('addLoadEvent(partial(initDeleteProtection, "' . _kt('Are you sure you wish to delete this item?') . '"));');
+		//$this->requireJSStandalone('addLoadEvent(partial(initDeleteProtection, "' . _kt('Are you sure you wish to delete this item?') . '"));');
 
         /* menu initialisation*/
         // FIXME:  how do we want to handle the menu?

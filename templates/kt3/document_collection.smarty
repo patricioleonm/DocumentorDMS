@@ -1,5 +1,5 @@
-    <table class="kt_collection" cellspacing="0" name="browseForm">
-        <thead>
+    <table class="kt_collection table table-bordered table-striped table-hover table-sm" name="browseForm">
+        <thead class="thead-light">
             <tr>
               {foreach item=oColumn from=$context->columns}
                 
@@ -16,7 +16,7 @@
         <tbody>
           {if ($context->itemCount != 0)}
             {foreach item=folder_row_id from=$context->activeset.folders name=rowiter}{* For folders *}
-            <tr class="{cycle name=rows values=",odd"} folder_row">
+            <tr class="folder_row">
               {foreach item=oColumn from=$context->columns name=coliter}
                 <td class="browse_column {$oColumn->name} {if $oColumn->getSortedOn()}sort_on{/if}">
                    {$oColumn->renderData($context->getFolderInfo($folder_row_id.id))} 
@@ -26,7 +26,7 @@
             {/foreach}
             
             {foreach item=document_row_id from=$context->activeset.documents name=rowiter}{* For files *}
-            <tr class="{cycle name=rows values=",odd"}">
+            <tr>
               {foreach item=oColumn from=$context->columns name=coliter}
                 <td class="browse_column {$oColumn->name} {if $oColumn->getSortedOn()}sort_on{/if}">
                    {$oColumn->renderData($context->getDocumentInfo($document_row_id.id))}
@@ -38,7 +38,7 @@
             <tr><td colspan="{$columncount}">{$context->empty_message}</td></tr>
           {/if}
         </tbody>
-        <tfoot>
+        <tfoot class="thead-light">
             <tr>
                 {if ($bIsBrowseCollection)}
                 <td colspan="{$columncount-1}"><span class="descriptiveText">

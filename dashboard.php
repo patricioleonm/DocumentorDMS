@@ -106,12 +106,13 @@ class DashboardDispatcher extends KTStandardDispatcher {
 
         // javascript - working input focus - restoring yui fixes the focus problem
         // yahoo
+        /*
         $this->oPage->requireJSResource('thirdpartyjs/yui/yahoo/yahoo.js');
         $this->oPage->requireJSResource('thirdpartyjs/yui/event/event.js');
         $this->oPage->requireJSResource('thirdpartyjs/yui/dom/dom.js');
         $this->oPage->requireJSResource('thirdpartyjs/yui/dragdrop/dragdrop.js');
         $this->oPage->requireJSResource('resources/js/DDList.js');
-
+        */
         $this->oUser->refreshDashboadState();
 
         // dashboard
@@ -123,15 +124,17 @@ class DashboardDispatcher extends KTStandardDispatcher {
         } else {
             $sDSJS .= $sDashboardState;
         }
+        /*
         $sDSJS .= ';';
         $this->oPage->requireJSStandalone($sDSJS);
         $this->oPage->requireJSResource('resources/js/dashboard.js');
-
+*/
         // render
         $oTemplating =& KTTemplating::getSingleton();
         $oTemplate = $oTemplating->loadTemplate('kt3/dashboard');
         $aTemplateData = array(
               'context' => $this,
+              'dashlets' => $aDashlets,
               'dashlets_left' => $aDashletsLeft,
               'dashlets_right' => $aDashletsRight,
         );

@@ -10,9 +10,7 @@
     {foreach from=$context->_extraargs item=v key=k}
     <input type="hidden" name="{$k}" value="{$v}">
     {/foreach}
-    
-    
-    
+        
     {$inner}
     
 </fieldset>

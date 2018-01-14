@@ -5,5 +5,5 @@
 {$edit_form->render()}
 
 {if $show_password}
-        <p><a href="{addQS}action=setPassword{/addQS}">{i18n}Change your password.{/i18n}</a></p>
+        <a class="btn btn-warning" href="{addQS}action=setPassword{/addQS}">{i18n}Change your password.{/i18n}</a>
 {/if}

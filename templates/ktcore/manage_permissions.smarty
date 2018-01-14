@@ -29,7 +29,7 @@
 </form>
 
 
-<table class="listing">
+<table class="table table-hover table-striped table-bordered mt-sm">
     <thead>
         <tr>
             <th>{i18n}Permission{/i18n}</th>

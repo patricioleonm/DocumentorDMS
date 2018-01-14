@@ -1,37 +1,80 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<!doctype html>
+<html lang="es">
 <head>
     <title>{i18n arg_appname="$appname"}Login | #appname#{/i18n}</title>
-
-    <link rel="stylesheet" href="{$rootUrl}/resources/css/kt-login.css" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="icon" href="{$rootUrl}/resources/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="{$rootUrl}/resources/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="{$rootUrl}/resources/css/kt-ie-icons.css" type="text/css" />
-
-    <!--
-        <script type="text/javascript" src="{$rootUrl}/thirdpartyjs/curvycorners/rounded_corners.inc.js"> </script>
-        <script type="text/javascript" src="{$rootUrl}/resources/js/login_loader.js"> </script>
-    -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+	<script src="https://use.fontawesome.com/55d9f84683.js"></script>
 </head>
 <body>
-	<div id="loginbox_outer" {if ($disclaimer)} class="hasDisclaimer" {/if}>
-	    <div id="{if $config->get("ui/poweredByDisabled") == '0'}loginbox_skin{else}loginbox{/if}" {if ($disclaimer)} class="hasDisclaimer" {/if}>
-	        <div id="formbox">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col col-md-6 col-lg-4">
+				<div class="card card-body">
+					<form action="{$smarty.server.PHP_SELF}" method="POST" name="login">
+						<input type="hidden" name="action" value="login" />
+						<input type="hidden" name="cookieverify" value="{$cookietest}" />
+						<input type="hidden" name="redirect" value="{$redirect}" />
+						<img src="{$rootUrl}/resources/graphics/ktlogo-topbar-right.png" alt="{$appname}" class="logoimage" height="50" width="200"/><br />
+
+						<h4>{i18n}Community Edition{/i18n}</h4>
+						
+					{if ($errorMessage == null)}
+						<p class="alert alert-info">{i18n}Please enter your details below to login.{/i18n}</p>
+					{else}
+						<p class="alert alert-warning">
+							{if ($errorMessage == $errorMessageConfirm)}
+								{$errorMessage}
+							{else}
+								{$errorMessage|sanitize}
+							{/if}
+						</p>
+					{/if}
+						<div class="form-group">
+							<label for="username" class="sr-only">{i18n}Username{/i18n}</label>
+							<input type="text" id="username" name="username" class="form-control" placeholder="{i18n}Username{/i18n}"/>
+						</div>
+
+						<div class="form-group">
+							<label for="password" class="sr-only">{i18n}Password{/i18n}</label>
+							<input type="password" id="password" name="password" class="form-control" placeholder="{i18n}Password{/i18n}"/>
+						</div>
+
+						<div class="form-group">
+							<label for="language" class="sr-only">{i18n}Language{/i18n}</label>
+							<select id="language" name="language" class="form-control">
+							{foreach from=$languages key=sLang item=sLanguageName}
+								<option value="{$sLang}" {if $sLang == $selected_language}SELECTED="yes"{/if}>{$sLanguageName}</option>
+							{/foreach}
+							</select>
+						</div>
+
+						<button class="btn btn-lg btn-primary btn-block" type="submit">{i18n}Login{/i18n}</button>
+					</form>
+				</div>
+			</div>
+		</div>
+    </div>
+
+<!--
+	<div>
+	    <div>
+	        <div>
 		    	<form action="{$smarty.server.PHP_SELF}" method="POST" name="login">
 		        	<input type="hidden" name="action" value="login" />
 					<input type="hidden" name="cookieverify" value="{$cookietest}" />
 					<input type="hidden" name="redirect" value="{$redirect}" />
-					{if $config->get("ui/mainLogo") != ''}
-						<img src="{$config->get("ui/mainLogo")}" alt="{$config->get("ui/mainLogoTitle")}" class="logoimage"/><br />
-					{else}
-						<img src="{$rootUrl}/resources/graphics/ktlogo-topbar-right.png" alt="{$appname}" class="logoimage" height="50" width="200"/><br />
-					{/if}
-					{if $smallVersion == 'Community Edition'}
-						<span class="communityLabel"><h2>{i18n}Community Edition{/i18n}</h2></span>
-					{/if}
+
+					<img src="{$rootUrl}/resources/graphics/ktlogo-topbar-right.png" alt="{$appname}" class="logoimage" height="50" width="200"/><br />
+
+					<span class="communityLabel"><h2>{i18n}Community Edition{/i18n}</h2></span>
+					
 			        {if ($errorMessage == null)}
 					    <p class="descriptiveText">{i18n}Please enter your details below to login.{/i18n}</p>
 					{else}
@@ -43,17 +86,24 @@
 					    	{/if}
 					    	</span></div>
 					{/if}
+					<div class="form-group">
 		        	<label for="username">{i18n}Username{/i18n}</label>
-					<input type="text" id="username" name="username"/>
-					<label for="password">{i18n}Password{/i18n}</label>
-					<input type="password" id="password" name="password"/>
+					<input type="text" id="username" name="username" class="from-control"/>
+					</div>
 
+					<div class="form-group">
+					<label for="password">{i18n}Password{/i18n}</label>
+					<input type="password" id="password" name="password" class="form-control"/>
+					</div>
+			
+					<div class="form-group">
 					<label for="language">{i18n}Language{/i18n}</label>
-					<select id="language" name="language">
+					<select id="language" name="language" class="form-control">
 					{foreach from=$languages key=sLang item=sLanguageName}
 					    <option value="{$sLang}" {if $sLang == $selected_language}SELECTED="yes"{/if}>{$sLanguageName}</option>
 					{/foreach}
 					</select>
+					</div>
 				    <div class="form_actions">
 			        	<input type="submit" value="{i18n}Login{/i18n}" />
 					</div>
@@ -64,7 +114,7 @@
 		    	<p>{$disclaimer}</p>
 			</div>
 			{/if}
-			<p class="descriptiveText version">
+			<p>
 		    	    <br>
 		    	    {i18n arg_appname="$appname"}#appname# Version{/i18n} {$versionName}<br/>
                     {i18n}<a href="http://www.knowledgetree.com/">Document Management Software</a>{/i18n}<br>
@@ -75,9 +125,8 @@
                         {i18n}All rights reserved.{/i18n}<br>
                     {/if}
             </p>
-	        <div id="bottomspacer"></div>
-	        <div class="floatClear"></div>
 	    </div>
 	</div>
+-->
 </body>
 </html>

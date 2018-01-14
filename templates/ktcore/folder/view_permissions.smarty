@@ -34,7 +34,7 @@ assigned are shown.{/i18n}</p>
 <div class="ktInfoMessage"><span>{i18n}No roles, groups, or users have been defined or have permissions.{/i18n}</span></div>
 {else}
 
-<table class="kt_collection narrow" cellspacing="0" cellpadding="0" border="0">
+<table class="table table-bordered table-striped table-hover">
 <thead>
 <tr>
 <th width="40%">{i18n}Role or Group{/i18n}</th>
@@ -53,9 +53,9 @@ assigned are shown.{/i18n}</p>
     { assign var=bHasPerm value=$aMapPermissionRole[$iPermId][$iRoleId] }
 
 { if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
+<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
 { else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
+<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
 { /if }
   { /foreach }
 </tr>
@@ -70,9 +70,9 @@ assigned are shown.{/i18n}</p>
     { assign var=bHasPerm value=$aMapPermissionGroup[$iPermId][$iGroupId] }
 
 { if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
+<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
 { else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
+<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
 { /if }
 
   { /foreach }
@@ -98,9 +98,9 @@ value="{$iGroupId}"></td>
 { /if }
 {else}
 { if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
+<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
 { else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
+<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
 { /if }
 {/if}
 
@@ -133,9 +133,9 @@ value="{$iGroupId}"></td>
 {foreach from=$permissions item=oPerm}
   {assign var=perm_id value=$oPerm->getId()}
   { if $aInfo.perms.$perm_id }
-    <td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
-    { else }
-    <td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
+<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
+{ else }
+<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
   { /if }
 {/foreach}
 </tr>

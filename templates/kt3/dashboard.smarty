@@ -1,133 +1,26 @@
-<div id="dashboard-container-left">
-    {foreach item=oDashlet from=$dashlets_left}
-    <div class="dashboard_block" id="{$context->_getDashletId($oDashlet)}">
-        <div class="{$oDashlet->sClass}">
-        	{if $oDashlet->sClass === "ktBlock"}
-	    	<div class="dashboard_block_rightrepeat_top"></div>
-	    	<div class="dashboard_block_rightrepeat_bottom"></div>
-	    	<div class="dashboard_block_leftrepeat_top"></div>
-	    	<div class="dashboard_block_leftrepeat_bottom"></div>
-	    	{/if}
-	    	
-	    	{if $oDashlet->sClass === "ktError"}
-	    	<div class="error_dashlet_rightrepeat_top"></div>
-	    	<div class="error_dashlet_rightrepeat_bottom"></div>
-	    	<div class="error_dashlet_leftrepeat_top"></div>
-	    	<div class="error_dashlet_leftrepeat_bottom"></div>
-	    	{/if}
-	    	
-	    	{if $oDashlet->sClass === "ktInfo"}
-	    	<div class="info_dashlet_rightrepeat_top"></div>
-	    	<div class="info_dashlet_rightrepeat_bottom"></div>
-	    	<div class="info_dashlet_leftrepeat_top"></div>
-	    	<div class="info_dashlet_leftrepeat_bottom"></div>
-	    	{/if}
-            <div class="dashboard_block_icons">
-                <a href="#" class="action action_rollup">&nbsp;</a>
-                <a href="#" class="action action_close">&nbsp;</a>
-            </div>
-
-            <h2 class="dashboard_block_handle">{$oDashlet->sTitle}</h2>
-
-            <div class="dashboard_block_body">
-                {$oDashlet->render()}
-            </div>
-            {if $oDashlet->sClass === "ktBlock"}
-	        <div class="dashboard_block_topleft"></div>
-	        <div class="dashboard_block_toprepeat"></div>
-	    	<div class="dashboard_block_topright"></div>
-	    	
-	    	<div class="dashboard_block_bottomleft"></div>
-	        <div class="dashboard_block_bottomrepeat"></div>
-	    	<div class="dashboard_block_bottomright"></div>
-	    	{/if}
-	    	{if $oDashlet->sClass === "ktError"}
-	        <div class="error_dashlet_topleft"></div>
-	        <div class="error_dashlet_toprepeat"></div>
-	    	<div class="error_dashlet_topright"></div>
-	    	
-	    	<div class="error_dashlet_bottomleft"></div>
-	        <div class="error_dashlet_bottomrepeat"></div>
-	    	<div class="error_dashlet_bottomright"></div>
-	    	{/if}
-	    	{if $oDashlet->sClass === "ktInfo"}
-	        <div class="info_dashlet_topleft"></div>
-	        <div class="info_dashlet_toprepeat"></div>
-	    	<div class="info_dashlet_topright"></div>
-	    	
-	    	<div class="info_dashlet_bottomleft"></div>
-	        <div class="info_dashlet_bottomrepeat"></div>
-	    	<div class="info_dashlet_bottomright"></div>
-	    	{/if}
-        </div>
-    </div>
-    {/foreach}
-    <div class="dashboard_block_empty" id="end-left">&nbsp;</div>
-</div>
-
-<div id="dashboard-container-right">
-    {foreach item=oDashlet from=$dashlets_right}
-    <div class="dashboard_block" id="{$context->_getDashletId($oDashlet)}">
-        <div class="{$oDashlet->sClass}">
-        	{if $oDashlet->sClass === "ktBlock"}
-        	<div class="dashboard_block_rightrepeat_top"></div>
-        	<div class="dashboard_block_rightrepeat_bottom"></div>
-            <div class="dashboard_block_leftrepeat_top"></div>
-        	<div class="dashboard_block_leftrepeat_bottom"></div>
-            {/if}
-            {if $oDashlet->sClass === "ktError"}
-        	<div class="error_dashlet_rightrepeat_top"></div>
-        	<div class="error_dashlet_rightrepeat_bottom"></div>
-        	<div class="error_dashlet_leftrepeat_top"></div>
-        	<div class="error_dashlet_leftrepeat_bottom"></div>
-        	{/if}
-        	{if $oDashlet->sClass === "ktInfo"}
-        	<div class="info_dashlet_rightrepeat_top"></div>
-        	<div class="info_dashlet_rightrepeat_bottom"></div>
-        	<div class="info_dashlet_leftrepeat_top"></div>
-        	<div class="info_dashlet_leftrepeat_bottom"></div>
-        	{/if}
-            <div class="dashboard_block_icons">
-                <a href="#" class="action action_rollup">&nbsp;</a>
-                <a href="#" class="action action_close">&nbsp;</a>
-            </div>
-            <h2 class="dashboard_block_handle">{$oDashlet->sTitle}</h2>
-
-            <div class="dashboard_block_body">
-                {$oDashlet->render()}
-            </div>
-
-            {if $oDashlet->sClass === "ktBlock"}
-            <div class="dashboard_block_topleft"></div>
-            <div class="dashboard_block_toprepeat"></div>
-        	<div class="dashboard_block_topright"></div>
-        	
-        	<div class="dashboard_block_bottomleft"></div>
-            <div class="dashboard_block_bottomrepeat"></div>
-        	<div class="dashboard_block_bottomright"></div>
-        	{/if}
-        	{if $oDashlet->sClass === "ktError"}
-            <div class="error_dashlet_topleft"></div>
-            <div class="error_dashlet_toprepeat"></div>
-        	<div class="error_dashlet_topright"></div>
-        	
-        	<div class="error_dashlet_bottomleft"></div>
-            <div class="error_dashlet_bottomrepeat"></div>
-        	<div class="error_dashlet_bottomright"></div>
-        	{/if}
-        	{if $oDashlet->sClass === "ktInfo"}
-            <div class="info_dashlet_topleft"></div>
-            <div class="info_dashlet_toprepeat"></div>
-        	<div class="info_dashlet_topright"></div>
-        	
-        	<div class="info_dashlet_bottomleft"></div>
-            <div class="info_dashlet_bottomrepeat"></div>
-        	<div class="info_dashlet_bottomright"></div>
-        	{/if}
-        </div>
-    </div>
-    {/foreach}
-    <div class="dashboard_block_empty" id="end-right">&nbsp;</div>
-</div>
-
-
+{assign var=odd value=1}
+	
+    {foreach item=oDashlet from=$dashlets}
+		{if $oDashlet->sClass == 'ktBlock'}
+			{assign var=card_type value='bg-light'}
+		{elseif $oDashlet->sClass == 'ktError'}
+			{assign var=card_type value='bg-danger text-white'}
+		{else}
+			{assign var=card_type value='bg-warning text-white'}
+		{/if}
+		{if $odd == 1 }
+		<div class="card-deck mt-1">
+		{/if}
+			<div class="card {$card_type}" id="{$context->_getDashletId($oDashlet)}">
+				<div class="card-header">{$oDashlet->sTitle}</div>
+				<div class="card-body">
+					{$oDashlet->render()}
+				</div>
+			</div>
+	{if $odd == 2}
+	</div>
+		{assign var=odd value=1}
+	{else}
+		{assign var=odd value=$odd+1}
+	{/if}
+	{/foreach}

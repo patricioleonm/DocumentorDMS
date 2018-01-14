@@ -73,7 +73,8 @@ class MultiDocumentAddAction extends KTFolderAction {
     function getButton(){
         $btn = array();
         $btn['display_text'] = _kt('Upload Document');
-        $btn['arrow_class'] = 'arrow_upload';
+        $btn['arrow_class'] = 'btn btn-success';
+        $btn['icon'] = 'fa fa-cloud-upload';
         return $btn;
     }
 	/**

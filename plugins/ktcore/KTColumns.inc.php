@@ -557,7 +557,7 @@ class AdvancedDownloadColumn extends AdvancedColumn {
         }
 
         $link = KTUtil::ktLink('action.php','ktcore.actions.document.view', 'fDocumentId=' . $aDataRow['document']->getId());
-        return sprintf('<a href="%s" class="ktAction ktDownload" title="%s">%s</a>', $link, _kt('Download Document'), _kt('Download Document'));
+        return sprintf('<a href="%s" class="ktAction ktDownload" title="%s"><i class="fa fa-cloud-download fa-2"></i> <span class="sr-only">%s</span></a>', $link, _kt('Download Document'), _kt('Download Document'));
     }
 
     function getName() { return _kt('Download'); }

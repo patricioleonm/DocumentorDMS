@@ -2,18 +2,14 @@
 
 {* Display the list of tasks *}
 
-<p>
-<span class="descriptiveText">
-    {i18n}The scheduler runs document indexing and various house keeping tasks, etc in the background.
-    {/i18n}
-</span>
+<p class="alert alert-info">
+    {i18n}The scheduler runs document indexing and various house keeping tasks, etc in the background.{/i18n}
 </p>
 
-<div style="overflow: auto; width: 730px;">
-<table class="kt_collection" cellspacing = "0" cellpadding = "4">
+<table class="kt_collection table table-bordered table-striped table-hover table-sm" cellspacing = "0" cellpadding = "4">
 
 {if $aHeadings}
-<thead>
+<thead class="thead-light">
     <tr>
         {foreach from=$aHeadings item=head}
             <th>
@@ -28,7 +24,7 @@
 {foreach from=$aList item=task}
 {assign var=taskId value=$task->getId()}
 
-    <tr class="{cycle name=rows values=",odd"}">
+    <tr>
         <td width='2%'>
             {$i++}
         </td>
@@ -60,7 +56,9 @@
             {$task->getRunDuration()}
         </td>
         <td>
-            {$task->getAlterFreqLink()}&nbsp;&nbsp;{$task->getRunNowLink()}&nbsp;&nbsp;{$task->getStatusLink()}
+            {$task->getAlterFreqLink()}
+            {$task->getRunNowLink()}
+            {$task->getStatusLink()}
         </td>
     </tr>
 
@@ -74,15 +72,15 @@
     </tr>
 {/if}
 </table>
-</div>
+
 
 <div id="formDiv" style="display: none; visibility: hidden;">
     <form name="changefreq" id="changefreq" method="post" action="{$sUrl}">
 
-        <select name="frequency" id="frequency">
+        <select name="frequency" id="frequency" class="form-control">
             {html_options options=$aFrequencies}
         </select>
         <input type="hidden" name="fId" id="fId" value="" />
-        <input type="button" name="save" id="save" onclick='javascript: saveFreq("{$sUrl}");' value="{i18n}Save{/i18n}" />
+        <input type="button" class="btn btn-primary" name="save" id="save" onclick='javascript: saveFreq("{$sUrl}");' value="{i18n}Save{/i18n}" />
     </form>
 </div>

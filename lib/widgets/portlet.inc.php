@@ -149,18 +149,14 @@ class KTActionPortlet extends KTPortlet {
      * @param string $class
      * @return unknown
      */
-    function renderBtn($text, $link, $class) {
-
+    function renderBtn($text, $link, $class, $icon = NULL) {
         // Create button html
-        $button = "<div class='portlet_button'>
-            <a href='{$link}'>
-                <div class='big_btn_left'></div>
-                <div class='big_btn_middle'>
-                    <div class='btn_text'>{$text}</div>
-                </div>
-                <div class='big_btn_right {$class}'></div>
+        $icon_text = ($icon != NULL) ? '<i class="'.$icon.'"></i>' : '';
+        $button = "
+            <a href=\"{$link}\" class=\"{$class}\">
+                {$text} {$icon_text}
             </a>
-        </div>";
+            ";
 
         return $button;
     }
@@ -178,7 +174,8 @@ class KTActionPortlet extends KTPortlet {
             $text = !empty($btn['display_text']) ? $btn['display_text'] : $btn['name'];
             $link = $btn['url'];
             $class = $btn['arrow_class'];
-            $rendered .= $this->renderBtn($text, $link, $class);
+            $icon = (isset($btn['icon'])) ? $btn['icon'] : NULL;
+            $rendered .= $this->renderBtn($text, $link, $class, $icon);
         }
 
         return $rendered;
