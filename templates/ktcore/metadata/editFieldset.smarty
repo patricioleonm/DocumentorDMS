@@ -1,38 +1,34 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Fieldset{/i18n}:<br />{$oFieldset->getName()}</h2>
+<h2>{i18n}Fieldset{/i18n}:<br />{$oFieldset->getName()}</h2>
 
 {if $sIncomplete}
-<div class="ktErrorMessage">
-<span><strong>{i18n}Incomplete{/i18n}: </strong>{i18n}This conditional fieldset cannot be used{/i18n}: <br />
-{$sIncomplete}</span>
-</div>
+  <div class="ktErrorMessage">
+    <span><strong>{i18n}Incomplete{/i18n}: </strong>{i18n}This conditional fieldset cannot be used{/i18n}: <br />
+    {$sIncomplete}</span>
+  </div>
 {/if}
 
 <form action="{$smarty.server.PHP_SELF}" method="POST">
+  <fieldset>
+    <legend>{i18n}Fieldset properties{/i18n}</legend>
 
-<fieldset>
-<legend>{i18n}Fieldset properties{/i18n}</legend>
+    <p class="descriptiveText">
+      {i18n}Please complete the following fields to edit the fieldset's properties and then click <strong>Change</strong>. Required fields are marked with a red square.{/i18n}
+    </p>
 
-<p class="descriptiveText">
-  {i18n}Please complete the following fields to edit the fieldset's properties and then click <strong>Change</strong>. Required fields are marked with a red square.{/i18n}
-</p>
+    <input type="hidden" name="fFieldsetId" value="{$oFieldset->getId()}" />
+    <input type="hidden" name="action" value="editobject" />
 
-<input type="hidden" name="fFieldsetId" value="{$oFieldset->getId()}" />
-<input type="hidden" name="action" value="editobject" />
+    {foreach item=oWidget from=$edit_fieldset_fields}
+      {$oWidget->render()}
+    {/foreach}
 
-
-
-{foreach item=oWidget from=$edit_fieldset_fields}
-  {$oWidget->render()}
-{/foreach}
-
-<div class="form_actions">
-<input type="submit" name="submit" value="{i18n}Change{/i18n}" />
-</div>
-</fieldset>
+    <div class="form_actions">
+      <input type="submit" name="submit" value="{i18n}Change{/i18n}" />
+    </div>
+  </fieldset>
 </form>
 
 {assign var="aFields" value=$oFieldset->getFields()}
-
 
 {assign var="showForm" value=true}
 {foreach from=$aFields item=oField}

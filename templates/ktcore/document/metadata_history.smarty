@@ -1,9 +1,9 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Document Version History{/i18n}:<br />{$document->getName()|sanitize}</h2>
+<h2>{i18n}Document Version History{/i18n}:<br />{$document->getName()|sanitize}</h2>
 
-<p class="descriptiveText">{i18n}This page lists versions of document metadata and allows you to compare a metadata version with the current metadata content.{/i18n}</p>
+<p class="alert alert-info">{i18n}This page lists versions of document metadata and allows you to compare a metadata version with the current metadata content.{/i18n}</p>
 
 
-    <table class="document_history" summary="{i18n arg_appname="$appname"}Document History for #appname# New UI Presentation{/i18n}" cellspacing="0">
+    <table class="table table-sm table-bordered table-striped" summary="{i18n arg_appname="$appname"}Document History for #appname# New UI Presentation{/i18n}" cellspacing="0">
 
         <thead>
             <tr>
@@ -88,6 +88,6 @@
 
 {if ($showdelete && !$showall)}
     <p>
-    <a href="{addQS}fDocumentId={$document->getId()}&show=all{/addQS}">{i18n}Show deleted versions{/i18n}</a>
+    <a href="{addQS}fDocumentId={$document->getId()}&show=all{/addQS}" class="btn btn-primary">{i18n}Show deleted versions{/i18n}</a>
     </p>
 {/if}

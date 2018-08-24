@@ -16,8 +16,6 @@
       <th>{i18n}Delete{/i18n}</th>
    </tr>
 </thead>
-
-
 <tbody>
 {section name=feed loop=$feedlist}
     <tr>
@@ -29,8 +27,3 @@
 </tbody>
 </table>
 {/if}
-
-
-
-
-

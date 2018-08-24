@@ -1,7 +1,7 @@
 {if empty($vocab)}
-    <div class="ktInfoMessage"><span>{$context->sEmptyMessage}</span></div>
+    <div class="alert alert-info"><span>{$context->sEmptyMessage}</span></div>
 {else}
-  <select name="{$name}{if $options.multi}[]{/if}"
+  <select name="{$name}{if $options.multi}[]{/if}" class="form-control form-control-sm"
     {if $has_id}id="{$id}"{/if}
     {if $options.multi}multiple="true"{/if}
     >

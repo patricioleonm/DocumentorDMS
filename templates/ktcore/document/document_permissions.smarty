@@ -1,4 +1,4 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Document permissions{/i18n}:<br />{$context->oDocument->getName()|sanitize}</h2>
+<h2>{i18n}Document permissions{/i18n}:<br />{$context->oDocument->getName()|sanitize}</h2>
 
 <p class="descriptiveText">{i18n}This page shows the permissions that apply to
 this specific document.  Where the folder view shows you information by role and group,
@@ -7,42 +7,42 @@ who have the different permissions. As a result, groups, users and roles with <s
 permissions are not shown.{/i18n}</p>
 
 {if $edit}
-{i18n}Manage security{/i18n}: <a href="{addQS}action=resolved_users&fDocumentId={$context->oDocument->getId()}{/addQS}">{i18n}View resolved permissions for user{/i18n}</a>
+{i18n}Manage security{/i18n}: <a href="{addQS}action=resolved_users&fDocumentId={$context->oDocument->getId()}{/addQS}" class="btn btn-primary btn-sm">{i18n}View resolved permissions for user{/i18n}</a>
 {/if}
 
 {if ((empty($roles) && empty($groups) && empty($users)))}
 <div class="ktInfoMessage"><span>{i18n}No roles or groups have been defined or have permissions.{/i18n}</span></div>
 {else}
 
-<table  class="table table-bordered table-striped table-hover">
-<thead>
-<tr>
-<th>{i18n}Role or Group{/i18n}</th>
-{ foreach item=oPerm from=$permissions }
-<th title="{$oPerm->getName()}" class="centered" style="white-space: normal !important;">{$oPerm->getHumanName()} {assign var=iPermId value=$oPerm->getId()}
-{if ($workflow_controls.$iPermId)}<br /><span class="descriptiveText">(workflow controlled)</span>{/if}
-{if ($conditions_control.$iPermId)}<br /><span class="descriptiveText">(condition affected)</span>{/if}
-</th>
-{ /foreach }
-</tr>
-</thead>
-<tbody>
+<table  class="table table-sm table-bordered table-striped table-hover">
+  <thead>
+    <tr>
+      <th>{i18n}Role or Group{/i18n}</th>
+      { foreach item=oPerm from=$permissions }
+      <th title="{$oPerm->getName()}">{$oPerm->getHumanName()} {assign var=iPermId value=$oPerm->getId()}
+      {if ($workflow_controls.$iPermId)}<br /><span class="descriptiveText">(workflow controlled)</span>{/if}
+      {if ($conditions_control.$iPermId)}<br /><span class="descriptiveText">(condition affected)</span>{/if}
+      </th>
+      { /foreach }
+    </tr>
+  </thead>
+  <tbody>
 
-{ foreach item=oRole from=$roles }
-<td><span class="descriptiveText">{i18n}Role{/i18n}:</span> {$oRole->getName()}</td>
-  { assign var=iRoleId value=$oRole->getId() }
-  { foreach item=oPerm from=$permissions }
-    { assign var=iPermId value=$oPerm->getId() }
-    { assign var=bHasPerm value=$aMapPermissionRole[$iPermId][$iRoleId] }
+  { foreach item=oRole from=$roles }
+  <td><span class="descriptiveText">{i18n}Role{/i18n}:</span> {$oRole->getName()}</td>
+    { assign var=iRoleId value=$oRole->getId() }
+    { foreach item=oPerm from=$permissions }
+      { assign var=iPermId value=$oPerm->getId() }
+      { assign var=bHasPerm value=$aMapPermissionRole[$iPermId][$iRoleId] }
 
-{ if $bHasPerm }
-<td class="centered"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
-{ else }
-<td class="centered"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
-{ /if }
+  { if $bHasPerm }
+  <td class="centered"><i class="fa fa-check text-success"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
+  { else }
+  <td class="centered"><i class="fa fa-ban text-danger"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
+  { /if }
+    { /foreach }
+  </tr>
   { /foreach }
-</tr>
-{ /foreach }
 
 
 { foreach item=oGroup from=$groups }
@@ -53,9 +53,9 @@ permissions are not shown.{/i18n}</p>
     { assign var=bHasPerm value=$aMapPermissionGroup[$iPermId][$iGroupId] }
 
 { if $bHasPerm }
-<td class="centered"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
+<td class="centered"><i class="fa fa-check text-success"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
 { else }
-<td class="centered"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
+<td class="centered"><i class="fa fa-ban text-danger"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
 { /if }
 
 

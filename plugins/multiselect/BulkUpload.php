@@ -66,8 +66,8 @@ class InetBulkUploadFolderAction extends KTFolderAction {
 	function getDisplayName() {
 		if(!KTPluginUtil::pluginIsActive('inet.foldermetadata.plugin'))
 		{
-			$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
-			$aJavascript[] = 'thirdpartyjs/jquery/jquery_noconflict.js';
+			//$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
+			//$aJavascript[] = 'thirdpartyjs/jquery/jquery_noconflict.js';
 
 			$oPage =& $GLOBALS['main'];
 			if (method_exists($oPage, 'requireJSResources')) {
@@ -137,10 +137,10 @@ class InetBulkUploadFolderAction extends KTFolderAction {
 		//FIXME: The widgets can support this via dynamic call to place libs in the head if they aren't loaded
 		//       jQuery can do this but need time to implement/test.
 
-		$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
-		$aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/tiny_mce.js';
-		$aJavascript[] = 'resources/js/kt_tinymce_init.js';
-    	$aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/jquery.tinymce.js';
+		//$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
+		//$aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/tiny_mce.js';
+		//$aJavascript[] = 'resources/js/kt_tinymce_init.js';
+    	//$aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/jquery.tinymce.js';
 
 		$this->oPage->requireJSResources($aJavascript);
 

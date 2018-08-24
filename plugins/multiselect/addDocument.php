@@ -74,7 +74,7 @@ class MultiDocumentAddAction extends KTFolderAction {
         $btn = array();
         $btn['display_text'] = _kt('Upload Document');
         $btn['arrow_class'] = 'btn btn-success';
-        $btn['icon'] = 'fa fa-cloud-upload';
+        $btn['icon'] = 'fa fa-file-upload';
         return $btn;
     }
 	/**
@@ -161,6 +161,7 @@ class MultiDocumentAddAction extends KTFolderAction {
                 'description' => sprintf(_kt('The document title is used as the main name of a document throughout %s.'), APP_NAME),
                 'name' => 'document_name',
                 'required' => true,
+                'aOptions' => array('class' => 'form-control form-control-sm'),
                 'id' => 'document_name',
             )),
             array('ktcore.widgets.entityselection',array(

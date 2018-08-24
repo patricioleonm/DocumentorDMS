@@ -19,7 +19,7 @@
     {/capture}
 	{i18n arg_options=$options}To edit the search criteria, use the #options#.{/i18n}
 {/if}
-	<font color=brown><div id="savedSearch" style="display: none">{i18n}The search criteria has been saved.{/i18n}</div></font>
+	<font color="brown"><div id="savedSearch" style="display: none">{i18n}The search criteria has been saved.{/i18n}</div></font>
 </fieldset>
 <br>
 {if !$search2_anonymous && !empty($iSavedID)}

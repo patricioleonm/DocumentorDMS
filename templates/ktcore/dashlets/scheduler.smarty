@@ -1,4 +1,3 @@
-
 <span class="descriptiveText">{i18n  arg_link=$sAdminLink}The scheduler takes care of managing and running tasks or batch jobs at regular intervals in the background. These tasks can be configured via the #link#.{/i18n}</span>
 
 <p>
@@ -28,27 +27,30 @@
 
 {else}
     <p>
-    {i18n}Note: The stack install uses its own service for task scheduling and the following is only for source installs.{/i18n}<br>
-    {i18n}Please ensure that the scheduler is listed in your cron jobs. The line to be added to the crontab to implement the cron job is: {/i18n}
-    <ul><li>*/5 * * * * {$sPath} > /dev/null</li></ul>
+        {i18n}Note: The stack install uses its own service for task scheduling and the following is only for source installs.{/i18n}<br>
+        {i18n}Please ensure that the scheduler is listed in your cron jobs. The line to be added to the crontab to implement the cron job is: {/i18n}
+        <ul>
+            <li>*/5 * * * * {$sPath} > /dev/null</li>
+        </ul>
     </p>
 
     <p>
-    <span onclick="{$onClick}">
-        <img id="scheduler_icon" src="{$sImg}"/>
-        <b>{i18n}Guide to using cron:{/i18n}</b></span>
-    <div id="cronguide" style="display: none; visibility: hidden;">
-    <ul>
-        <li>{i18n}View jobs in the crontab:{/i18n} crontab -l</li>
-        <li>{i18n}Edit the crontab:{/i18n} crontab -e
-        <ol><li>{i18n}Press 'o' to start a new line.{/i18n}</li>
-            <li>{i18n}Press 'i' to edit a line.{/i18n}</li>
-            <li>{i18n}Press the 'esc' key to exit the edit mode.{/i18n}</li>
-            <li>{i18n}Type ZZ to save changes and exit.{/i18n}</li>
-            <li>{i18n}Type :q! to exit without saving.{/i18n}</li>
-        </ol>
-    </ul>
-    </div>
+        <span onclick="{$onClick}">
+            <img id="scheduler_icon" src="{$sImg}"/>
+            <b>{i18n}Guide to using cron:{/i18n}</b>
+        </span>
+        <div id="cronguide" style="display: none; visibility: hidden;">
+            <ul>
+                <li>{i18n}View jobs in the crontab:{/i18n} crontab -l</li>
+                <li>{i18n}Edit the crontab:{/i18n} crontab -e
+                <ol>
+                    <li>{i18n}Press 'o' to start a new line.{/i18n}</li>
+                    <li>{i18n}Press 'i' to edit a line.{/i18n}</li>
+                    <li>{i18n}Press the 'esc' key to exit the edit mode.{/i18n}</li>
+                    <li>{i18n}Type ZZ to save changes and exit.{/i18n}</li>
+                    <li>{i18n}Type :q! to exit without saving.{/i18n}</li>
+                </ol>
+            </ul>
+        </div>
     </p>
-
 {/if}

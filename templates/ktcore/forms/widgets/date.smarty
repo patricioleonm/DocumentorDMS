@@ -1,11 +1,12 @@
-<!--------------------------------------
-	---- Changes for Custom Fields -----
-	-------------------------------------->
-<div name="{$name}" id="div_{$name}" class="kt_date_field"></div>
+
+<input name="{$name}" id="div_{$name}" class="kt_date_field form-control form-control-sm" type="date">
 
 {literal}
 <script type="text/javascript">
-
+    $(".kt_date_field".datepicker({
+        uiLibrary: 'bootstrap'
+    });
+/*
 Ext.onReady(function(){
 
     Ext.QuickTips.init();
@@ -22,7 +23,7 @@ Ext.onReady(function(){
 
     dp.render('div_{/literal}{$name}{literal}');
 });
-
+*/
 </script>
 
 {/literal}

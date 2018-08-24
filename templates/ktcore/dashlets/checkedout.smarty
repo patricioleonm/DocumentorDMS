@@ -4,7 +4,7 @@
 {foreach item=oDocument from=$documents}
   <dt>{$oDocument->getName()|sanitize} | <a href="{$context->getDocumentLink($oDocument)}">{i18n}View Document{/i18n}</a></dt>
 {/foreach}
-</ul>
+</dl>
 {else}
 <div class="ktInfoMessage"><span>{i18n}You have no documents which are currently checked out.{/i18n}</span></div>
 {/if}

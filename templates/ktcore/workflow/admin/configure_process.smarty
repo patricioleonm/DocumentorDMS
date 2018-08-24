@@ -1,9 +1,7 @@
 <h2>{i18n arg_name=$context->oWorkflow->getName()}States and Transitions: #name#{/i18n}</h2>
 
 {capture assign=widgets}
-
-
-    <table class="kt_collection" cellspacing="0">
+    <table class="kt_collection table table-bordered table-striped">
         <thead>
             <tr>
                 <th>{i18n}Transition{/i18n}</th>
@@ -15,7 +13,7 @@
         </thead>
         <tbody>
             {foreach from=$transitions item=oTransition}
-                <tr class="row {cycle values=odd,even}">
+                <tr>
                     <td>{$oTransition->getName()}</td>
                     <td><select name="fTo[{$oTransition->getId()}]">
                         {foreach from=$states item=oState}

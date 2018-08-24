@@ -1,22 +1,21 @@
 function kt_add_document_addMessage(message) {
-    var my_div = getElement('kt-add-document-target');
-    appendChildNodes(my_div, DIV(null, message));
+    var my_div = document.getElementById('kt-add-document-target');
+    my_div.innerHTML += "<pre>" + message + "</pre>";
 }
 
 function kt_add_document_newFile(filename) {
-    var my_div = getElement('kt-add-document-target');
-    H2 = createDOMFunc('h2');
-    appendChildNodes(my_div, H2(null, filename));
+    var my_div = document.getElementById('kt-add-document-target');
+    my_div.innerHTML += "<pre>" + filename + "</pre>";
 }
 
 function kt_add_document_redirectToDocument(id) {
-    var base = getElement('kt-core-baseurl').value;
+    var base = document.getElementsByName('kt-core-baseurl')[0].value;
     var href = base + "/control.php?action=viewDocument&fDocumentId=" + id;
     document.location.href = href;
 }
 
 function kt_add_document_redirectToFolder(id) {
-    var base = getElement('kt-core-baseurl').value;
+    var base = document.getElementsByName('kt-core-baseurl')[0].value;
     document.location.href = base + "/control.php?action=browse&fFolderId=" + id;
 }
 

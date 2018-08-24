@@ -55,7 +55,7 @@ require_once(KT_LIB_DIR . '/groups/Group.inc');
 require_once(KT_LIB_DIR . '/roles/Role.inc');
 require_once(KT_LIB_DIR . '/widgets/portlet.inc.php');
 require_once(KT_LIB_DIR . '/widgets/forms.inc.php');
-//require_once(KT_DIR . "/thirdparty/pear/GraphViz.php");
+require_once(KT_DIR . "/thirdparty/pear/GraphViz.php");
 
 class WorkflowNavigationPortlet extends KTPortlet {
     var $oWorkflow;
@@ -137,12 +137,12 @@ class KTWorkflowAdminV2 extends KTAdminDispatcher {
         }
 
         $this->HAVE_GRAPHVIZ = false;
-/*        $dotCommand = KTUtil::findCommand("ui/dot", 'dot');
+        $dotCommand = KTUtil::findCommand("ui/dot", 'dot');
         if (!empty($dotCommand)) {
             $this->HAVE_GRAPHVIZ = true;
             $this->dotCommand = $dotCommand;
         }
-*/
+
     }
 
     function do_main() {
@@ -2597,7 +2597,7 @@ class KTWorkflowAdminV2 extends KTAdminDispatcher {
             'errors' => $errors,
             'info' => $info,
         );
-
+echo $graph;
         return $data;
     }
 

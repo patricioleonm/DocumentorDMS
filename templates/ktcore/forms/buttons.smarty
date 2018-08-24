@@ -1,6 +1,8 @@
-<div class="form_actions">
-    <input type="submit" class="btn btn-primary" name="" value="{$context->_submitlabel}" /> 
-    {if ($context->bCancel)}
-        <a class="form_cancel btn btn-warning" href="{$context->_cancelurl}">{i18n}Cancel{/i18n}</a>
-    {/if}
+<div class="row">
+    <div class="col-12">
+        {if ($context->bCancel)}
+        <a class="form_cancel btn btn-warning" href="{$context->_cancelurl}"><i class="fa fa-ban"></i> {i18n}Cancel{/i18n}</a>
+        {/if}
+        <input type="submit" class="btn btn-primary float-right" name="" value="{$context->_submitlabel}" />
+    </div>
 </div>

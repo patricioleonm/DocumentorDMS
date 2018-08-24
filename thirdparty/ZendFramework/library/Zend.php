@@ -16,7 +16,7 @@
  * @package    Zend
  * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Zend.php 3900 2007-03-13 18:51:49Z bkarwin $
+ * @version    $Id: Zend.php 4380 2007-04-06 05:35:26Z bkarwin $
  */
 
 /**
@@ -37,18 +37,11 @@ require_once 'Zend/Exception.php';
 final class Zend
 {
     /**
-     * Zend Framework version identification - see compareVersion()
-     *
-     * @deprecated Since 0.9.0 -- use Zend_Version::VERSION instead.
-     */
-    const VERSION = '0.9.0dev';
-
-    /**
      * Object registry provides storage for shared objects
      *
      * @var Zend_Registry
      */
-    static private $_registry = null;
+    private static $_registry = null;
 
     /**
      * Loads a class from a PHP file.  The filename must be formatted
@@ -71,7 +64,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Loader::loadClass() instead.
      */
-    static public function loadClass($class, $dirs = null)
+    public static function loadClass($class, $dirs = null)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Loader::loadClass() instead");
         require_once 'Zend/Loader.php';
@@ -83,7 +76,7 @@ final class Zend
      *
      * @deprecated Since 0.6
      */
-    static public function loadInterface($class, $dirs = null)
+    public static function loadInterface($class, $dirs = null)
     {
         throw new Zend_Exception(__FUNCTION__ . " has been removed. Please use require_once().");
     }
@@ -112,7 +105,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Loader::loadFile() instead.
      */
-    static public function loadFile($filename, $dirs = null, $once = false)
+    public static function loadFile($filename, $dirs = null, $once = false)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Loader::loadFile() instead");
         require_once 'Zend/Loader.php';
@@ -128,52 +121,11 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Loader::isReadable() instead.
      */
-    static public function isReadable($filename)
+    public static function isReadable($filename)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Loader::isReadable() instead");
         require_once 'Zend/Loader.php';
         return Zend_Loader::isReadable($filename);
-    }
-
-    /**
-     * Return a new exception
-     *
-     * Loads an exception class as specified by $class, and then passes the
-     * message and code arguments to the Exception's constructor, returning the
-     * new Exception object.
-     *
-     * If the exception created is not a true Exception, throws a Zend_Exception
-     * indicating an invalid exception class was passed.
-     *
-     * Usage:
-     * <code>
-     *     throw Zend::exception('Some_Exception', 'exception message');
-     * </code>
-     *
-     * @param string $class
-     * @param string $message Defaults to empty string
-     * @param int $code Defaults to 0
-     * @return Exception
-     * @throws Zend_Exception when invalid exception class passed
-     *
-     * @deprecated Since 0.6.1
-     */
-    static public function exception($class, $message = '', $code = 0)
-    {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.6.1");
-
-        $class = (string) $class;
-
-        require_once 'Zend/Loader.php';
-        Zend_Loader::loadClass($class);
-
-        $exception = new $class($message, $code);
-
-        if (!$exception instanceof Exception) {
-            throw new Zend_Exception('Invalid exception class used in Zend::exception()');
-        }
-
-        return $exception;
     }
 
     /**
@@ -185,7 +137,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Registry::set() instead.
      */
-    static public function register($index, $newval)
+    public static function register($index, $newval)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::set() instead");
         require_once 'Zend/Registry.php';
@@ -205,7 +157,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Registry::get() instead.
      */
-    static public function registry($index = null)
+    public static function registry($index = null)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::get() instead");
         require_once 'Zend/Registry.php';
@@ -221,7 +173,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Registry::isRegistered() instead.
      */
-    static public function isRegistered($index)
+    public static function isRegistered($index)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::isRegistered() instead");
         require_once 'Zend/Registry.php';
@@ -237,7 +189,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Registry::setClassName() instead.
      */
-    static public function initRegistry($registry = 'Zend_Registry')
+    public static function initRegistry($registry = 'Zend_Registry')
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::setClassName() instead");
         require_once 'Zend/Registry.php';
@@ -250,7 +202,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Registry::_unsetInstance() instead.
      */
-    static public function __unsetRegistry()
+    public static function __unsetRegistry()
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Registry::_unsetInstance() instead");
         require_once 'Zend/Registry.php';
@@ -268,7 +220,7 @@ final class Zend
      *
      * @deprecated since 0.9.0
      */
-    static public function dump($var, $label=null, $echo=true)
+    public static function dump($var, $label=null, $echo=true)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Debug::dump() instead");
         require_once 'Zend/Debug.php';
@@ -283,7 +235,7 @@ final class Zend
      *
      * @deprecated Since 0.9.0 -- Use Zend_Version::compareVersion() instead.
      */
-    static public function compareVersion($version)
+    public static function compareVersion($version)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . " deprecated since 0.9.0, use Zend_Version::compareVersion() instead");
         require_once 'Zend/Version.php';

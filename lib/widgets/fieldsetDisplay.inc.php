@@ -226,19 +226,19 @@ class GenericFieldsetDisplay extends KTFieldsetDisplay {
         // creation
         $creator =& User::get($document->getCreatorId());
         if (PEAR::isError($creator)) {
-           $creator_name = '<span class="ktError">' . _kt("Unable to find the document's creator") . '</span>';
+           $creator_name = '<span class="alert alert-danger">' . _kt("Unable to find the document's creator") . '</span>';
         } else {
            $creator_name = $creator->getName();
         }
         $owner =& User::get($document->getOwnerId());
         if (PEAR::isError($owner)) {
-           $owner_name = '<span class="ktError">' . _kt("Unable to find the document's owner") . '</span>';
+           $owner_name = '<span class="alert alert-danger">' . _kt("Unable to find the document's owner") . '</span>';
         } else {
            $owner_name = $owner->getName();
         }
         $modified_user =& User::get($document->getModifiedUserId());
         if (PEAR::isError($modified_user)) {
-           $modified_user_name = '<span class="ktError">' . _kt("Unable to find the document's modifier") . '</span>';
+           $modified_user_name = '<span class="alert alert-danger">' . _kt("Unable to find the document's modifier") . '</span>';
         } else {
            $modified_user_name = $modified_user->getName();
         }
@@ -337,11 +337,11 @@ class GenericFieldsetDisplay extends KTFieldsetDisplay {
             'document_data' => $aDocumentData,
             'document' => $aDocumentData['document'],
 
-        'title' => $document->getName(),
-        'comparison_title' => $comparison_document->getName(),
+            'title' => $document->getName(),
+            'comparison_title' => $comparison_document->getName(),
 
-        'filename' => $document->getFileName(),
-        'comparison_filename' => $comparison_document->getFileName(),
+            'filename' => $document->getFileName(),
+            'comparison_filename' => $comparison_document->getFileName(),
 
             'creator' => $creator,
             'creation_date' => $creation_date,
@@ -369,9 +369,11 @@ class GenericFieldsetDisplay extends KTFieldsetDisplay {
 
     function renderEdit($document_data) {
         global $main; // FIXME remove direct access to $main
-        $oField = new KTBaseWidget(_kt('Document Title'),
+        $oField = new KTBaseWidget(
+            _kt('Document Title'),
             sprintf(_kt("The document title is used as the main name of a document throughout %s."), APP_NAME),
-            'generic_title', $document_data['document']->getName(), $main, true, null, array());
+            'generic_title', $document_data['document']->getName(), $main, true, null, array()
+        );
         $aFields = array($oField); // its the only one editable from the basic set (currently).
 
         $oTemplating =& KTTemplating::getSingleton();

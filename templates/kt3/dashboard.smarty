@@ -1,5 +1,5 @@
-{assign var=odd value=1}
-	
+	<div class="row" id="dashboard">
+		<div class="grid-sizer"></div>
     {foreach item=oDashlet from=$dashlets}
 		{if $oDashlet->sClass == 'ktBlock'}
 			{assign var=card_type value='bg-light'}
@@ -8,19 +8,15 @@
 		{else}
 			{assign var=card_type value='bg-warning text-white'}
 		{/if}
-		{if $odd == 1 }
-		<div class="card-deck mt-1">
-		{/if}
-			<div class="card {$card_type}" id="{$context->_getDashletId($oDashlet)}">
-				<div class="card-header">{$oDashlet->sTitle}</div>
-				<div class="card-body">
-					{$oDashlet->render()}
+		<div class="grid-item col-md-6 col-lg-4 mb-2">
+			<div class="grid-item-content">
+				<div class="card {$card_type}" id="{$context->_getDashletId($oDashlet)}">
+					<div class="card-header">{$oDashlet->sTitle}</div>
+					<div class="card-body">
+						{$oDashlet->render()}
+					</div>
 				</div>
 			</div>
-	{if $odd == 2}
-	</div>
-		{assign var=odd value=1}
-	{else}
-		{assign var=odd value=$odd+1}
-	{/if}
+		</div>
 	{/foreach}
+	</div>

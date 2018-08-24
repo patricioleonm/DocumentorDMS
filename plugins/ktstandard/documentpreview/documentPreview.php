@@ -35,8 +35,10 @@
  * Contributor( s): ______________________________________
  */
 
-$kt_dir = $_REQUEST['kt_dir'];
-require_once($kt_dir.'/config/dmsDefaults.php');
+//$kt_dir = $_REQUEST['kt_dir'];
+//require_once($kt_dir.'/config/dmsDefaults.php');
+require_once('../../../config/dmsDefaults.php');
+
 
 class DocumentPreview {
     var $_oDocument;
@@ -85,22 +87,23 @@ class DocumentPreview {
         $sTitle = htmlentities($this->_oDocument->getName(), ENT_NOQUOTES, 'utf-8');
         $iLen = strlen($sTitle);
 
+        /*
         if($iLen > 60){
             $sFull = $sTitle;
             if($iLen >= 99){
                 $sTitle = substr($sTitle, 0, 97).'...';
             }
-            $sTitle = '<h4 title="'.$sFull.'">'.$sTitle.'</h4>';
+            $sTitle = '<p title="'.$sFull.'">'.$sTitle.'</b>';
         }else{
-            $sTitle = '<h2>'.$sTitle.'</h2>';
+            $sTitle = '<p>'.$sTitle.'</b>';
         }
-
+        */
         // Get the icon
         $sIcon = $this->getMimeIcon();
 
-        $sTitle = '<div class="previewhd">
-                <div style="float:left">'.$sIcon.'</div>
-                <div style="float:left; width: 375px;">'.$sTitle.'</div>
+        $sTitle = '<div class="row">
+                <div class="col-1">'.$sIcon.'</div>
+                <div class="col-11"><p class="text-truncate">'.$sTitle.'</p></div>
             </div>';
         return $sTitle;
     }
@@ -117,7 +120,7 @@ class DocumentPreview {
 
         $sIconPath = $this->getIconPath();
         $sIconPath = $default->rootUrl.$sIconPath;
-        return "<img src='$sIconPath' title='$sTitle' />&nbsp;&nbsp;";
+        return "<img src='$sIconPath' title='$sTitle' width=\"32px\"/>";
     }
 
     /**
@@ -190,7 +193,7 @@ class DocumentPreview {
 
         $sInfo = $this->getMetadata();
 
-        $sInfo = '<div id="preview" class="preview" onclick="javascript: destroyPanel();">'.$sInfo.'</div>';
+        //$sInfo = '<div id="preview" class="preview" onclick="javascript: destroyPanel();">'.$sInfo.'</div>';
 
         $sInfo .= $this->getThumbnail();
 
@@ -276,8 +279,7 @@ class DocumentPreview {
 
         /* Create table */
 
-        $sInfo = "<div style='float:left; width:405px;'>
-            <table cellspacing='3px' cellpadding='3px' width='405px'>
+        $sInfo = "<table class=\"table table-condensed table-striped\">
             <tr><td>{$sFilenameLb}</td><td><b>{$sFilename}</b></td></tr>
             <tr><td>{$sMimeTypeLb}</td><td><b>{$sMimeType}</b></td></tr>
             <tr><td>{$sVersionLb}</td><td><b>{$iVersion}</b></td></tr>
@@ -296,7 +298,7 @@ class DocumentPreview {
         }
 
         $sInfo .= "<tr><td>{$sIdLb}</td><td><b>{$sId}</b></td></tr>";
-        $sInfo .= " </table></div>";
+        $sInfo .= " </table>";
 
         return $sInfo;
     }
@@ -332,6 +334,7 @@ $oPreview = new DocumentPreview($iDocumentId);
 $sTitle = $oPreview->getTitle();
 $sContent = $oPreview->renderPreview();
 
+//echo $sTitle.'<br />'.$sContent;
 echo $sTitle.'<br />'.$sContent;
 exit;
 ?>

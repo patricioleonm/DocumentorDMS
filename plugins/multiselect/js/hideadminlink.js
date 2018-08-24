@@ -1,4 +1,5 @@
 //To hide the link for existing document fieldset
+/*
 JQ(document).ready(function(){ 
 	var elems = JQ("dl.panel_menu").find("a");
 	for (i = 0; i < elems.length; i++) {
@@ -16,3 +17,4 @@ JQ(document).ready(function(){
 		}
 	}
 });
+*/

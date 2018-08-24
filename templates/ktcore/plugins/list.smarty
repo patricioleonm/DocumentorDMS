@@ -1,27 +1,38 @@
-<h2>{i18n}Plugins{/i18n}</h2>
-<p class="descriptiveText">{i18n}Check the plugins that require activation and then click "Update". To disable a plugin, uncheck the plugin and click "Update".{/i18n}</p>
+<div class="row">
+    <div class="col-12">
+        <h3>{i18n}Plugins{/i18n}</h3>
+        <p class="alert alert-info">{i18n}Check the plugins that require activation and then click "Update". To disable a plugin, uncheck the plugin and click "Update".{/i18n}</p>
+    </div>
+    <div class="col-12">
+        {if $plugins}
+        <form action="{$smarty.server.PHP_SELF}" method="POST">
+            <input type="hidden" name="action" value="update" />
+            {entity_checkboxes entities=$plugins selected=$enabled_plugins method=getUserFriendlyName assign=boxes name="pluginids" class="form-check-input"}
+            <ul class="list-group">
+            {foreach from=$boxes item=box}
+                <li class="list-group-item">
+                    <div class="form-check">
+                        {$box}
+                    </div>
+                </li>
+            {/foreach}
+            </ul>
+            <hr>
+            <input type="submit" name="submit" value="{i18n}Update{/i18n}" class="btn btn-primary"/>
+        </form>
+        {/if}
+    </div>
+    <div class="col-12">
+        <h3>{i18n}Read plugins from filesystem{/i18n}</h3>
+    </div>
+    <div class="col-12">
+        <p class="alert alert-info">{i18n arg_appname="$appname"}If you have moved the location of #appname# on your server filesystem, or installed or removed plugins, the plugins
+        must be re-read from the filesystem{/i18n}</p>
 
-{if $plugins}
-<form action="{$smarty.server.PHP_SELF}" method="POST">
-<input type="hidden" name="action" value="update" />
-{entity_checkboxes entities=$plugins selected=$enabled_plugins
-method=getUserFriendlyName assign=boxes name="pluginids"}
-{foreach from=$boxes item=box}
-{$box} <br />
-{/foreach}
-
-<input type="submit" name="submit" value="{i18n}Update{/i18n}" />
-</form>
-{/if}
-
-<h3>{i18n}Read plugins from filesystem{/i18n}</h3>
-
-<p class="descriptiveText">{i18n arg_appname="$appname"}If you have moved the location of #appname# on your server filesystem, or installed or removed plugins, the plugins
-must be re-read from the filesystem{/i18n}</p>
-
-<form action="{$smarty.server.PHP_SELF}" method="POST">
-<input type="hidden" name="action" value="reread" />
-<input type="hidden" name="_force_plugin_truncate" value="1" />
-<input type="submit" name="submit" value="{i18n}Reread plugins{/i18n}" />
-</form>
-
+        <form action="{$smarty.server.PHP_SELF}" method="POST">
+            <input type="hidden" name="action" value="reread" />
+            <input type="hidden" name="_force_plugin_truncate" value="1" />
+            <input type="submit" name="submit" value="{i18n}Reread plugins{/i18n}" class="btn btn-primary"/>
+        </form>
+    </div>
+</div>

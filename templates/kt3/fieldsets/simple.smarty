@@ -1,27 +1,25 @@
-<div class="detail_fieldset">
-    <h3>{$fieldset->getName()}</h3>
-        <p class="descriptiveText">
-        {$description}
-    </p>
-
-    <table class="metadatatable" cellspacing="0" cellpadding="5">
-      {foreach item=aFieldPair from=$fieldset_values name=fields}
-    <tr class="{cycle values=even,odd} {if $smarty.foreach.fields.first}first{/if}">
-        <th>{$aFieldPair.field->getName()}</th>
-        <td>
-        {if ($aFieldPair.value !== null)}
-			{if ($aFieldPair.field->getIsHTML())}
-				{$aFieldPair.value}
-			{else}
-				{$aFieldPair.value|sanitize}
-			{/if}
-        {else}
-			<span class="descriptiveText">{i18n}no value{/i18n}</span>
-		{/if}
-        </td>
-    </tr>
-      {/foreach}
-    </table>
-
-    <div class="floatClear"><!-- --> </div>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title"><i class="fa fa-list-ul"></i> {$fieldset->getName()}</h4>
+        <p class="card-subtitle text-muted">{$description}</p>
+        <br>
+        <table class="table table-sm table-bordered table-striped">
+        {foreach item=aFieldPair from=$fieldset_values name=fields}
+        <tr>
+            <th>{$aFieldPair.field->getName()}</th>
+            <td>
+            {if ($aFieldPair.value !== null)}
+                {if ($aFieldPair.field->getIsHTML())}
+                    {$aFieldPair.value}
+                {else}
+                    {$aFieldPair.value|sanitize}
+                {/if}
+            {else}
+                <span class="text-secondary">{i18n}no value{/i18n}</span>
+            {/if}
+            </td>
+        </tr>
+        {/foreach}
+        </table>
+    </div>
 </div>

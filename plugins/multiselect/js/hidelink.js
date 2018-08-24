@@ -1,4 +1,5 @@
 //To hide the link for existing bulk upload link
+/*
 jQuery(document).ready(function(){ 
 	var elems = jQuery("ul.actionlist").find("a");
 	for (i = 0; i < elems.length; i++) {
@@ -18,3 +19,4 @@ jQuery(document).ready(function(){
 		}
 	}
 });
+*/

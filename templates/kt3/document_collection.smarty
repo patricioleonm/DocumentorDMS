@@ -1,3 +1,4 @@
+  <div class="table-responsive">
     <table class="kt_collection table table-bordered table-striped table-hover table-sm" name="browseForm">
         <thead class="thead-light">
             <tr>
@@ -40,77 +41,88 @@
         </tbody>
         <tfoot class="thead-light">
             <tr>
-                {if ($bIsBrowseCollection)}
-                <td colspan="{$columncount-1}"><span class="descriptiveText">
-                {else}
-                <td colspan="{$columncount}"><span class="descriptiveText">                
-                {/if}
-{i18n arg_itemCount=$context->itemCount arg_batchSize=$context->batchSize}#itemCount# items, #batchSize# per page{/i18n}</span>
-                <span class="collectionNavigation">
-                {if ($pagecount > 1)}
-                  {if ($currentpage == 0)}
-                    <span class="notactive">&laquo; prev</a> 
-                  {else}
-                    <a href="{$context->pageLink($currentpage-1)}">&laquo; {i18n}prev{/i18n}</a> 
-                  {/if}
-                    &middot; 
-                  {if ($currentpage == $pagecount-1)}
-                    <span class="notactive">{i18n}next{/i18n} &raquo;</a> 
-                  {else}
-                    <a href="{$context->pageLink($currentpage+1)}">{i18n}next{/i18n} &raquo;</a> 
-                  {/if}
-                  {assign var=shownEllipsis value=false}
-                  {foreach item=showPage from=1|range:$pagecount name=pagecrumbs}
-                    {assign var=showCrumb value=false}
-                    {capture assign=relative}{$showPage-1-$currentpage}{/capture}
-                    {if $smarty.foreach.pagecrumbs.total <= 27}
-                    {assign var=showCrumb value=true}
-                    {elseif $showPage <= 5}
-                    {assign var=showCrumb value=true}
-                    {elseif abs($relative) <= 5}
-                    {assign var=showCrumb value=true}
-                    {elseif $relative > 0 and $relative <= 10}
-                    {assign var=showCrumb value=true}
-                    {elseif abs($smarty.foreach.pagecrumbs.total - ($showPage - 1)) <= 3 }
-                    {assign var=showCrumb value=true}
-                    {elseif $currentpage < 13 && $showPage <= 23}
-{*ie, show up to 23 always, 13 = 23 - 10 (forward)*}
-                    {assign var=showCrumb value=true}
-                    {elseif ($smarty.foreach.pagecrumbs.total - $currentpage) < 16 && ($smarty.foreach.pagecrumbs.total - $showPage) < 20}
-{*ie, always show back 20 if we're in the last 20,
-(not 23, since we show 5 from the front if not in the front 23 or so,
-and only 3 from the back if we're not in the back 20 or so.  20 - 16 = 5
-(according to my math)*}
-                    {assign var=showCrumb value=true}
-                    {/if}
-
-                    {if $showCrumb}
-                      &middot; 
-                      {if ($showPage-1 != $currentpage)}
-                        <a href="{$context->pageLink($showPage-1)}">{$showPage}</a>
+              <td colspan="{$columncount}">
+                <div class="row">
+                  <div class="col-6">
+                   <span>{i18n arg_itemCount=$context->itemCount arg_batchSize=$context->batchSize}#itemCount# items, #batchSize# per page{/i18n}</span>
+                  </div>
+                  <div class="col-6">
+                      <div class="form-inline float-right">
+                        <select class="form-control form-control-sm" name="perpage" onchange="document_collection_setbatching(this.value, '{$returnURL|htmlentities}');">
+                          <option value="10" {if ($batch_size == 10)}selected="true"{/if}>10</option>
+                          <option value="25" {if ($batch_size == 25)}selected="true"{/if}>25</option>
+                          <option value="50" {if ($batch_size == 50)}selected="true"{/if}>50</option>
+                        </select> <label>{i18n}per page{/i18n}</label>
+                      </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination justify-content-center">
+                    {if ($pagecount > 1)}
+                      {if ($currentpage == 0)}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#" tabindex="-1"><i class="fa fa-chevron-left"></i> {i18n}prev{/i18n}</a>
+                        </li>
                       {else}
-                        <span class="batchCurrent">{$showPage}</span>
+                        <li class="page-item">
+                          <a class="page-link" tabindex="-1" href="{$context->pageLink($currentpage-1)}"><i class="fa fa-chevron-left"></i> {i18n}prev{/i18n}</a>
+                        </li>                    
                       {/if}
+
                       {assign var=shownEllipsis value=false}
-                    {else}
-                      {if not $shownEllipsis}
-                        &middot; &hellip;
-                        {assign var=shownEllipsis value=true}
+                      {foreach item=showPage from=1|range:$pagecount name=pagecrumbs}
+                        {assign var=showCrumb value=false}
+                        {capture assign=relative}{$showPage-1-$currentpage}{/capture}
+                        {if $smarty.foreach.pagecrumbs.total <= 27}
+                        {assign var=showCrumb value=true}
+                        {elseif $showPage <= 5}
+                        {assign var=showCrumb value=true}
+                        {elseif abs($relative) <= 5}
+                        {assign var=showCrumb value=true}
+                        {elseif $relative > 0 and $relative <= 10}
+                        {assign var=showCrumb value=true}
+                        {elseif abs($smarty.foreach.pagecrumbs.total - ($showPage - 1)) <= 3 }
+                        {assign var=showCrumb value=true}
+                        {elseif $currentpage < 13 && $showPage <= 23}
+                        {*ie, show up to 23 always, 13 = 23 - 10 (forward)*}
+                        {assign var=showCrumb value=true}
+                        {elseif ($smarty.foreach.pagecrumbs.total - $currentpage) < 16 && ($smarty.foreach.pagecrumbs.total - $showPage) < 20}
+                        {*ie, always show back 20 if we're in the last 20,
+                        (not 23, since we show 5 from the front if not in the front 23 or so,
+                        and only 3 from the back if we're not in the back 20 or so.  20 - 16 = 5
+                        (according to my math)*}
+                        {assign var=showCrumb value=true}
+                        {/if}
+
+                        {if $showCrumb}
+                          {if ($showPage-1 != $currentpage)}
+                            <li class="page-item">
+                              <a href="{$context->pageLink($showPage-1)}" class="page-link">{$showPage}</a>
+                            </li>
+                          {else}
+                            <li class="page-item active">
+                              <a href="#" class="page-link">{$showPage}</a>
+                            </li>
+                          {/if}
+                        {/if}
+                      {/foreach}
+                      
+                      {if ($currentpage == $pagecount-1)}
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">{i18n}next{/i18n} <i class="fa fa-chevron-right"></i></a>
+                        </li>
+                      {else}
+                        <li class="page-item">
+                          <a class="page-link" href="{$context->pageLink($currentpage+1)}">{i18n}next{/i18n} <i class="fa fa-chevron-right"></i></a>
+                        </li>
                       {/if}
                     {/if}
-                  {/foreach}
-                {/if} 
-                </span>
-                </td>
-                {if ($bIsBrowseCollection)}                
-                <td>
-                    <select name="perpage" onchange="document_collection_setbatching(this.value, '{$returnURL|htmlentities}');">
-                    <option value="10" {if ($batch_size == 10)}selected="true"{/if}>10</option>
-                    <option value="25" {if ($batch_size == 25)}selected="true"{/if}>25</option>                    
-                    <option value="50" {if ($batch_size == 50)}selected="true"{/if}>50</option>                    
-                    </select> {i18n}per page{/i18n}
-                </td>
-                {/if}
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </td>
             </tr>
         </tfoot>
     </table>
+  </div>

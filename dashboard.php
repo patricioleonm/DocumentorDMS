@@ -65,7 +65,8 @@ class DashboardDispatcher extends KTStandardDispatcher {
         return parent::KTStandardDispatcher();
     }
     function do_main() {
-        $this->oPage->setShowPortlets(false);
+        $this->oPage->setShowPortlets(FALSE);
+        $this->oPage->hide_section = TRUE;
         // retrieve action items for the user.
         // FIXME what is the userid?
 
@@ -113,6 +114,8 @@ class DashboardDispatcher extends KTStandardDispatcher {
         $this->oPage->requireJSResource('thirdpartyjs/yui/dragdrop/dragdrop.js');
         $this->oPage->requireJSResource('resources/js/DDList.js');
         */
+        $this->oPage->requireJSResource('assets/js/masonry.pkgd.min.js');
+        $this->oPage->requireJSResource('assets/js/dashboard.js');
         $this->oUser->refreshDashboadState();
 
         // dashboard

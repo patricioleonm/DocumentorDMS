@@ -77,9 +77,9 @@ function hideTooltip()
 <script type="text/javascript">var MY_DROP_DOCUMENTS = "{$url}";</script>
 <script type="text/javascript">
 {literal}
-Ext.onReady(function()
-{
-    CheckFolderExists();
-});
+//Ext.onReady(function()
+//{
+ //   CheckFolderExists();
+//});
 {/literal}
 </script>

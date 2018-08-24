@@ -2,14 +2,14 @@
 
 <p class="descriptiveText">{i18n}Collections of fields are associated into fieldsets.  These represent a set of related information which can be associated with a document and thus comprise part of the document's metadata.{/i18n}</p>
 
-<p><a class="ktAction ktAdd ktActionDescribed" href="{addQS context=$context}action=newfieldset{/addQS}">{i18n}Create new Fieldset{/i18n}</a>
-<a href="{addQS context=$context}action=newfieldset{/addQS}">{i18n}Create New Fieldset{/i18n}</a>
+<p>
+<a href="{addQS context=$context}action=newfieldset{/addQS}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {i18n}Create New Fieldset{/i18n}</a>
 </p>
 
 { if $fieldsets}
 <h3>{i18n}Existing document fieldsets{/i18n}</h3>
 
-<table class="kt_collection narrow" cellpadding="1.5em" cellspacing="0">
+<table class="table table-sm table-striped table-bordered">
   <thead>
     <tr>
       <th>{i18n}Name{/i18n}</th>
@@ -30,16 +30,16 @@
       </td>
       <td class="centered">
 {if ($oFieldset->getIsGeneric())}
-    <span class="ktAction ktAllowed">{i18n}Yes{/i18n}</span>
+    <span class="">{i18n}Yes{/i18n}</span>
 {else}
-	<span class="ktAction ktDenied">{i18n}No{/i18n}</span>
+	<span class="">{i18n}No{/i18n}</span>
 {/if}
       </td>
       <td class="centered">
 {if ($oFieldset->getIsSystem())}
-	<span class="ktAction ktAllowed">{i18n}Yes{/i18n}</span>
+	<span class="">{i18n}Yes{/i18n}</span>
 {else}
-	<span class="ktAction ktDenied">{i18n}No{/i18n}</span>
+	<span class="">{i18n}No{/i18n}</span>
 {/if}
       </td>
       <td>
@@ -60,10 +60,10 @@
 	  </td>
 
 	  <td>
-	     <a href="{addQS}action=edit&fFieldsetId={$oFieldset->getId()}{/addQS}" class="ktAction ktEdit">{i18n}Edit{/i18n}</a>
+	     <a href="{addQS}action=edit&fFieldsetId={$oFieldset->getId()}{/addQS}" class=""><i class="fa fa-edit"></i> {i18n}Edit{/i18n}</a>
 	  </td>
 	  <td>
-	     <a href="{addQS}action=delete&fFieldsetId={$oFieldset->getId()}{/addQS}" class="ktAction ktDelete">{i18n}Delete{/i18n}</a>
+	     <a href="{addQS}action=delete&fFieldsetId={$oFieldset->getId()}{/addQS}" class=""><i class="fa fa-times"></i> {i18n}Delete{/i18n}</a>
 	  </td>
 
 

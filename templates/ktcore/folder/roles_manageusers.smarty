@@ -22,7 +22,7 @@ To remove users from this role, select one or more user names in the Member user
 <p>{i18n}Use the Filter fields to display names in order of specified criteria.
 Use the Ctrl key to multi-select user names.{/i18n}</p>
 
-<table border="0" width="600">
+<table class="table table-sm table-bordered table-striped">
    <thead>
       <tr>
          <th>{i18n}Available Users{/i18n}</th>

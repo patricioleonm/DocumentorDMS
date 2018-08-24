@@ -1,1 +1,1 @@
-Zend Framework Preview Release 0.9.1-Beta (build 4221)
+Zend Framework Preview Release 0.9.2-Beta (build 4420)

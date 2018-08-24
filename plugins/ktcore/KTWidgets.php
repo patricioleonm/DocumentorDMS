@@ -884,7 +884,7 @@ class KTCoreConditionalSelectionWidget extends KTCoreSelectionWidget {
         $bHasErrors = false;
         if (count($this->aErrors) != 0) { $bHasErrors = true; }
 
-	$this->sTemplate = 'ktcore/forms/widgets/conditional_selection';
+	    $this->sTemplate = 'ktcore/forms/widgets/conditional_selection';
 
         $oTemplating =& KTTemplating::getSingleton();
         $oTemplate = $oTemplating->loadTemplate($this->sTemplate);
@@ -967,9 +967,9 @@ class KTCoreTextAreaWidget extends KTWidget {
         $oTemplating =& KTTemplating::getSingleton();        
         $oTemplate = $oTemplating->loadTemplate('ktcore/forms/widgets/base');
 		
-      	$this->aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
-        $this->aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/tiny_mce.js';
-    	$this->aJavascript[] = 'resources/js/kt_tinymce_init.js';
+      	//$this->aJavascript[] = 'assets/jquery/jquery.min.js';
+        //$this->aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/tiny_mce.js';
+    	//$this->aJavascript[] = 'resources/js/kt_tinymce_init.js';
     	
         if (!empty($this->aJavascript)) {
             // grab our inner page.

@@ -60,7 +60,7 @@ class PreviewColumn extends AdvancedColumn {
         global $main;
 
         // Get the CSS to render the pop-up
-        $main->requireCSSResource($this->sPluginPath.'/resources/container.css');
+        //$main->requireCSSResource($this->sPluginPath.'/resources/container.css');
 
         // Get the javascript to render the property preview
         $main->requireJSResource($this->sPluginPath.'/resources/preview.js');
@@ -94,6 +94,7 @@ class PreviewColumn extends AdvancedColumn {
         }
 
         //$link = '<a name = "ktP'.$iDocumentId.'" href = "#ktP'.$iDocumentId.'" class="ktAction ktPreview" id = "box_'.$iDocumentId.'" ';
+        /*
 		$link = '<a href="#browseForm" class="ktAction ktPreview" id = "box_'.$iDocumentId.'" ';
         if($this->sActivation == 'mouse-over'){
             $sJs = "javascript: this.t = setTimeout('showInfo(\'$iDocumentId\', \'$sUrl\', \'$sDir\', \'$sLoading\', $width)', $iDelay);";
@@ -102,8 +103,8 @@ class PreviewColumn extends AdvancedColumn {
             $sJs = "javascript: showInfo('$iDocumentId', '$sUrl', '$sDir', '$sLoading', $width);";
             $link .= 'onclick = "'.$sJs.'" title="'.$sTitle.'">';
         }
-
-        return $link.'<i class="fa fa-search"></i> <span class="sr-only">'.$sTitle.'</span></a>';
+        */
+        return '<a href="#" onClick="documentPreview('.$iDocumentId.');" data-id="'.$iDocumentId.'"><i class="fa fa-search"></i> <span class="sr-only">'.$sTitle.'</span></a>';
     }
 
     function getName() { return _kt('Property Preview'); }
@@ -121,9 +122,9 @@ class DocumentPreviewPlugin extends KTPlugin {
     function setup() {
         $this->registerColumn(_kt('Property Preview'), 'ktcore.columns.preview', 'PreviewColumn', 'documentPreviewPlugin.php');
 
-        require_once(KT_LIB_DIR . '/templating/templating.inc.php');
-        $oTemplating =& KTTemplating::getSingleton();
-        $oTemplating->addLocation('documentpreview', '/plugins/ktstandard/documentpreview/templates', 'ktstandard.preview.plugin');
+        //require_once(KT_LIB_DIR . '/templating/templating.inc.php');
+        //$oTemplating =& KTTemplating::getSingleton();
+        //$oTemplating->addLocation('documentpreview', '/plugins/ktstandard/documentpreview/templates', 'ktstandard.preview.plugin');
     }
 }
 

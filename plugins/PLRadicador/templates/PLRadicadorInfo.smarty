@@ -1,0 +1,29 @@
+<h2>
+Información de radicación
+<br>
+{$filename}
+</h2>
+<table class="kt_collection">
+    <tr>
+        <td  style="width:250px"><b>Nombre documento</b></td><td>{$nombre}</td>
+    </tr>
+    <tr>
+        <td><b>Código de radicación</b></td><td>{$codigo}</td>
+    </tr>
+    <tr>
+        <td><b>Tipo de radicación</b></td><td>{$tiporadicacion}</td>
+    </tr>
+    <tr>
+        <td><b>Fecha de radicación</b></td><td>{$fecha}</td>
+    </tr>
+    <tr>
+        <td><b>Usuario radicador</b></td><td>{$usuario}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+                <div id="visor" style="width:100%;height:210px">
+                    <object id="pdf" width="100%" height="100%" type="application/pdf" data="plugins/PLRadicador/codigos/{$id}.pdf"></object>
+                </div>
+        </td>
+    <tr>
+</table>

@@ -1,0 +1,109 @@
+{literal}
+<script language="javascript" type="text/javascript">
+    function MoveE(org, des){
+        sOrg = document.getElementById(org);
+        sDes = document.getElementById(des);
+        if(sOrg.selectedIndex != -1){
+            for(var i=0;i<sOrg.options.length;i++){
+                if(sOrg.options[i].selected){
+                    sDes.options.add(sOrg.options[i]);
+                }
+            }
+        }
+        return;
+    }
+
+    function salvarRad(){
+        if(document.getElementById("rad_nombre").value != "" && document.getElementById("rad_descripcion").value != "" && document.getElementById("rad_asig[]").options.length > -1){
+            for(var i=0;i<document.getElementById("rad_asig[]").options.length;i++){
+                document.getElementById("rad_asig[]").options[i].selected = true;
+            }
+            document.getElementById("rad_form").submit();
+        }else{
+            alert("Rellene todos los campos y asigne al menos un fieldset.");
+        }
+    }
+</script>
+{/literal}
+<h3>Administrar radicaciones</h3>
+<fieldset>
+    <legend>Radicación</legend>
+    <form name="rad_form" id="rad_form" method="POST" action="admin.php?kt_path_info=radicador/radicaciones">
+        <input type="hidden" name="action" value="{$action}" />
+        <input type="hidden" name="rad_id" value="{$rad_id}" />
+        <div class="form-group">
+            <label for="rad_nombre">Nombre<span class="required">(Requerido)</span></label>
+            <input type="text" name="rad_nombre" id="rad_nombre" maxlength="25" value="{$rad_nombre}" class="form-control" />
+            <p class="form-text text-muted">Nombre con el que se identificara el tipo de radicación</p>
+        </div>
+        <div class="form-group">
+            <label for="rad_descripcion">Descripción<span class="required">(Requerido)</span></label>      
+            <textarea name="rad_descripcion" id="rad_descripcion" cols="45" rows="7" class="form-control">{$rad_descripcion}</textarea>
+            <p class="form-text text-muted">Descripción del tipo de radicación</p>
+        </div>
+        <h2>Fieldsets</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th><b>Disponibles</b></th>
+                    <th style="width:25px"></td>
+                    <th><b>Asignados</b><span class="required">(Requerido)</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <select name="rad_disp" id="rad_disp" multiple="true" style="width:200px" class="form-control">
+                            {foreach from=$fieldsets item=fieldset}<option value="{$fieldset.id}">{$fieldset.name}</option>{/foreach}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="button" value=">>" class="btn btn-primary" onClick="javascript:MoveE('rad_disp', 'rad_asig[]');"/>
+                        <br />
+                        <input type="button" value="<<" class="btn btn-primary" onClick="javascript:MoveE('rad_asig[]','rad_disp');"/>
+                    </td>
+                    <td>
+                        <select name="rad_asig[]" id="rad_asig[]" multiple="true" style="width:200px" class="form-control" required>
+                        {if $rad_asig}
+                        {foreach from=$rad_asig item=rad}
+                            <option value={$rad.id}>{$rad.name}</option>
+                        {/foreach}
+                        {/if}
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <hr/>
+    <input type="button" value="Guardar" class="btn btn-primary" onClick="javascript:salvarRad();"/>
+</fieldset>
+<h2>Radicaciones creadas.</h2>
+{if $radicaciones}
+<table class="table table-sm table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fieldsets</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach from=$radicaciones item=radicacion}
+        <tr>
+            <td>{$radicacion.id}</td>
+            <td>{$radicacion.nombre}</td>
+            <td>{$radicacion.descripcion|truncate:35:"..."}</td>
+            <td>{$radicacion.fieldset_asignados|truncate:35:"..."}</td>
+            <td><a class="" href="admin.php?kt_path_info=radicador/radicaciones&action=edit&rad_id={$radicacion.id}"><i class="fa fa-edit"></i><span class="sr-only">{i18n}Edit{/i18n}</span></a></td>
+            <td><a class="" href="admin.php?kt_path_info=radicador/radicaciones&action=delete&rad_id={$radicacion.id}"><i class="fa fa-trash"></i><span class="sr-only">{i18n}Delete{/i18n}</span></a></td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
+{else}
+    <h2>No se han creado radicaciones.<h2>
+{/if}

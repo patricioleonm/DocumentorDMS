@@ -388,7 +388,7 @@ class KTrss{
 	    	      </tr>\n
 	    	      <tr>\n
     	    	      <td colspan='2'>\n
-        	    	      ".ucfirst($aItem[0]['itemType'])." Information (ID: ".$aItem[0][0][id].")</>\n
+        	    	      ".ucfirst($aItem[0]['itemType'])." Information (ID: ".$aItem[0][0][id].")\n
         	    	      <hr>\n
 
         	    	      <table width='95%'>\n

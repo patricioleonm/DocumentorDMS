@@ -1,7 +1,3 @@
-{$context->oPage->requireJSResource('thirdpartyjs/MochiKit/MochiKitPacked.js')}
-
-{$context->oPage->requireJSResource('resources/js/toggleselect.js')}
-
 {if ($custom_title != null)}
     <h2>{$custom_title|sanitize}</h2>
 {/if}
@@ -42,7 +38,8 @@
         <input type="hidden" name="fReturnAction" value="{$returnaction}" />
         <input type="hidden" name="fReturnData" value="{$returndata|sanitize}" />
     {foreach from=$bulkactions item=bulkaction}
-        <input type="submit" name="submit[{$bulkaction->getName()}]" value="{$bulkaction->getDisplayName()}" class="btn btn-primary"/>
+        {assign var=info value=$bulkaction->getInfo()}
+        <button type="submit" name="submit[{$bulkaction->getName()}]" title="{$bulkaction->getDisplayName()}" class="btn btn-primary"><i class="{$info.icon_class}"></i> <span class="d-none d-sm-inline">{$bulkaction->getDisplayName()}</span></button>
     {/foreach}
     </div>
     {/if}

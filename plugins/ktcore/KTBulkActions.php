@@ -46,6 +46,7 @@ class KTBulkDeleteAction extends KTBulkAction {
     var $sName = 'ktcore.actions.bulk.delete';
     var $_sPermission = 'ktcore.permissions.delete';
     var $_bMutator = true;
+    var $sIconClass = "fa fa-trash-alt";
 
     function getDisplayName() {
         return _kt('Delete');
@@ -295,6 +296,7 @@ class KTBulkMoveAction extends KTBulkAction {
     var $sName = 'ktcore.actions.bulk.move';
     var $_sPermission = 'ktcore.permissions.write';
     var $_bMutator = true;
+    var $sIconClass = "fa fa-people-carry";
 
     function getDisplayName() {
         return _kt('Move');
@@ -554,6 +556,7 @@ class KTBulkCopyAction extends KTBulkAction {
     var $sName = 'ktcore.actions.bulk.copy';
     var $_sPermission = 'ktcore.permissions.read';
     var $_bMutator = true;
+    var $sIconClass = "fa fa-copy";
 
     function getDisplayName() {
         return _kt('Copy');
@@ -804,6 +807,7 @@ class KTBulkArchiveAction extends KTBulkAction {
     var $sName = 'ktcore.actions.bulk.archive';
     var $_sPermission = 'ktcore.permissions.write';
     var $_bMutator = true;
+    var $sIconClass = "fa fa-archive";
 
     function getDisplayName() {
         return _kt('Archive');
@@ -1114,6 +1118,7 @@ class KTBrowseBulkExportAction extends KTBulkAction {
     var $_sPermission = 'ktcore.permissions.read';
     var $_bMutator = true;
     var $bNotifications = true;
+    var $sIconClass = "fa fa-file-download";
 
     function getDisplayName() {
         return _kt('Download All');
@@ -1291,6 +1296,7 @@ class KTBrowseBulkCheckoutAction extends KTBulkAction {
     var $sName = 'ktcore.actions.bulk.checkout';
     var $_sPermission = 'ktcore.permissions.write';
     var $_bMutator = true;
+    var $sIconClass = "fa fa-shopping-cart";
 
     function getDisplayName() {
         return _kt('Checkout');

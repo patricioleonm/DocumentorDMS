@@ -1,11 +1,12 @@
 <p class="descriptiveText">{i18n}Fieldsets bring together different fields into a collection
 of related information.{/i18n}</p>
 
-<p><a class="ktAction ktAdd ktActionDescribed" href="{addQS context=$context}fieldset_action=newfield{/addQS}">{i18n}Add New Field{/i18n}</a>
-<a href="{addQS context=$context}fieldset_action=newfield{/addQS}">{i18n}Add New Field{/i18n}</a></p>
+<p>
+    <a href="{addQS context=$context}fieldset_action=newfield{/addQS}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {i18n}Add New Field{/i18n}</a>
+</p>
 
 {if (!empty($fields))}
-<table class="kt_collection narrow" cellspacing="0">
+<table class="table table-sm table-striped table-bordered">
     <thead>
         <tr>
             <th>{i18n}Field Name{/i18n}</th>
@@ -22,22 +23,22 @@ of related information.{/i18n}</p>
                 {$oField->getName()}
             </td>
             <td class="centered">
-                <a href="{addQS context=$context}fieldset_action=managefield&fFieldId={$oField->getId()}{/addQS}" class="ktAction ktEdit">{i18n}edit{/i18n}</a>
+                <a href="{addQS context=$context}fieldset_action=managefield&fFieldId={$oField->getId()}{/addQS}" title="{i18n}edit{/i18n}"><i class="fa fa-edit"></i><span class="sr-only">{i18n}edit{/i18n}</span></a>
             </td>
             <td class="centered">
-                <a href="{addQS context=$context}fieldset_action=deletefield&fFieldId={$oField->getId()}{/addQS}" class="ktAction ktDelete">{i18n}delete{/i18n}</a>
+                <a href="{addQS context=$context}fieldset_action=deletefield&fFieldId={$oField->getId()}{/addQS}" title="{i18n}delete{/i18n}"><i class="fa fa-trash"></i><span class="sr-only">{i18n}delete{/i18n}</span></a>
             </td>
             <td>
                 <span class="descriptiveText">{if $oField->getHasInetLookup()}{$oField->getInetLookupTypeFriendlyName()}{else}{$oField->getTypeDescription()}{/if}</span>
             </td>
             <td>
                 {if !$smarty.foreach.fieldlist.first}
-                    <a href="{addQS context=$context}fieldset_action=orderUp&fFieldId={$oField->getId()}{/addQS}" class="ktAction ktMoveUp">{i18n}Reorder up{/i18n}</a>
+                    <a href="{addQS context=$context}fieldset_action=orderUp&fFieldId={$oField->getId()}{/addQS}" title="{i18n}Reorder up{/i18n}"><i class="fa fa-arrow-up"></i><span class="sr-only">{i18n}Reorder up{/i18n}</span></a>
                 {/if}
             </td>
             <td>
                 {if !$smarty.foreach.fieldlist.last}
-                    <a href="{addQS context=$context}fieldset_action=orderDown&fFieldId={$oField->getId()}{/addQS}" class="ktAction ktMoveDown">{i18n}Reorder down{/i18n}</a>
+                    <a href="{addQS context=$context}fieldset_action=orderDown&fFieldId={$oField->getId()}{/addQS}" title="{i18n}Reorder down{/i18n}"><i class="fa fa-arrow-down"></i><span class="sr-only">{i18n}Reorder down{/i18n}</span></a>
                 {/if}
             </td>
         </tr>

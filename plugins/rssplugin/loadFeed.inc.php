@@ -79,16 +79,23 @@
  }
  // Prepare response data to be passed back to page
  $response = "<h3>".$aRSSArray[channel][title]."</h3>" .
- 		"<div class='outerContainer' id='outerContainer'>" .
- 		"<table width='90%'>";
+ 		"<div class=\"outerContainer\" id=\"outerContainer\">" .
+ 		"<table width=\"90%\">";
 		for($i=0;$i<count($aRSSArray[items]);$i++){
-			 $response .= "<tr>
-				<td colspan='2'><strong><a href='".$aRSSArray[items][$i][link]."' target='_blank'>".$aRSSArray[items][$i][title]."</a><strong></td>
+			 $response .= "
+			 <tr>
+				<td colspan=\"2\">
+					<strong><a href=\"".$aRSSArray[items][$i][link]."\" target=\"_blank\">".$aRSSArray[items][$i][title]."</a><strong>
+				</td>
 			</tr>
 			<tr>
 				<td>".$aRSSArray[items][$i][description]."</td>
 			</tr>
-			<tr><td colspan='2'><br></td></tr>";
+			<tr>
+				<td colspan='2'>
+					<br>
+				</td>
+			</tr>";
 		}
  $response .= "</table></div><br>";
 

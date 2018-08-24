@@ -1,11 +1,12 @@
 <p class="descriptiveText">{i18n}Fieldsets bring together different fields into a collection
 of related information.{/i18n}</p>
 
-<p><a class="ktAction ktAdd ktActionDescribed" href="{addQS context=$context}fieldset_action=newfield{/addQS}">{i18n}Add New Field{/i18n}</a>
-<a href="{addQS context=$context}fieldset_action=newfield{/addQS}">{i18n}Add New Field{/i18n}</a></p>
+<p>
+    <a href="{addQS context=$context}fieldset_action=newfield{/addQS}" class="btn btn-primary"><i class="fa fa-plus-circle"></i> {i18n}Add New Field{/i18n}</a>
+</p>
 
 {if (!empty($fields))}
-<table class="kt_collection narrow" cellspacing="0">
+<table class="table table-striped table-bordered" cellspacing="0">
     <thead>
         <tr>
             <th>{i18n}Field Name{/i18n}</th>

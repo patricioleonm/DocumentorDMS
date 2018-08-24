@@ -82,7 +82,8 @@ class AdvancedTitleColumn extends AdvancedColumn {
         /* this check has to be done so that any titles longer than 40 characters is not displayed incorrectly.
          as mozilla cannot wrap text without white spaces */
         global $default;
-        $charLength = (isset($default->titleCharLength)) ? $default->titleCharLength : 40;
+        //$charLength = (isset($default->titleCharLength)) ? $default->titleCharLength : 40;
+        $charLength = 1000;
 
         if (mb_strlen($aDataRow["folder"]->getName(), 'UTF-8') > $charLength) {
         	mb_internal_encoding("UTF-8");
@@ -98,23 +99,18 @@ class AdvancedTitleColumn extends AdvancedColumn {
     }
 
     function renderDocumentLink($aDataRow) {
-        /* this check has to be done so that any titles longer than 40 characters is not displayed incorrectly.
-         as mozilla cannot wrap text without white spaces */
-        global $default;
-        $charLength = (isset($default->titleCharLength)) ? $default->titleCharLength : 40;
-
-        if (mb_strlen($aDataRow["document"]->getName(), 'UTF-8') > $charLength) {
-        	mb_internal_encoding("UTF-8");
-            $outStr = htmlentities(mb_substr($aDataRow["document"]->getName(), 0, $charLength, 'UTF-8')."...", ENT_NOQUOTES, 'UTF-8');
-        }else{
-            $outStr = htmlentities($aDataRow["document"]->getName(), ENT_NOQUOTES, 'UTF-8');
-        }
+        $filename = htmlentities($aDataRow["document"]->getName(), ENT_NOQUOTES, 'UTF-8');
 
         if($this->link_documents) {
-            $outStr = '<a href="' . $this->buildDocumentLink($aDataRow) . '" title="' . htmlentities($aDataRow["document"]->getFilename(), ENT_QUOTES, 'UTF-8').'">' .
-                $outStr . '</a>';
+            return  sprintf("<a href=\"%s\" title=\"%s\">%s</a>", 
+                                    $this->buildDocumentLink($aDataRow),
+                                    $filename,
+                                    $filename
+                                );
+
+        }else{
+            return $filename;
         }
-        return $outStr;
     }
 
     function buildDocumentLink($aDataRow) {
@@ -175,7 +171,8 @@ class AdvancedTitleColumn extends AdvancedColumn {
                 $contenttype .= '_shortcut';
             }
             // Separate the link from the mime icon to allow for right-to-left languages
-            return "<div style='float: left' class='contenttype $contenttype'>&nbsp;</div>$link";
+            //return "<div style='float: left' class='contenttype $contenttype'>&nbsp;</div>$link";
+            return "<i class=\"fa fa-".$contenttype."\"></i> ".$link;
         } else {
             $type = '';
             $size = '';
@@ -192,7 +189,8 @@ class AdvancedTitleColumn extends AdvancedColumn {
             $contenttype = $this->_mimeHelper($aDataRow["document"]->getMimeTypeId(), $type);
 
             // Separate the link from the mime icon and the size to allow for right-to-left languages
-            return "<div style='float: left' class='contenttype $contenttype'>&nbsp;</div><div style='float: left'>$link</div>$size";
+            //return "<div style='float: left' class='contenttype $contenttype'>&nbsp;</div><div style='float: left'>$link</div>$size";
+            return "<i class=\"fa fa-file-".$contenttype."\"></i> ".$link." ".$size;
         }
     }
 
@@ -557,7 +555,7 @@ class AdvancedDownloadColumn extends AdvancedColumn {
         }
 
         $link = KTUtil::ktLink('action.php','ktcore.actions.document.view', 'fDocumentId=' . $aDataRow['document']->getId());
-        return sprintf('<a href="%s" class="ktAction ktDownload" title="%s"><i class="fa fa-cloud-download fa-2"></i> <span class="sr-only">%s</span></a>', $link, _kt('Download Document'), _kt('Download Document'));
+        return sprintf('<a href="%s" class="ktAction ktDownload" title="%s"><i class="fa fa-file-download"></i> <span class="sr-only">%s</span></a>', $link, _kt('Download Document'), _kt('Download Document'));
     }
 
     function getName() { return _kt('Download'); }

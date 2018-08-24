@@ -1,6 +1,6 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}View Permissions for{/i18n}:<br />{$context->oFolder->getName()|sanitize}</h2>
+<h2><i class="fa fa-caret-right text-warning"></i> {i18n}View Permissions for{/i18n}: <span class="text-muted">{$context->oFolder->getName()|sanitize}</span></h2>
 
-<p class="descriptiveText">{i18n}This page shows the permissions that apply to
+<p class="alert alert-info">{i18n}This page shows the permissions that apply to
 this specific folder.  Only the roles or groups which have permissions
 assigned are shown.{/i18n}</p>
 
@@ -13,31 +13,28 @@ assigned are shown.{/i18n}</p>
 
 
 {if $iFolderId != 1}
-<p>
-<div class="ktInfoMessage">
-{ if $inherited }
-<span>{i18n arg_permission_source=$inherited|sanitize}This folder <strong>inherits</strong> its permissions from #permission_source#.{/i18n}
-{if $inheritable}
-<a class="ktActionLink ktDelete"
-   kt:deleteMessage="{i18n}Are you sure you wish to override the permissions?{/i18n}"
+<div class="alert alert-warning">
+  {if $inherited }
+  <span>{i18n arg_permission_source=$inherited|sanitize}This folder <strong>inherits</strong> its permissions from #permission_source#.{/i18n}
+    {if $inheritable}
+  <a class="ktActionLink ktDelete" kt:deleteMessage="{i18n}Are you sure you wish to override the permissions?{/i18n}"
    href="{addQS}action=edit&fFolderId={$oFolder->getId()}&override=1{/addQS}">{i18n}Override permissions{/i18n}</a>
-{/if}
-</span>
-{ else }
-<p>{i18n}This folder defines its own permissions.{/i18n}</p>
-{ /if }
-</div>
-</p>
+    {/if}
+  </span>
+  {else }
+  <p>{i18n}This folder defines its own permissions.{/i18n}</p>
+  {/if}
+  </div>
 { /if }
 
 {if (empty($roles) && empty($groups) && empty($users)) }
-<div class="ktInfoMessage"><span>{i18n}No roles, groups, or users have been defined or have permissions.{/i18n}</span></div>
+<div class="alert alert-info"><span>{i18n}No roles, groups, or users have been defined or have permissions.{/i18n}</span></div>
 {else}
 
-<table class="table table-bordered table-striped table-hover">
+<table class="table table-sm table-bordered table-striped table-hover">
 <thead>
 <tr>
-<th width="40%">{i18n}Role or Group{/i18n}</th>
+<th>{i18n}Role or Group{/i18n}</th>
 { foreach item=oPerm from=$permissions }
 <th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}</th>
 { /foreach }

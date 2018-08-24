@@ -1,4 +1,4 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Fieldset{/i18n}:<br />{$oFieldset->getName()}</h2>
+<h2>{i18n}Fieldset{/i18n}:<br />{$oFieldset->getName()}</h2>
 
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <fieldset>
@@ -41,7 +41,7 @@ value="{$oField->getId()}" />{$oField->getName()}</label></li>
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <input type="hidden" name="fFieldsetId" value="{$oFieldset->getId()}" />
 <input type="hidden" name="action" value="newfield" />
-<table class="prettysw" cellpadding="0" cellspacing="0">
+<table class="prettysw table table-striped table-bordered">
   <tr>
     <th>{i18n}Name{/i18n}</th>
     <td><input type="textbox" name="name" />

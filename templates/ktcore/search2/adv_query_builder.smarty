@@ -1,3 +1,4 @@
+{$context->oPage->requireJSResource('assets/js/knockout.min.js')}
 {literal}
 	<style>
 		fieldset { border: 1px dotted #999; }
@@ -867,7 +868,7 @@
 													</div>
 
 												<td valign=top>
-													<div id="fieldset_fields_wrapper0" style="display: none"">
+													<div id="fieldset_fields_wrapper0" style="display: none">
 														<div id="fieldset_name0"></div>
 														<select id="fieldset_fields0" size=5 style="width: 150px" onclick="addMetadataField(0)"></select>
 													</div>
@@ -891,6 +892,109 @@
 			</div>
 		</div>
 		<div id="">
+			<input type=button class="btn btn-primary" value="{i18n}Add another set of criteria{/i18n}" onclick="addCriteriaSet()">
+			<input type=button class="btn btn-primary" value="{i18n}Search{/i18n}" onclick="butSearchClick()">
+		</div>
+	</fieldset>
+</div>
+<div>
+	<fieldset>
+		<legend>{i18n}Advanced Search{/i18n}</legend>
+		{capture assign=options}
+		<a href="{$rootUrl}/search2.php?action=queryBuilder">{i18n}Search Criteria Editor{/i18n}</a>
+		{/capture}
+
+		{i18n arg_options=$options}The #options# may also be used to create more complex search criteria expressions.{/i18n}
+
+		{capture assign=options}
+		<select id="allop" class="form-control">
+			<option value="AND">{i18n}all{/i18n}</option>
+			<option value="OR" SELECTED>{i18n}any{/i18n}</option>
+		</select>
+		{/capture}
+
+		{i18n arg_options=$options}Return items which match #options# of the criteria groups specified.{/i18n}
+
+		<div id="groupwrapping">
+			<div id="groupwrapper0">
+				<fieldset>
+					<legend>{i18n}Criteria Group{/i18n}</legend>
+
+					{capture assign=options}
+						<select id="groupop0" class="form-control">
+							<option value="AND">{i18n}all{/i18n}
+							<option value="OR" SELECTED>{i18n}any{/i18n}
+						</select>
+					{/capture}
+
+					{i18n arg_options=$options}Return items which match #options# of the criteria specified below.{/i18n}
+
+					<div id="criteria0">
+						<form id="form0" onsubmit="return false;">
+							<table width="100%">
+								<tr>
+									<td width="50%" valign="top">										
+										<div id="criteria_nofields0" style="color: brown">
+											{i18n}No criteria have been selected for the criteria group.{/i18n}										
+											<input type=button value="{i18n}Remove Criteria Group{/i18n}" onclick="removeCriteriaGroup(0)" id="removeCriteriaGroup0" style="display: none">
+										</div>
+										<div id="criteria_fields0"></div>
+									</td>
+									<td valign="top">
+										<table>
+											<tr>
+												<td valign=top>												
+													<select id="selector0" class="form-control" style="width: 200px" onchange="selectorChange(0)">
+														<option value="0">{i18n}Available Criteria{/i18n}</option>
+														<option value="1">{i18n}Available Fieldsets{/i18n}</option>
+														<option value="2">{i18n}Available Workflows{/i18n}</option>
+													</select>
+													<div>
+														<select id="fields0" class="form-control" size="5" style="width: 200px; height: 100px; display: block" onclick="fieldChange(0)">
+															<option value="" selected>--- {i18n}Select some criteria{/i18n} ---</option>
+															{foreach from=$metainfo.fields item=field}
+															<option>{$field.display}</option>
+															{/foreach}
+														</select>
+														<select id="fieldsets0" class="form-control" size="5" style="width: 200px;   height: 100px; display: none" onclick="fieldsetsChange(0)">
+															<option value="" selected>--- {i18n}Select a fieldset{/i18n} ---</option>
+															{foreach from=$metainfo.fieldsets item=fieldset}
+															<option>{$fieldset.name}</option>
+															{/foreach}
+														</select>
+														<select id="workflows0" size="5" style="width: 200px;   height: 100px; display: none" onclick="workflowsChange(0)" >
+															<option value="" selected>--- {i18n}Select a workflow{/i18n} ---</option>
+															{foreach from=$metainfo.workflows item=workflow}
+															<option>{$workflow.name}</option>
+															{/foreach}
+														</select>
+													</div>
+
+												<td valign=top>
+													<div id="fieldset_fields_wrapper0" style="display: none">
+														<div id="fieldset_name0"></div>
+														<select id="fieldset_fields0" size=5 style="width: 150px" onclick="addMetadataField(0)"></select>
+													</div>
+													<div id="workflow_states_wrapper0" style="display: none">
+														<div id="workflow_name0"></div>
+														<select id="workflow_states0" size=5 style="width: 150px" onclick="addWorkflowStateField(0)"></select>
+													</div>
+												</td>
+											<tr>
+												<td colspan=5>
+													{i18n}Click on a field above to add it to the criteria group.{/i18n}
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div id="">x
 			<input type=button class="btn btn-primary" value="{i18n}Add another set of criteria{/i18n}" onclick="addCriteriaSet()">
 			<input type=button class="btn btn-primary" value="{i18n}Search{/i18n}" onclick="butSearchClick()">
 		</div>

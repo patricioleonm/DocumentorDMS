@@ -1,2 +1,4 @@
-      <input type="file" name="{$name}" {if $has_id}id="{$id}"{/if} {if $options.width}size="{$options.width}"{/if} 
-      {if $options.onchange}onchange="{$options.onchange}" {/if} />
+      <div class="custom-file">
+            <input type="file" name="{$name}" id="{if $has_id}{$id}{else}0{/if}" {if $options.onchange}onchange="{$options.onchange}" {/if} />
+            <label class="custom-file-label" for="{if $has_id}{$id}{else}0{/if}">{i18n}Browse{/i18n}</label>
+      </div>

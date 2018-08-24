@@ -5,7 +5,7 @@
 { if $fieldsets}
 <h3>{i18n}Existing document fieldsets{/i18n}</h3>
 
-<table class="kt_collection narrow" cellpadding="1.5em" cellspacing="0">
+<table class="kt_collection table table-striped table-bordered">
   <thead>
     <tr>
       <th>{i18n}Name{/i18n}</th>

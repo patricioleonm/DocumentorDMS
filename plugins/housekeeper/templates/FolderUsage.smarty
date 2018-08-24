@@ -1,32 +1,36 @@
 {literal}
 <script>
-function cleanupFolder(path)
-{
-	if (confirm('{/literal}{i18n}Are you sure you want to clear{/i18n}{literal} ' + path + '?'))
+	function cleanupFolder(path)
 	{
-		document.location = "{/literal}{$dispatcherURL}{literal}?action=cleanup&folder=" + path;
+		if (confirm('{/literal}{i18n}Are you sure you want to clear{/i18n}{literal} ' + path + '?'))
+		{
+			document.location = "{/literal}{$dispatcherURL}{literal}?action=cleanup&folder=" + path;
+		}
 	}
-}
 </script>
 {/literal}
-
-<table border=0 cellspacing="1" cellpadding="1" width="100%">
-    <tr>
-        <td ><B>{i18n}Description{/i18n}</td>
-		<td width="80" align="center"><B># {i18n}Files{/i18n}</td>
-		<td width="130" align="center"><B>{i18n}Space Used{/i18n}</td>
-		<td width="80" align="center"><B>{i18n}Action{/i18n}</td>
-    </tr>
-	<tr><td colspan=4><hr></tr>
-{section name=usage loop=$usages}
-{if $usages[usage].folder!= ''}
-    <tr>
-        <td><i>{$usages[usage].description}</i><br>({$usages[usage].folder}) </td>
-		<td align=right>{$usages[usage].files}&nbsp;&nbsp;</td>
-		<td align=right>{$usages[usage].filesize}&nbsp;&nbsp;</td>
-		<td align="center">{if $usages[usage].canClean}<a href="javascript:cleanupFolder('{$usages[usage].folder}')">{i18n}cleanup{/i18n}</a>{else}{i18n}N/A{/i18n}{/if}&nbsp;&nbsp;</td>
-    </tr>
-{/if}
-{/section}
-	<tr><td colspan=4><hr></tr>
-</table>
+<div class="table-responsive">
+	<table class="table table-sm table-bordered table-striped">
+		<tr>
+			<td colspan="3">{i18n}Description{/i18n}</td>
+		</tr>
+		<tr>
+			<td align="center"># {i18n}Files{/i18n}</td>
+			<td align="center">{i18n}Space Used{/i18n}</td>
+			<td align="center">{i18n}Action{/i18n}</td>
+		</tr>
+		{section name=usage loop=$usages}
+		{if $usages[usage].folder!= ''}
+		<tr>
+			<td colspan="3">{$usages[usage].description}<br>({$usages[usage].folder}) </td>
+		</tr>
+		<tr>
+			<!--td><i>{$usages[usage].description}</i><br>({$usages[usage].folder}) </td-->
+			<td>{$usages[usage].files}&nbsp;&nbsp;</td>
+			<td>{$usages[usage].filesize}&nbsp;&nbsp;</td>
+			<td>{if $usages[usage].canClean}<a href="javascript:cleanupFolder('{$usages[usage].folder}')" class="btn btn-sm btn-danger">{i18n}cleanup{/i18n}</a>{else}{i18n}N/A{/i18n}{/if}&nbsp;&nbsp;</td>
+		</tr>
+		{/if}
+		{/section}
+	</table>
+</div>

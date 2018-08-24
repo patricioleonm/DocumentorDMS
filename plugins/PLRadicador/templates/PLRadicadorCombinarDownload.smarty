@@ -1,0 +1,17 @@
+{literal}
+<script type="text/javascript">
+    var disable_loader = true;
+</script>
+{/literal}
+<h2>Descargar documento combinado</h2>
+<form action="" method="POST">
+    <input type="hidden" name="filename" value="{$tmp_filename}" />
+    <input type="hidden" value="download" name="action">
+    <input type="hidden" value="{$templateid}" name="templateid" />
+    <br />
+    Descargar documento combinado de {$filename}.
+    <br />
+    <div class="form_actions">
+        <input type="submit" value="Descargar" />
+    </div>
+</form>

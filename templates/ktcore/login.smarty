@@ -7,21 +7,22 @@
 
     <link rel="icon" href="{$rootUrl}/resources/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="{$rootUrl}/resources/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
-	<script src="https://use.fontawesome.com/55d9f84683.js"></script>
+    <link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{$rootUrl}/assets/css/login.css">
+	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css"<
+	<script language="javascript" src="{$rootUrl}/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script language="javascript" src="{$rootUrl}/assets/fontawesome/js/fontawesome.min.js"></script>
 </head>
 <body>
 	<div class="container">
-		<div class="row justify-content-center">
+		<div class="row justify-content-center align-middle">
 			<div class="col col-md-6 col-lg-4">
 				<div class="card card-body">
 					<form action="{$smarty.server.PHP_SELF}" method="POST" name="login">
 						<input type="hidden" name="action" value="login" />
 						<input type="hidden" name="cookieverify" value="{$cookietest}" />
 						<input type="hidden" name="redirect" value="{$redirect}" />
-						<img src="{$rootUrl}/resources/graphics/ktlogo-topbar-right.png" alt="{$appname}" class="logoimage" height="50" width="200"/><br />
+						<img src="{$rootUrl}/assets/images/logoh.png" alt="{$appname}" class="logoimage" height="50" width="200"/><br />
 
 						<h4>{i18n}Community Edition{/i18n}</h4>
 						

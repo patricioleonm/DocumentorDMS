@@ -1,17 +1,19 @@
-    <div class="field {if ($has_errors)}error{/if}">
-      <label for="{$name}">{$label}{if ($required === true)}<span class="required">({i18n}Required{/i18n})</span>{/if}</label>
-      {if ($description)}<p class="descriptiveText">{$description}</p>{/if}
-      {if ($options.important_description)}<p class="descriptiveText important">{$options.important_description}</p>{/if}
+    <div class="form-group">
+      <label for="{$name}">{$label}{if ($required === true)} <span class="text text-warning">({i18n}Required{/i18n})</span>{/if}</label>
       {if ($has_errors)}
-      {foreach item=sError from=$errors}
-      <p class="errorMessage">
-         {$sError}
-      </p>
-      {/foreach}
+        <div class="alert alert-danger">
+          <ul>
+          {foreach item=sError from=$errors}
+            <li>{$sError}</li>
+          {/foreach}
+          </ul>
+        </div>
       {else}
-      <p class="errorMessage"></p>
+        <!--p class="errorMessage"></p-->
       {/if}
-
+      {if ($options.important_description)}<div class="alert alert-danger" role="alert">{$options.important_description}</div>{/if}
         {$widget}
-
+      {if ($description)}
+      <small class="form-text text-muted">{$description}</small>
+      {/if}
      </div>

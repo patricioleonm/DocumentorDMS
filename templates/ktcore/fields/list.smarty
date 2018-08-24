@@ -3,7 +3,7 @@
 { if $fieldsets}
 <h2>{i18n}Existing generic document fields{/i18n}</h2>
 
-<table class="pretty" cellspacing="0" cellpadding="0">
+<table class="table table-striped table-bordered">
   <thead>
     <tr>
       <th colspan="2">{i18n}Name{/i18n}</th>

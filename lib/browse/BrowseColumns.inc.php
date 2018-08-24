@@ -172,8 +172,6 @@ class TitleColumn extends BrowseColumn {
     }
 }
 
-
-
 class DateColumn extends BrowseColumn {
     var $field_function;
 
@@ -232,7 +230,6 @@ class DateColumn extends BrowseColumn {
     }
 }
 
-
 class UserColumn extends BrowseColumn {
     var $field_function;
 
@@ -290,7 +287,6 @@ class UserColumn extends BrowseColumn {
 }
 
 // use the _name_ parameter + _f_ + id to create a non-clashing checkbox.
-
 class SelectionColumn extends BrowseColumn {
     var $show_documents;
     var $show_folders;
@@ -333,7 +329,6 @@ class SelectionColumn extends BrowseColumn {
 
 }
 
-
 class SingleSelectionColumn extends SelectionColumn {
     var $show_documents;
     var $show_folders;
@@ -370,7 +365,6 @@ class SingleSelectionColumn extends SelectionColumn {
     }
 
 }
-
 
 class WorkflowColumn extends BrowseColumn {
 
@@ -418,7 +412,6 @@ class DownloadColumn extends BrowseColumn {
     function renderData($aDataRow) {
         $localname = $this->name;
 
-
         // only _ever_ show this folder documents.
         if ($aDataRow['type'] === 'folder') {
             return '&nbsp;';
@@ -426,7 +419,7 @@ class DownloadColumn extends BrowseColumn {
 
         // FIXME at some point we may want to hide this if the user doens't have the download action, but its OK for now.
         $link = KTUtil::ktLink('action.php','ktcore.actions.document.view', 'fDocumentId=' . $aDataRow['document']->getId());
-        $outStr = sprintf('<a href="%s" class="ktAction ktDownload" title="%s"><i class="fa fa-cloud-download"></i> <span class="sr-only">%s</span></a>', $link, _kt('Download Document'), _kt('Download Document'));
+        $outStr = sprintf('<a href="%s" class="ktAction ktDownload" title="%s"><i class="fa fa-file-download"></i> <span class="sr-only">%s</span></a>', $link, _kt('Download Document'), _kt('Download Document'));
         return $outStr;
     }
 }

@@ -1,19 +1,19 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Document Details{/i18n}: {$context->oDocument->getName()|sanitize}</h2>
+<h3>{i18n}Document Details{/i18n}: {$context->oDocument->getName()|sanitize}</h3>
 
 {if ($document->getIsCheckedOut() == 1)}
 {capture assign=checkout_user}<strong>{$sCheckoutUser}</strong>{/capture}
 {if ($isCheckoutUser)}
-<div class="ktInfoMessage">
+<div class="alert alert-info">
 	<span>{i18n}This document is currently checked out by <strong>you</strong>. If this is incorrect, or you no longer need to make changes to it, please cancel the checkout.{/i18n}</span>
 </div>
 {else}
 {if ($canCheckin)}
-<div class="ktInfoMessage">
-<span>{i18n arg_checkoutuser=$checkout_user}This document is currently checked out by #checkoutuser#, but you
-have sufficient priviledges to cancel their checkout.{/i18n}</span>
+<div class="alert alert-info">
+	<span>{i18n arg_checkoutuser=$checkout_user}This document is currently checked out by #checkoutuser#, but you
+	have sufficient priviledges to cancel their checkout.{/i18n}</span>
 </div>
 {else}
-<div class="ktInfoMessage">
+<div class="alert alert-info">
 	<span>{i18n arg_checkoutuser=$checkout_user arg_appname="$appname"}This document is currently checked out by #checkoutuser#.  You cannot make
 changes until that user checks it in.  If you have urgent modifications to make, please
 contact your #appname# Administrator.{/i18n}</span>
@@ -23,7 +23,7 @@ contact your #appname# Administrator.{/i18n}</span>
 {/if}
 
 {if ($document->getImmutable() == true)}
-<div class="ktInfoMessage">
+<div class="alert alert-warning">
 	<span>{i18n}This document is immutable.  No further content changes can be
 made to this document, and only administrators (in administration mode)
 can make changes to the metadata or can move or delete it.{/i18n}

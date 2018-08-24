@@ -1,33 +1,34 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Folder Transaction History{/i18n}:<br />{$folder->getName()|sanitize}</h2>
+<h2><i class="fa fa-caret-right text-warning"></i> {i18n}Folder Transaction History{/i18n}: <span class="text-muted">{$folder->getName()|sanitize}</span></h2>
 
-<p class="descriptiveText">{i18n}This page provides details of all activities that have been carried out on the folder.{/i18n}</p>
+<p class="alert alert-info">{i18n}This page provides details of all activities that have been carried out on the folder.{/i18n}</p>
 
-
-    <table class="document_history table table-striped table-bordered" summary="{i18n}Folder History{/i18n}" cellspacing="0">
+<div class="table-responsibe">
+    <table class="table table-sm table-striped table-bordered" summary="{i18n}Folder History{/i18n}">
         <thead>
             <tr>
-                <th class="username">{i18n}User{/i18n}</th>
-                <th class="action">{i18n}Action{/i18n}</th>
-                <th class="date">{i18n}Date{/i18n}</th>
-                <th class="comment">{i18n}Comment{/i18n}</th>
+                <th>{i18n}User{/i18n}</th>
+                <th>{i18n}Action{/i18n}</th>
+                <th>{i18n}Date{/i18n}</th>
+                <th>{i18n}Comment{/i18n}</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th class="username">{i18n}User{/i18n}</th>
-                <th class="action">{i18n}Action{/i18n}</th>
-                <th class="date">{i18n}Date{/i18n}</th>
-                <th class="comment">{i18n}Comment{/i18n}</th>
+                <th>{i18n}User{/i18n}</th>
+                <th>{i18n}Action{/i18n}</th>
+                <th>{i18n}Date{/i18n}</th>
+                <th>{i18n}Comment{/i18n}</th>
             </tr>
         </tfoot>
         <tbody>
           {foreach item=aTransactionRow from=$transactions}
             <tr>
-                <td class="username">{$aTransactionRow.user_name}</td>
-                <td class="action">{i18n}{$aTransactionRow.transaction_name}{/i18n}</td>
-                <td class="date">{$aTransactionRow.datetime}</td>
-                <td class="comment">{$aTransactionRow.comment|sanitize}</td>
+                <td>{$aTransactionRow.user_name}</td>
+                <td>{i18n}{$aTransactionRow.transaction_name}{/i18n}</td>
+                <td>{$aTransactionRow.datetime}</td>
+                <td>{$aTransactionRow.comment|sanitize}</td>
             </tr>
             {/foreach}
         </tbody>
     </table>
+</div>
