@@ -73,9 +73,9 @@ class PDFGeneratorAction extends KTDocumentAction {
             $sDisplayName = _kt('Generate PDF');
 
             $sHostPath = KTUtil::kt_url();
-            $icon = "<img src='{$sHostPath}/resources/mimetypes/pdf.gif' alt='PDF' border=0 />";
+//            $icon = "<img src='{$sHostPath}/resources/mimetypes/pdf.gif' alt='PDF' border=0 />";
             $link = KTUtil::ktLink('action.php', 'ktstandard.pdf.generate', array( 'fDocumentId' => $this->oDocument->getId(), 'action' => 'pdfdownload'));
-            $sDisplayLink = "&nbsp;<a href=\"{$link}\">{$icon}</a>";
+ //        $sDisplayLink = "&nbsp;<a href=\"{$link}\">{$icon}</a>";
 
             // First check if the pdf has already been generated
             $dir = $default->pdfDirectory;
@@ -101,31 +101,6 @@ class PDFGeneratorAction extends KTDocumentAction {
         }
 
         return '';
-
-        /*
-		//$cmdpath = KTUtil::findCommand('externalBinary/python');
-        // Check if openoffice and python are available
-
-        if($cmdpath != false && file_exists($cmdpath) && !empty($cmdpath)) {
-            $sDocType = $this->getMimeExtension();
-            // make sure that the selected document is of an acceptable extension
-            foreach($this->aAcceptedMimeTypes as $acceptType){
-                if($acceptType == $sDocType){
-    	            // build server path
-    	            $sHostPath = KTUtil::kt_url();
-                    // create image
-                    $icon = "<img src='{$sHostPath}/resources/mimetypes/pdf.gif' alt='PDF' border=0 />";
-                    $link = KTUtil::ktLink('action.php', 'ktstandard.pdf.generate', array( 'fDocumentId' => $this->oDocument->getId(), 'action' => 'pdfdownload'));
-                    return _kt('Generate PDF') . "&nbsp;<a href=\"{$link}\">{$icon}</a>";
-                }
-            }
-            // If the document is empty then we are probably in the workflow admin - action restrictions section, so we can display the name.
-            if(empty($this->oDocument)){
-                return _kt('Generate PDF');
-            }
-        }
-        return '';
-        */
     }
 
     function form_main() {

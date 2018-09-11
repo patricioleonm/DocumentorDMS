@@ -38,7 +38,7 @@
 
 require_once(KT_LIB_DIR . '/actions/portletregistry.inc.php');
 require_once(KT_LIB_DIR . '/widgets/portlet.inc.php');
-
+/*
 class KTSearchPortlet extends KTPortlet {
 
     function KTSearchPortlet() {
@@ -75,7 +75,7 @@ class KTSearchPortlet extends KTPortlet {
         return $oTemplate->render($aTemplateData);
     }
 }
-
+*/
 
 
 class KTBrowseModePortlet extends KTPortlet {
@@ -102,7 +102,7 @@ class KTBrowseModePortlet extends KTPortlet {
 		$oPlugin =& $oRegistry->getPlugin('ktcore.tagcloud.plugin');
 		if(!PEAR::isError($oPlugin) && !empty($oPlugin)){
     		$tagUrl = $oPlugin->getPagePath('TagCloudRedirection');
-    		$modes['tag'] = array('name' => '<a href="'.$tagUrl.'">'._kt('Tag').'</a>');
+    		$modes['tag'] = array('name' => _kt('Tag'), 'url' => $tagUrl);//'<a href="'.$tagUrl.'">'..'</a>');
 		}
 
         $oTemplating =& KTTemplating::getSingleton();
@@ -117,7 +117,7 @@ class KTBrowseModePortlet extends KTPortlet {
     }
 }
 
-
+/*
 class KTAdminModePortlet extends KTPortlet {
 
     function KTAdminModePortlet() {
@@ -162,7 +162,7 @@ class KTAdminModePortlet extends KTPortlet {
         return $oTemplate->render($aTemplateData);
     }
 }
-
+*/
 
 
 class KTAdminSectionNavigation extends KTPortlet {

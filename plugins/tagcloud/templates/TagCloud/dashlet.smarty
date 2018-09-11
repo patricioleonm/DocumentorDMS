@@ -1,30 +1,9 @@
-{literal}
-<style type="text/css">
-#tagcloud a, a.link, a.visited, a.hover, a.active {
-
-color: gray;
-border-bottom: 0px;
-text-decoration: none;
-
-}
-</style>
-{/literal}
-
 {if empty($tags)}
-
-{i18n}There are no tags defined or accessible.{/i18n}
-
+	{i18n}<div class="alert alert-warning">There are no tags defined or accessible.{/i18n}</div>
 {else}
-<div id=tagcloud>
-{foreach from=$tags key=tag item=size}
-
-	<a  href="{$url}&tag={$tag|urlencode}" style="font-size: {$size}px">{$tag|sanitize_input}</a>&nbsp;
-
-{/foreach}
-</div>
+	<div id="tagcloud">
+	</div>
 {/if}
-
-
-
-<br>
-<br>
+<script type="text/javascript">
+var tags_data = {$tags|@json_encode nofilter};
+</script>

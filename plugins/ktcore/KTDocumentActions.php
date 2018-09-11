@@ -342,10 +342,15 @@ class KTDocumentViewAction extends KTDocumentAction {
     }
 
     function getButton() {
+        /*
         $btn = array();
         $btn['display_text'] = _kt('Download Document');
-        $btn['arrow_class'] = 'arrow_download';
-        return $btn;
+        $btn['arrow_class'] = 'fa fa-file-download';
+        */
+        return array(
+            'display_text' => _kt('Download Document'),
+            'icon' => 'fa fa-file-download',
+        );
     }
 
     function customiseInfo($aInfo) {

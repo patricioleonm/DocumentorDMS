@@ -546,6 +546,7 @@ class KTPluginUtil {
      */
     function doPluginRegistration()
     {
+       return true;
         global $default;
 
         KTPluginUtil::_deleteSmartyFiles();

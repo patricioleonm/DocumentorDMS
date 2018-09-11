@@ -1,171 +1,175 @@
-<h2>Folder permissions for "{$foldername|sanitize}"</h2>
-
-
-
-
-{* check if there are roles etc *}
+<h2><i class="fa fa-chevron-right"></i> Folder permissions for "{$foldername|sanitize}"</h2>
 
 {if ((empty($roles) && empty($groups)))}
-    <div class="ktInfoMessage"><span>{i18n}No roles or groups have been defined.  Permissions can only be allocated to roles and groups.{/i18n}</span></div>
+    <div class="alert alert-warning"><span>{i18n}No roles or groups have been defined.  Permissions can only be allocated to roles and groups.{/i18n}</span></div>
 {else}
+  <ul class="nav nav-tabs" id="folder-permissions-tab" role="tab-list">
+    <li class="nav-item">
+      <a class="nav-link active" id="permissions-tab" data-toggle="tab" href="#permissions" role="tab" aria-controls="permissions" aria-selected="true">
+        {i18n}Permissions{/i18n}
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="dynamics-tab" data-toggle="tab" href="#dynamic" role="tab" aria-controls="dynamic" aria-selected="false">
+        {i18n}Dynamic permissions{/i18n}
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+      <div class="card card-body">
+        <p>{i18n}Manage security{/i18n}: <a href="{addQS context=$context}{/addQS}">{i18n}View permissions overview{/i18n}</a>
+      |   <a href="{addQS context=$context}action=resolved_users{/addQS}">{i18n}View resolved permissions for user{/i18n}</a>
+        </p>
 
-{* otherwise continue *}
-<p>{i18n}Manage security{/i18n}: <a href="{addQS context=$context}{/addQS}">{i18n}View permissions overview{/i18n}</a>
-| <a href="{addQS context=$context}action=resolved_users{/addQS}">{i18n}View resolved permissions for user{/i18n}</a>
-</p>
+      {if ($can_inherit)}
+        <div class="ktInfoMessage">
+          <span>{i18n}This folder defines its own permissions.{/i18n}
+          <a class="ktActionLink ktDelete"
+            kt:deleteMessage="{i18n}Are you sure you wish to reinstate inherited permissions?{/i18n}"
+            href="{addQS context=$context}action=inheritPermissions{/addQS}">{i18n}Inherit permissions{/i18n}</a></span>
+        </div>
+      {/if}
+      {$context->oPage->requireJSResource('assets/select2/select2.min.js')}
+      {$context->oPage->requireCSSResource('assets/select2/select2.min.css')}
+      {$context->oPage->requireJSResource('assets/js/permissions.js')}
+      {capture assign=sJavascript}initializePermissions('{addQS}fFolderId={$context->oFolder->getId()}&action=json&json_action=getEntities&filter=%{/addQS}', {$jsonpermissions});{/capture}
+      {$context->oPage->requireJSStandalone($sJavascript)}
 
-{if ($can_inherit)}
-<div class="ktInfoMessage">
-<span>{i18n}This folder defines its own permissions.{/i18n}
-<a class="ktActionLink ktDelete"
-   kt:deleteMessage="{i18n}Are you sure you wish to reinstate inherited permissions?{/i18n}"
-   href="{addQS context=$context}action=inheritPermissions{/addQS}">{i18n}Inherit permissions{/i18n}</a></span>
-</div>
+        <form name="update_permissions_form" action="{$smarty.server.PHP_SELF}" method="POST" class="form-inline">
+          <p class="descriptiveText">{i18n}Select roles and groups for whom you wish to change permission assignment from the box on the left, and move them over to the box on the right using the button with right-pointing arrows. You can then allocate or remove permissions from these entities and save by pressing the 'Update Permission Assignments' button'.{/i18n}</p>
+          
+          <label class="my-1 mr-2" for="users">{i18n}Available Entities{/i18n}</label>
+          <select name="entities" id="entities" class="form-control my-1 mr-sm-2"></select>
+          <button class="btn btn-primary my-1" id="add_entity">{i18n}Add{/i18n}</button>
+          
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped" id="permissions-table">
+              <thead>
+                <tr>
+                  <th>{i18n}Role or Group{/i18n}</th>
+                  {foreach from=$permissions item=oPerm}
+                  <th title="{$oPerm->getName()}" data-id="{$oPerm->getId()}">{$oPerm->getHumanName()}</th>
+                  {/foreach}
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+          <input name="entities_items_added" id="entities_items_added" type="hidden" />
+          <input name="entities_items_removed" id="entities_items_removed" type="hidden" />
+          <input type="hidden" name="kt_core_fieldsets_expect[entities]" value ="1" />
+
+          <input type="hidden" name="action" value="update">
+          <input type="hidden" name="fFolderId" value="{$iFolderId}">
+          <div id="submitButtons" class="form_actions">
+            <input type="{$input.type}" value="{i18n}Update Permission Assignments{/i18n}" onclick="{$input.onclick}" class="btn btn-primary"/>
+            <a href="{addQS}fFolderId={$iFolderId}{/addQS}" class="btn btn-warning">{i18n}Cancel{/i18n}</a>
+          </div>
+        </form>
+        {/if}
+      </div>
+    </div>
+    <div class="tab-pane fade" id="dynamic" role="tabpanel" aria-labelledby="dynamics-tab">
+      <div class="card card-body">
+        { if $edit }
+        <h5>{i18n}Add a new dynamic permission{/i18n}</h5>
+        <form action="{$smarty.server.PHP_SELF}" method="POST">
+          <input type="hidden" name="action" value="newDynamicPermission" />
+          <input type="hidden" name="fFolderId" value="{$iFolderId}" />
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>{i18n}Group{/i18n}</th>
+                  <th>{i18n}Condition{/i18n}</th>
+                {foreach from=$document_permissions item=oPerm}
+                  <th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}</th>
+                {/foreach}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{entity_select entities=$groups name=fGroupId none=true class='form-control'}</td>
+                  <td>{entity_select entities=$conditions name=fConditionId none=true class="form-control"}</td>
+                  {entity_checkboxes entities=$document_permissions name=fPermissionIds assign=aPermissionCheckboxes method="none"}
+                {foreach from=$aPermissionCheckboxes item=sCheckbox}
+                  <td>{$sCheckbox}</td>
+                {/foreach}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <input type="submit" name="submit" class="btn btn-primary float-right" value="{i18n}Add{/i18n}" />
+        </form>
+        { /if }
+
+        {if (!empty($conditions))}
+        {if ($edit || $dynamic_conditions)}
+        <hr>
+        <h5>{i18n}Dynamic permissions{/i18n}</h5>
+        {/if}
+        { if $dynamic_conditions }
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>{i18n}Group{/i18n}</th>
+                <th>{i18n}Condition{/i18n}</th>
+                {foreach from=$permissions item=oPerm}
+                <th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}</th>
+                {/foreach}
+                { if $edit }
+                <th width="1%">{i18n}Remove{/i18n}</th>
+                { /if }
+              </tr>
+            </thead>
+            <tbody>
+              { foreach from=$dynamic_conditions item=oDynamicCondition }
+              <tr>
+                {php}
+                $this->assign("oGroup", Group::get($this->_tpl_vars['oDynamicCondition']->getGroupId()));
+                $this->assign("oCondition", KTSavedSearch::get($this->_tpl_vars['oDynamicCondition']->getConditionId()));
+                $this->assign("aPermissions", $this->_tpl_vars['oDynamicCondition']->getAssignment());
+                {/php}
+                <td>{$oGroup->getName()}</td>
+                <td>{$oCondition->getName()}</td>
+                {foreach from=$permissions item=oPerm}
+                {assign var=bHasPerm value=$oPerm->getId()|in_array:$aPermissions}
+                { if $bHasPerm }
+                <td><i class="fa fa-check text-success"></i> <span class="sr-only">{i18n}Allowed{/i18n}</span></td>
+                { else }
+                <td><i class="fa fa-ban text-danger"></i> <span class="sr-only">{i18n}Denied{/i18n}</span></td>
+                { /if }
+                {/foreach}
+                { if $edit }
+                <td>
+                  {capture assign=sQS}action=removeDynamicCondition&fFolderId={$iFolderId}&fDynamicConditionId={$oDynamicCondition->getId()}{/capture}
+                  <a href="{$smarty.server.PHP_SELF|addQueryString:"$sQS"}"><i class="fa fa-trash fa-2x"></i> <span class="sr-only">{i18n}Delete{/i18n}</span></a>
+                </td>
+                {/if}
+              </tr>
+              { /foreach }
+            </tbody>
+          </table>
+        </div>
+        {/if} 
+      </div>
+    </div>
+  </div>
 {/if}
 
-{$context->oPage->requireJSResource("resources/js/jsonlookup.js")}
-{$context->oPage->requireJSResource("resources/js/permissions.js")}
-
-{capture assign=sJavascript}initializePermissions('entities', '{addQS}fFolderId={$context->oFolder->getId()}&action=json&json_action=getEntities{/addQS}', {$jsonpermissions});{/capture}
-{$context->oPage->requireJSStandalone($sJavascript)}
-
-<form name="update_permissions_form" action="{$smarty.server.PHP_SELF}" method="POST">
-<div class="field">
-
-  <p class="descriptiveText">{i18n}Select roles and groups for whom you wish to change permission assignment from the box on the left, and move them over to the box on the right using the button with right-pointing arrows. You can then allocate or remove permissions from these entities and save by pressing the 'Update Permission Assignments' button'.{/i18n}</p>
-
-<table width="60%">
-
-<thead>
-    <tr>
-        <td style="width:45%"><label for="select_{$name}_avail">{i18n}Available Entities{/i18n}</label></td>
-        <td style="width:10%">&nbsp;</td>
-        <td style="width:45%"><label for="select_{$name}_assigned">{i18n}Assigned Entities{/i18n}</label></td>
-    </tr>
-</thead>
-
-<tbody>
-    <tr>
-    <td style="vertical-align: top">
-
-  <select name="entities" id="select_entities_avail" multiple="true"size="5">
-  </select>
-
-  <div><label for="filter_entities_avail">{i18n}Filter{/i18n}</label><input type="text" id="filter_entities_avail" /><br/><a href="#" id="entities_show_all">{i18n}Show All{/i18n}</a></div>
-    </td>
-
+<template id="perm_row">
+  <tr>
+    <td class="title"></td>
+    {foreach from=$permissions item=oPerm}
+    <td data-type="checkbox" data-permission="{$oPerm->getId()}"></td>
+    {/foreach}        
     <td>
-
-    <input type="button" id="entities_add" value="&raquo;" />
-    <br /><br/>
-    <input type="button" id="entities_remove" value="&laquo;" />
-
+      <button class="btn btn-danger delete" title="{i18n}Delete{/i18n}"><i class="fa fa-trash"></i> <span class="sr-only">{i18n}Delete{/i18n}</span></button>
     </td>
-
-    <td style="vertical-align: top">
-
-  <select name="entities" id="select_entities_assigned" multiple="true"size="5">
-  </select>
-  <div><label for="filter_entities_assigned">{i18n}Filter{/i18n}</label><input type="text" id="filter_entities_assigned" /></div>
-    </td>
-    </tr>
-</tbody>
-</table>
-
-  <input name="entities_items_added" id="entities_items_added" type="hidden" />
-  <input name="entities_items_removed" id="entities_items_removed" type="hidden" />
-
-  <input type="hidden" name="kt_core_fieldsets_expect[entities]" value ="1" />
-</div>
-
-
-<div id="permissions_table_container"></div>
-
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="fFolderId" value="{$iFolderId}">
-<div id="submitButtons" class="form_actions">
-  <input type="{$input.type}" value="{i18n}Update Permission Assignments{/i18n}" onclick="{$input.onclick}" />
-  <input type="submit" name="kt_cancel[{addQS}fFolderId={$iFolderId}{/addQS}]" value="{i18n}Cancel{/i18n}" />
-{/if}
-</div>
-</form>
-
-
-{if (!empty($conditions))}
-{if ($edit || $dynamic_conditions)}
-<h2>{i18n}Dynamic permissions{/i18n}</h2>
-{/if}
-{ if $dynamic_conditions }
-<table class="kt_collection narrow"  cellpadding="0" cellspacing="0">
-  <thead>
-    <tr>
-{ if $edit }
-      <th width="1%">{i18n}Remove{/i18n}</th>
-{ /if }
-      <th>{i18n}Group{/i18n}</th>
-      <th>{i18n}Condition{/i18n}</th>
-{foreach from=$permissions item=oPerm}
-      <th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}</th>
-{/foreach}
-    </tr>
-  </thead>
-  <tbody>
-{ foreach from=$dynamic_conditions item=oDynamicCondition }
-    <tr>
-{php}
-$this->assign("oGroup", Group::get($this->_tpl_vars['oDynamicCondition']->getGroupId()));
-$this->assign("oCondition", KTSavedSearch::get($this->_tpl_vars['oDynamicCondition']->getConditionId()));
-$this->assign("aPermissions", $this->_tpl_vars['oDynamicCondition']->getAssignment());
-{/php}
-{ if $edit }
-  <td>
-{capture assign=sQS}action=removeDynamicCondition&fFolderId={$iFolderId}&fDynamicConditionId={$oDynamicCondition->getId()}{/capture}
-     <a href="{$smarty.server.PHP_SELF|addQueryString:"$sQS"}" class="ktAction ktDelete">{i18n}Delete{/i18n}</a>
-  </td>
-{/if}
-    <td>{$oGroup->getName()}</td>
-    <td>{$oCondition->getName()}</td>
-{foreach from=$permissions item=oPerm}
-  {assign var=bHasPerm value=$oPerm->getId()|in_array:$aPermissions}
-  { if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
-{ else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
-  { /if }
-{/foreach}
-    </tr>
-{ /foreach }
-  </tbody>
-</table>
-{ /if }
-
-{ if $edit }
-<h3>{i18n}Add a new dynamic permission{/i18n}</h3>
-<form action="{$smarty.server.PHP_SELF}" method="POST">
-<table class="kt_collection" cellpadding="0" cellspacing="0">
-<input type="hidden" name="action" value="newDynamicPermission" />
-<input type="hidden" name="fFolderId" value="{$iFolderId}" />
-<thead>
-<tr>
-  <th>{i18n}Group{/i18n}</th>
-  <th>{i18n}Condition{/i18n}</th>
-{foreach from=$document_permissions item=oPerm}
-  <th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}</th>
-{/foreach}
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>{entity_select entities=$groups name=fGroupId none=true}</td>
-  <td>{entity_select entities=$conditions name=fConditionId none=true}</td>
-{entity_checkboxes entities=$document_permissions name=fPermissionIds assign=aPermissionCheckboxes method="none"}
-{foreach from=$aPermissionCheckboxes item=sCheckbox}
-  <td class="centered">{$sCheckbox}</td>
-{/foreach}
-</tr>
-</tbody>
-</table>
-<input type="submit" name="submit" value="{i18n}Add{/i18n}" />
-</form>
-{ /if }
-{/if}
+  </tr>
+</template>

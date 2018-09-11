@@ -108,9 +108,12 @@ function initializeTable(aPermissions) {
 };
 
 function initializePermissions(sName, sAction, aPermissions) {
-    addLoadEvent(function() {
-		     initJSONLookup(sName, sAction)();
-		     initializeTable(aPermissions);
-		 });
+	document.addEventListener("DOMContentLoaded",
+			() =>
+				{
+					initJSONLookup(sName, sAction)();
+					initializeTable(aPermissions);
+				}
+			);
 }
     

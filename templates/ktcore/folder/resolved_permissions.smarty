@@ -1,81 +1,72 @@
 <h2>{i18n}Permissions{/i18n}</h2>
 
-<p class="descriptiveText">{i18n}This page shows the permissions that apply to
+<p class="alert alert-info">{i18n}This page shows the permissions that apply to
 this specific folder.  Only the roles or groups which have permissions
 assigned are shown.{/i18n}</p> 
 
 {if (empty($roles) && empty($groups) && empty($users)) }
-<div class="ktInfoMessage"><span>{i18n}No roles, groups, or users have been defined or have permissions.{/i18n}</span></div>
+<div class="alert alert-info"><span>{i18n}No roles, groups, or users have been defined or have permissions.{/i18n}</span></div>
 {else}
 
 <form action="{$smarty.server.PHP_SELF}" method="POST">
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="fFolderId" value="{$iFolderId}">
-<table  class="table table-bordered table-striped table-hover" cellspacing="0" cellpadding="0" border="0">
-<thead>
-<tr>
-<th width="40%">{i18n}Role or Group{/i18n}</th>
-{ foreach item=oPerm from=$permissions }
-<th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}</th>
-{ /foreach }
-</tr>
-</thead>
-<tbody>
-
-{ foreach item=oRole from=$roles }
-<td><span class="descriptiveText">{i18n}Role{/i18n}:</span> {$oRole->getName()}</td>
-  { assign var=iRoleId value=$oRole->getId() }
-  { foreach item=oPerm from=$permissions }
-    { assign var=iPermId value=$oPerm->getId() }
-    { assign var=bHasPerm value=$aMapPermissionRole[$iPermId][$iRoleId] }
-
-{ if $edit}
-{ if $bHasPerm }
-<td class="centered"><input type="checkbox" name="foo[{$iPermId}][role][]"
-value="{$iRoleId}" checked="true"></td>
-{ else }
-<td class="centered"><input type="checkbox" name="foo[{$iPermId}][role][]"
-value="{$iRoleId}"></td>
-{ /if }
-{else}
-{ if $bHasPerm }
-<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
-{ else }
-<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
-{ /if }
-{/if}
+  <input type="hidden" name="action" value="update">
+  <input type="hidden" name="fFolderId" value="{$iFolderId}">
+  <table  class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th width="40%">{i18n}Role or Group{/i18n}</th>
+        { foreach item=oPerm from=$permissions }
+        <th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}</th>
+        { /foreach }
+      </tr>
+    </thead>
+    <tbody>
+    { foreach item=oRole from=$roles }
+      <tr>
+        <td><span class="descriptiveText">{i18n}Role{/i18n}:</span> {$oRole->getName()}</td>
+        { assign var=iRoleId value=$oRole->getId() }
+        { foreach item=oPerm from=$permissions }
+          { assign var=iPermId value=$oPerm->getId() }
+          { assign var=bHasPerm value=$aMapPermissionRole[$iPermId][$iRoleId] }
+          { if $edit}
+          { if $bHasPerm }
+        <td><input type="checkbox" name="foo[{$iPermId}][role][]" value="{$iRoleId}" checked="true"></td>
+        { else }
+        <td><input type="checkbox" name="foo[{$iPermId}][role][]" value="{$iRoleId}"></td>
+        { /if }
+        {else}
+        { if $bHasPerm }
+        <td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
+        { else }
+        <td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
+        { /if }
+        {/if}
+        { /foreach }
+      </tr>
+    { /foreach }
+    { foreach item=oGroup from=$groups }
+      <tr>
+      <td><span class="descriptiveText">{i18n}Group{/i18n}:</span> {$oGroup->getName()}</td>
+      { assign var=iGroupId value=$oGroup->getId() }
+      { foreach item=oPerm from=$permissions }
+        { assign var=iPermId value=$oPerm->getId() }
+        { assign var=bHasPerm value=$aMapPermissionGroup[$iPermId][$iGroupId] }
+        { if $edit}
+        { if $bHasPerm }
+        <td><input type="checkbox" name="foo[{$iPermId}][group][]" value="{$iGroupId}" checked="true"></td>
+        { else }
+        <td><input type="checkbox" name="foo[{$iPermId}][group][]" value="{$iGroupId}"></td>
+        { /if }
+        {else}
+        { if $bHasPerm }
+        <td class="text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
+        { else }
+        <td class="text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
+        { /if }
+        {/if}
+      { /foreach }
+    </tr>
   { /foreach }
-</tr>
-{ /foreach }
-
-
-{ foreach item=oGroup from=$groups }
-<td><span class="descriptiveText">{i18n}Group{/i18n}:</span> {$oGroup->getName()}</td>
-  { assign var=iGroupId value=$oGroup->getId() }
-  { foreach item=oPerm from=$permissions }
-    { assign var=iPermId value=$oPerm->getId() }
-    { assign var=bHasPerm value=$aMapPermissionGroup[$iPermId][$iGroupId] }
-
-{ if $edit}
-{ if $bHasPerm }
-<td class="centered"><input type="checkbox" name="foo[{$iPermId}][group][]"
-value="{$iGroupId}" checked="true"></td>
-{ else }
-<td class="centered"><input type="checkbox" name="foo[{$iPermId}][group][]"
-value="{$iGroupId}"></td>
-{ /if }
-{else}
-{ if $bHasPerm }
-<td class="centered text-success"><i class="fa fa-check"></i><span class="sr-only">{i18n}Allowed{/i18n}</span></td>
-{ else }
-<td class="centered text-warning"><i class="fa fa-ban"></i><span class="sr-only">{i18n}Denied{/i18n}</span></td>
-{ /if }
-{/if}
-
-
-  { /foreach }
-</tr>
-{ /foreach }
 
 
 { foreach item=oUser from=$users }

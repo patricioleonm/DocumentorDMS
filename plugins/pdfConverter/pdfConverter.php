@@ -62,9 +62,6 @@ class pdfConverter extends BaseProcessor
 		$this->ooPort = $config->get('openoffice/port','8100');
 
 		$this->xmlrpc = XmlRpcLucene::get($javaServerUrl);
-
-
-
     }
 
     /**

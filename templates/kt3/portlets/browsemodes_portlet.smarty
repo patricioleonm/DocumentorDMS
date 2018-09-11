@@ -1,13 +1,19 @@
-<ul class="actionlist">
+<div class="list-group list-group-flush">
 {foreach item=sModeName key=sModeKey from=$modes}
-   <li>{if ($sModeKey == $current_action)}
-      <strong>{$sModeName.name}</strong>
+   {if ($sModeKey == $current_action)}
+      <a href="#" class="list-group-item list-group-item-action active pb-1 pt-1">
+        {$sModeName.name} <i class="fa fa-chevron-right"></i> 
+      </a>
    {else}
-      {if ($sModeName.target != null)} <a href="{php}require_once(KT_LIB_DIR .  '/browse/browseutil.inc.php'); print KTBrowseUtil::getBrowseBaseUrl(){/php}?action={$sModeName.target}">{$sModeName.name}</a>
+      {if ($sModeName.target != null)}
+          <a href="{php}require_once(KT_LIB_DIR .  '/browse/browseutil.inc.php'); print KTBrowseUtil::getBrowseBaseUrl(){/php}?action={$sModeName.target}" class="list-group-item list-group-item-action pt-1 pb-1">
+            <i class="fa fa-chevron-right"></i> {$sModeName.name}
+          </a>
       {else}
-        {$sModeName.name}
+          <a href="{$sModeName.url}" class="list-group-item list-group-item-action pt-1 pb-1">
+            <i class="fa fa-chevron-right"></i> {$sModeName.name}
+          </a>
       {/if}
    {/if}
-   </li>
 {/foreach}
-</ul>
+</div>

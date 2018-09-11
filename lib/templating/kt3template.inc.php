@@ -113,12 +113,13 @@ class KTPage {
            "resources/css/kt-headings.css"*/
         );
         $this->requireCSSResources($aCSS);
-
+/*
         if($oConfig->get('ui/morphEnabled') == '1'){
         	$morphTheme = $oConfig->get('ui/morphTo');
         	$this->requireThemeCSSResource('skins/kts_'.$oConfig->get('ui/morphTo').'/kt-morph.css');
         	$this->requireThemeCSSResource('skins/kts_'.$oConfig->get('ui/morphTo').'/kt-ie-morph.css', true);
         }
+        */
         // IE only
         //$this->requireCSSResource("resources/css/kt-ie-icons.css", true);
 
@@ -174,13 +175,13 @@ class KTPage {
 
 
     function setTitle($sTitle) {
-	$this->title = $sTitle;
+	    $this->title = $sTitle;
     }
 
     /* javascript handling */
     // require that the specified JS file is referenced.
     function requireJSResource($sResourceURL) {
-	$this->js_resources[$sResourceURL] = 1; // use the keys to prevent multiple copies.
+	    $this->js_resources[$sResourceURL] = 1; // use the keys to prevent multiple copies.
     }
 
     // require that the specified JS files are referenced.
@@ -274,8 +275,13 @@ class KTPage {
         return array_keys($this->css_standalone);
     }
 
-    function setPageContents($contents) { $this->contents = $contents; }
-    function setShowPortlets($bShow) { $this->show_portlets = $bShow; }
+    function setPageContents($contents) {
+        $this->contents = $contents; 
+    }
+
+    function setShowPortlets($bShow) { 
+        $this->show_portlets = $bShow; 
+    }
 
     /* set the breadcrumbs.  the first item is the area name.
        the rest are breadcrumbs. */
@@ -283,18 +289,23 @@ class KTPage {
         $breadLength = count($aBreadcrumbs);
         if ($breadLength != 0) {
             $this->breadcrumbSection = $this->_actionhelper($aBreadcrumbs[0]);
-	    // handle the menu
-	    if (($aBreadcrumbs[0]["action"]) && ($this->menu[$aBreadcrumbs[0]["action"]])) {
-		$this->menu[$aBreadcrumbs[0]["action"]]["active"] = 1;
-	    }
+            // handle the menu
+            if (($aBreadcrumbs[0]["action"]) && ($this->menu[$aBreadcrumbs[0]["action"]])) {
+                $this->menu[$aBreadcrumbs[0]["action"]]["active"] = 1;
+            }
         }
         if ($breadLength > 1) {
             $this->breadcrumbs = array_map(array(&$this, "_actionhelper"), array_slice($aBreadcrumbs, 1));
         }
     }
 
-    function setBreadcrumbDetails($sBreadcrumbDetails) { $this->breadcrumbDetails = $sBreadcrumbDetails; }
-	function setUser($oUser) { $this->user = $oUser; }
+    function setBreadcrumbDetails($sBreadcrumbDetails) { 
+        $this->breadcrumbDetails = $sBreadcrumbDetails; 
+    }
+
+	function setUser($oUser) { 
+        $this->user = $oUser; 
+    }
 
     function setContentClass($sClass) { $this->content_class = $sClass; }
 
@@ -324,11 +335,15 @@ class KTPage {
 			$this->componentLabel = _kt('Dashboard');
 			$this->componentClass = 'dashboard';
 		}
-
 	}
 
-	function addError($sError) { array_push($this->errStack, $sError); }
-	function addInfo($sInfo) { array_push($this->infoStack, $sInfo); }
+	function addError($sError) { 
+        array_push($this->errStack, $sError); 
+    }
+
+	function addInfo($sInfo) { 
+        array_push($this->infoStack, $sInfo); 
+    }
 
 	/** no-one cares what a portlet is, but it should be renderable, and have its ->title member set. */
 	function addPortlet($oPortlet) {
@@ -336,7 +351,8 @@ class KTPage {
 	}
 
 	/* LEGACY */
-	var $deprecationWarning = "Legacy UI API: ";
+    var $deprecationWarning = "Legacy UI API: ";
+    
 	function setCentralPayload($sCentral) {
 	    $this->contents = $sCentral;
 		$this->addError($this->deprecationWarning . "called <strong>setCentralPayload</strong>");
@@ -354,7 +370,7 @@ class KTPage {
 
     /* final render call. */
     function render() {
-	global $default;
+	    global $default;
         $oConfig = KTConfig::getSingleton();
 
         if (empty($this->contents)) {
@@ -366,70 +382,93 @@ class KTPage {
             $this->contents = "";
         }
 
-	if (!is_string($this->contents)) {
-	    $this->contents = $this->contents->render();
-	}
+        if (!is_string($this->contents)) {
+            $this->contents = $this->contents->render();
+        }
 
-	// if we have no portlets, make the ui a tad nicer.
-	if (empty($this->portlets)) {
-	    $this->show_portlets = false;
-	}
+        // if we have no portlets, make the ui a tad nicer.
+        if (empty($this->portlets)) {
+            $this->show_portlets = false;
+        }
 
-	if (empty($this->title)) {
-	    if (!empty($this->breadcrumbDetails)) {
-		$this->title = $this->breadcrumbDetails;
-	    } else if (!empty($this->breadcrumbs)) {
-		$this->title = array_slice($this->breadcrumbs, -1);
-		$this->title = $this->title[0]['label'];
-	    } else if (!empty($this->breadcrumbSection)) {
-		$this->title = $this->breadcrumbSection['label'];
-	    } else {
-		$this->title = $this->componentLabel;
-	    }
-	}
+        if (empty($this->title)) {
+            if (!empty($this->breadcrumbDetails)) {
+            $this->title = $this->breadcrumbDetails;
+            } else if (!empty($this->breadcrumbs)) {
+            $this->title = array_slice($this->breadcrumbs, -1);
+            $this->title = $this->title[0]['label'];
+            } else if (!empty($this->breadcrumbSection)) {
+            $this->title = $this->breadcrumbSection['label'];
+            } else {
+            $this->title = $this->componentLabel;
+            }
+        }
 
-	$this->userMenu = array();
-	$sBaseUrl = KTUtil::kt_url();
+	    $this->userMenu = array();
+	    $sBaseUrl = KTUtil::kt_url();
 
-	if (!(PEAR::isError($this->user) || is_null($this->user) || $this->user->isAnonymous())) {
-	    if ($oConfig->get("user_prefs/restrictPreferences", false) && !Permission::userIsSystemAdministrator($this->user->getId())) {
-		    $this->userMenu['logout'] = array('label' => _kt('Logout'), 'url' => $sBaseUrl.'/presentation/logout.php');
-	    } else {
+        if (!(PEAR::isError($this->user) || is_null($this->user) || $this->user->isAnonymous())) {
+            if ($oConfig->get("user_prefs/restrictPreferences", false) && !Permission::userIsSystemAdministrator($this->user->getId())) {
+                $this->userMenu['logout'] = array('label' => _kt('Logout'), 'url' => $sBaseUrl.'/presentation/logout.php');
+            } else {
 
-        	if($default->enableESignatures){
-        	    $sUrl = KTPluginUtil::getPluginPath('electronic.signatures.plugin', true);
-        	    $heading = _kt('You are attempting to modify Preferences');
-        	    $this->userMenu['preferences']['url'] = '#';
-        	    $this->userMenu['preferences']['onclick'] = "javascript: showSignatureForm('{$sUrl}', '{$heading}', 'dms.administration.accessing_preferences', 'system', '{$sBaseUrl}/preferences.php', 'redirect');";
-        	}else{
-        	    $this->userMenu['preferences']['url'] = $sBaseUrl.'/preferences.php';
-        	}
+                //admin mode on menu
+                $admin_mode['show'] = FALSE;
+                $admin_mode['iFolderId'] = KTUtil::arrayGet($_REQUEST, 'fFolderId', 1);
+                $admin_mode['iDocumentId'] = KTUtil::arrayGet($_REQUEST, 'fDocumentId');
+                if ($iDocumentId) {
+                    $oDocument = Document::get($admin_mode['iDocumentId']);
+                    if ($oDocument != FALSE) {
+                        $admin_mode['iFolderId'] = $oDocument->getFolderId();    
+                    }                    
+                }
 
-//	        $this->userMenu['preferences'] = array('label' => _kt('Preferences'), 'url' => $sBaseUrl.'/preferences.php');
-	        $this->userMenu['preferences']['label'] = _kt('Preferences');
-	        $this->userMenu['aboutkt'] = array('label' => _kt('About'), 'url' => $sBaseUrl.'/about.php');
-	        $this->userMenu['logout'] = array('label' => _kt('Logout'), 'url' => $sBaseUrl.'/presentation/logout.php');
-	    }
-	} else {
-	    $this->userMenu['login'] = array('label' => _kt('Login'), 'url' => $sBaseUrl.'/login.php');
-	}
+                if (Permission::userIsSystemAdministrator($this->user) || Permission::isUnitAdministratorForFolder($this->user, $admin_mode['iFolderId'])) {
+                    $admin_mode['show'] = TRUE;
+                    if (KTUtil::arrayGet($_SESSION, 'adminmode', FALSE) == FALSE) {
+                        $admin_mode['toggleMode'] = 'enableAdminMode';
+                    }else{
+                        $admin_mode['toggleMode'] = 'disableAdminMode';
+                    }
+                    $admin_mode['url'] = KTBrowseUtil::getBrowseBaseUrl();
+                    //$QS = sprintf('fDocumentId=%s&fFolderId=%s&action=%s',$iDocumentId, $iFolderId, $toggleMode);
+            
+                    //$admin_mode['url'] = array('label' => 'admin mode', 'url' => KTUtil::addQueryString(KTBrowseUtil::getBrowseBaseUrl(), $QS));
+                }
 
-	// FIXME we need a more complete solution to navigation restriction
-	if (!is_null($this->menu['administration']) && !is_null($this->user)) {
-	    if (!Permission::userIsSystemAdministrator($this->user->getId())) {
-		  unset($this->menu['administration']);
-	    }
-	}
+                if($default->enableESignatures){
+                    $sUrl = KTPluginUtil::getPluginPath('electronic.signatures.plugin', true);
+                    $heading = _kt('You are attempting to modify Preferences');
+                    $this->userMenu['preferences']['url'] = '#';
+                    $this->userMenu['preferences']['onclick'] = "javascript: showSignatureForm('{$sUrl}', '{$heading}', 'dms.administration.accessing_preferences', 'system', '{$sBaseUrl}/preferences.php', 'redirect');";
+                }else{
+                    $this->userMenu['preferences']['url'] = $sBaseUrl.'/preferences.php';
+                }
 
-	$sContentType = 'Content-type: ' . $this->contentType;
-	if(!empty($this->charset)) {
-	    $sContentType .= '; charset=' . $this->charset;
-	};
+    //	        $this->userMenu['preferences'] = array('label' => _kt('Preferences'), 'url' => $sBaseUrl.'/preferences.php');
+                $this->userMenu['preferences']['label'] = _kt('Preferences');
+                $this->userMenu['aboutkt'] = array('label' => _kt('About'), 'url' => $sBaseUrl.'/about.php');
+                $this->userMenu['logout'] = array('label' => _kt('Logout'), 'url' => $sBaseUrl.'/presentation/logout.php');
+            }
+        } else {
+            $this->userMenu['login'] = array('label' => _kt('Login'), 'url' => $sBaseUrl.'/login.php');
+        }
 
+        // FIXME we need a more complete solution to navigation restriction
+        if (!is_null($this->menu['administration']) && !is_null($this->user)) {
+            if (!Permission::userIsSystemAdministrator($this->user->getId())) {
+            unset($this->menu['administration']);
+            }
+        }
 
-	header($sContentType);
+        $sContentType = 'Content-type: ' . $this->contentType;
+        if(!empty($this->charset)) {
+            $sContentType .= '; charset=' . $this->charset;
+        };
 
-	$savedSearches = SearchHelper::getSavedSearches($_SESSION['userID']);
+        header($sContentType);
+
+    	$savedSearches = SearchHelper::getSavedSearches($_SESSION['userID']);
 
         $oTemplating =& KTTemplating::getSingleton();
         $oTemplate = $oTemplating->loadTemplate($this->template);
@@ -438,7 +477,9 @@ class KTPage {
 			       	"systemversion" => $default->systemVersion,
 			       	"versionname" => $default->versionName,
 					'smallVersion' => substr($default->versionName, -17),
-			       	'savedSearches'=> $savedSearches);
+                    'savedSearches'=> $savedSearches,
+                    'admin_mode' => $admin_mode);
+
         if ($oConfig->get("ui/automaticRefresh", false)) {
             $aTemplateData['refreshTimeout'] = (int)$oConfig->get("session/sessionTimeout") + 3;
         }
@@ -471,21 +512,21 @@ class KTPage {
     }
 
     function setHelp($sHelpPage) {
-	$this->helpPage = $sHelpPage;
+	    $this->helpPage = $sHelpPage;
     }
 
     function getHelpURL() {
-	if (empty($this->helpPage)) {
-	    return null;
-	}
+        if (empty($this->helpPage)) {
+            return null;
+        }
 
-	return KTUtil::ktLink('help.php',$this->helpPage);
+        return KTUtil::ktLink('help.php',$this->helpPage);
     }
 
     function getReqTime() {
         $microtime_simple = explode(' ', microtime());
         $finaltime = (float) $microtime_simple[1] + (float) $microtime_simple[0];
-	return sprintf("%.3f", ($finaltime - $GLOBALS['_KT_starttime']));
+	    return sprintf("%.3f", ($finaltime - $GLOBALS['_KT_starttime']));
     }
 
     function getDisclaimer() {
@@ -497,7 +538,6 @@ class KTPage {
             return;
         }
     }
-
 }
 
-?>
+

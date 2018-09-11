@@ -1,6 +1,6 @@
 <h2>{i18n}Document Storage Verification{/i18n}</h2>
 
-<p class="descriptiveText">{i18n}When restoring from backups or checking that 
+<p class="alert alert-warning">{i18n}When restoring from backups or checking that 
 everything is functioning correctly with your DMS, it is important to know that
 all files that've been added to the system are present, and that no extraneous
 files have been found in the repository.  This page shows you any such issues 

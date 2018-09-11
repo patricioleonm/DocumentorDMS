@@ -12,3 +12,16 @@
 119  [main] INFO  com.knowledgetree.lucene  - Result fragment size: 40
 145  [main] INFO  com.knowledgetree.lucene  - Suspect that this is first time that indexing is run. Will attempt to create segments in ../../var/indexes
 208  [main] INFO  com.knowledgetree  - Starting web server on port: 8875
+0    [main] INFO  com.knowledgetree  - XML-RPC Server starting up...
+0    [main] INFO  com.knowledgetree  - Loading properties file: KnowledgeTreeIndexer.properties
+90   [main] INFO  com.knowledgetree  - Server trusting everyone!
+100  [main] INFO  com.knowledgetree.lucene  - Indexer starting up...
+110  [main] INFO  com.knowledgetree.lucene  - Loading properties file: KnowledgeTreeIndexer.properties
+120  [main] INFO  com.knowledgetree.lucene  - Using index directory: ../../var/indexes
+130  [main] INFO  com.knowledgetree.lucene  - Starting: Sat Aug 25 10:25:22 CLT 2018
+130  [main] INFO  com.knowledgetree.lucene  - Client IPs: 127.0.0.1
+130  [main] INFO  com.knowledgetree.lucene  - Max query result: 1000
+130  [main] INFO  com.knowledgetree.lucene  - Result fragments: 3
+130  [main] INFO  com.knowledgetree.lucene  - Result fragment seperator: ...
+130  [main] INFO  com.knowledgetree.lucene  - Result fragment size: 40
+180  [main] INFO  com.knowledgetree  - Starting web server on port: 8875

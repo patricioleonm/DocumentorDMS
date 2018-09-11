@@ -105,6 +105,7 @@ function wrapString($str, $length = 20){
 }
 
 // {{{ KTSubscriptionPortlet
+/*
 class KTSubscriptionPortlet extends KTPortlet {
     function KTSubscriptionPortlet() {
         parent::KTPortlet(_kt("Subscriptions"));
@@ -201,6 +202,7 @@ class KTSubscriptionPortlet extends KTPortlet {
         return $oTemplate->render($aTemplateData);
     }
 }
+*/
 // }}}
 
 // {{{ KTDocumentSubscriptionAction

@@ -72,18 +72,30 @@ class TagCloudDashlet extends KTBaseDashlet {
 	 * @return unknown
 	 */
 	function render() {
+		global $main;
 		$oTemplating =& KTTemplating::getSingleton();
 		$oTemplate = $oTemplating->loadTemplate('TagCloud/dashlet');
+		$main->requireJSResource('assets/js/jquery.svg3dtagcloud.min.js');
+		$main->requireJSResource('plugins/tagcloud/js/tagcloud.js');
 
-		$aTags = $this->get_tag_weightings($aTags);
+		//$aTags = $this->get_tag_weightings($aTags);
+		$aTags = $this->get_relevant_tags();
 
 		$oRegistry =& KTPluginRegistry::getSingleton();
 		$oPlugin =& $oRegistry->getPlugin('ktcore.tagcloud.plugin');
 		$url = $oPlugin->getPagePath('TagCloudRedirection');
 
+		$tags = array();
+
+		foreach($aTags as $tag){
+			$tags[] = array(
+						'label' => $tag['tag'],
+						'url' => $url."&tag=".$tag['tag'],
+						'tooltip' => $tag["freq"],
+					);
+		}
 		$aTemplateData = array(
-		'tags' => $aTags,
-		'url'=>$url
+			'tags' => $tags,
 		);
 		return $oTemplate->render($aTemplateData);
     }
@@ -94,15 +106,16 @@ class TagCloudDashlet extends KTBaseDashlet {
      * @param array $aTags
      * @return array
      */
-    function get_tag_weightings($aTags)
-	{
+    function get_tag_weightings($aTags){
 		$aTags = $this->get_relevant_tags();
 
 		if($aTags === false || empty($aTags)){
 		    return array();
 		}
 
-		if (count($aTags) == 0) $min_freq=$max_freq=0;
+		if (count($aTags) == 0){
+			 $min_freq=$max_freq=0;
+		}
 		else
 		{
 			$min_freq = min(array_values($aTags));
@@ -112,7 +125,10 @@ class TagCloudDashlet extends KTBaseDashlet {
 		$max_size = 30;
 
 		$distrib = $max_freq - $min_freq;
-		if ($distrib == 0) $distrib=1;
+
+		if ($distrib == 0){
+			$distrib=1;
+		}
 
 		$step = ($max_size - $min_size)/($distrib);
 
@@ -149,13 +165,14 @@ class TagCloudDashlet extends KTBaseDashlet {
 
 		);
 		$aTags = array();
+		/*
 		foreach($tags as $tag)
 		{
 			$word=$tag['tag'];
 			$freq=$tag['freq'];
 			$aTags[$word] = $freq;
-		}
-		return $aTags;
+		}*/
+		return $tags;
 
 	}
 

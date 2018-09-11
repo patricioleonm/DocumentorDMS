@@ -186,13 +186,13 @@ class KTActionPortlet extends KTPortlet {
             return null;
         }
 
-        $btn = $this->showButtons();
+        ///$btn = $this->showButtons();
 
         $oTemplating =& KTTemplating::getSingleton();
         $oTemplate = $oTemplating->loadTemplate('kt3/portlets/actions_portlet');
         $aTemplateData = array(
             'context' => $this,
-            'btn' => $btn
+            'btn' => $this->btns,
         );
 
         return $oTemplate->render($aTemplateData);

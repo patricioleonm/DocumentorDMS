@@ -180,7 +180,9 @@ class BrowseDispatcher extends KTStandardDispatcher {
 
 
 
-		} else if ($this->browse_mode == 'lookup_value') {
+		}
+		 else if ($this->browse_mode == 'lookup_value') 
+		 {
 			// browsing by a lookup value
 
 			$this->editable = false;
@@ -216,7 +218,9 @@ class BrowseDispatcher extends KTStandardDispatcher {
 
 
 
-		} else if ($this->browse_mode == 'document_type') {
+		} 
+		else if ($this->browse_mode == 'document_type') 
+		{
 			// browsing by document type
 			$this->editable = false;
 			$doctype = KTUtil::arrayGet($_REQUEST, 'fType',null);
@@ -250,9 +254,6 @@ class BrowseDispatcher extends KTStandardDispatcher {
 		$aOptions = $collection->getEnvironOptions(); // extract data from the environment
 		$aOptions['result_url'] = $this->resultURL;
 		$aOptions['is_browse'] = true;
-
-
-
 		$collection->setOptions($aOptions);
 		$collection->setQueryObject($this->oQuery);
 		$collection->setColumnOptions('ktcore.columns.selection', array(
@@ -280,8 +281,6 @@ class BrowseDispatcher extends KTStandardDispatcher {
 		}
 		return $oTemplate->render($aTemplateData);
 	}
-
-
 
 	function do_selectField() {
 		$aFields = DocumentField::getList('has_lookup = 1');

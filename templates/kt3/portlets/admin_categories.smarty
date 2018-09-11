@@ -1,5 +1,7 @@
-<ul class="actionlist">
+<div class="list-group list-group-flush">
    {foreach item=aCategory from=$categories}
-      <li><a href="{ktLink base="admin.php" query="action=viewCategory&fCategory=`$aCategory.name`"}">{$aCategory.title}</a></li>
+    <a href="{ktLink base="admin.php" query="action=viewCategory&fCategory=`$aCategory.name`"}" class="list-group-item list-group-item-action pt-1 pb-1">
+        <i class="fa fa-chevron-right"></i> {$aCategory.title}
+    </a>
    {/foreach}
-</ul>
+</div>

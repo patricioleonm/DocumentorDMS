@@ -53,11 +53,18 @@
 				{/if}
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					{if ($admin_mode.show == TRUE)}
+					{if ($admin_mode.toggleMode == 'enableAdminMode')}
+					<a class="dropdown-item text-danger" href="{$admin_mode.url}?fDocumentId={$admin_mode.fDocumentId}&fFolderId={$admin_mode.fFolderId}&action={$admin_mode.toggleMode}"><i class="fa fa-lock"></i> {i18n}Disable Admin Mode{/i18n}</a>
+					{else}
+					<a class="dropdown-item text-success" href="{$admin_mode.url}?fDocumentId={$admin_mode.fDocumentId}&fFolderId={$admin_mode.fFolderId}&action={$admin_mode.toggleMode}"><i class="fa fa-unlock-alt"></i> {i18n}Enable Admin Mode{/i18n}</a>
+					{/if}
+					{/if}
 				{foreach item=aMenuItem from=$page->userMenu name=prefmenu}
 					{if ($aMenuItem.active == 1)}
-						<a class="dropdown-item active" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
+					<a class="dropdown-item active" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
 					{else}
-						<a class="dropdown-item" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
+					<a class="dropdown-item" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
 					{/if}
 				{/foreach}
 				</div>
@@ -115,10 +122,10 @@
 					{if $portlet_output}
 					<!--div class="portlet {if $oPortlet->getActive()}expanded{/if}"-->
 					<div class="bd-toc-item">
-						<a class="bd-toc-link" data-toggle="collapse" data-target="#p{$smarty.foreach.obj.iteration}" aria-controls="p{$smarty.foreach.obj.iteration}">
-							<i class="fa fa-chevron-circle-down"></i> {$oPortlet->getTitle()}
+						<a class="bd-toc-link pt-2 pb-2 border bg-secondary text-light" data-toggle="collapse" data-target="#p{$smarty.foreach.obj.iteration}" aria-controls="p{$smarty.foreach.obj.iteration}">
+							<h6><i class="fa fa-chevron-circle-down"></i> {$oPortlet->getTitle()}</h6>
 						</a>
-						<div class="card card-body collapse{if $oPortlet->getActive()} show{/if}" id="p{$smarty.foreach.obj.iteration}">
+						<div class="card collapse{if $oPortlet->getActive()} show{/if}" id="p{$smarty.foreach.obj.iteration}">
 							{$portlet_output}
 						</div>
 					</div>
@@ -197,7 +204,7 @@
 								</div>
 							</div>
 							{/if}
-							<div class="col-12 pt-2">
+							<div class="col-12 pt-2 pb-2">
 								{$page->contents}
 							</div>
 						</div>
@@ -210,7 +217,7 @@
 		<div class="row bg-dark text-white">
 			<div class="col mt-2">
 				<a href="{$rootUrl}">
-					<img src="{$rootUrl}/resources/powered-by-kt.png" border="0" alt="Powered by KnowledgeTree" title="Powered by KnowledgeTree"/>
+					<img src="{$rootUrl}/resources/powered-by-kt.png" alt="Powered by KnowledgeTree" title="Powered by KnowledgeTree"/>
 				</a>
 			</div>
 			<div class="col">
@@ -237,6 +244,7 @@
     <script type="text/javascript" src="{$rootUrl}/assets/js/popper.min.js"></script>
     <script type="text/javascript" src="{$rootUrl}/assets/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{$rootUrl}/assets/fontawesome/js/all.js"></script>
+	<script type="text/javascript" src="{$rootUrl}/assets/js/util.js"></script>
 {foreach item=sResourceURL from=$page->getJSResources()}
 	<script type="text/javascript" src="{$rootUrl}/{$sResourceURL}"> </script>
 {/foreach}

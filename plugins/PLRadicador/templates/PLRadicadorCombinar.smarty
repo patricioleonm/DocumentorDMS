@@ -1,4 +1,0 @@
-<input type="text" value="{$doctypeid}" /><br />
-{foreach from=$fieldsets item=fieldset}
-	{$fieldset}
-{/foreach}
