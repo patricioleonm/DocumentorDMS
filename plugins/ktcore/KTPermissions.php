@@ -343,26 +343,6 @@ class KTRoleAllocationPlugin extends KTFolderAction {
             $aRoles[$iRoleId]['real_allocation_id'] = $raid;
         }
 
-        /*
-        print '<pre>';
-        var_dump($aRoles);
-        print '</pre>';
-        */
-
-
-
-        // FIXME this is test data.
-        /*
-        $aRoles = array(
-            1 => array('name' => 'Manager', 'users' => array(1), 'groups' => array(1), 'allocation_id' => 1),
-            2 => array('name' => 'Peasant', 'users' => array(1), 'groups' => array(), 'allocation_id' => 2),
-            3 => array('name' => 'Inherited', 'users' => array(), 'groups' => array(1), 'allocation_id' => null),
-        );
-        */
-
-
-        // final step.
-
         // Include the electronic signature
         global $default;
 		$iFolderId = $this->oFolder->getId() ;
@@ -580,11 +560,14 @@ class KTRoleAllocationPlugin extends KTFolderAction {
         $this->oPage->setBreadcrumbDetails(_kt('Manage Users for Role'));
         $this->oPage->setTitle(sprintf(_kt('Manage Users for Role')));
 
+        /*
         $initJS = 'var optGroup = new OptionTransfer("userSelect","chosenUsers"); ' .
         'function startTrans() { var f = getElement("userroleform"); ' .
         ' optGroup.saveNewRightOptions("userFinal"); ' .
         ' optGroup.init(f); }; ' .
         ' addLoadEvent(startTrans); ';
+        */
+        $initJS = "ko.applyBindings(new ElementSelection(users, 'userFinal','userroleform'), document.userroleform);";
         $this->oPage->requireJSStandalone($initJS);
 
         $aInitialUsers = $oRoleAllocation->getUsers();
@@ -592,13 +575,14 @@ class KTRoleAllocationPlugin extends KTFolderAction {
 
         // FIXME this is massively non-performant for large userbases..
         $aRoleUsers = array();
-        $aFreeUsers = array();
+        $aUsers = array();
         foreach ($aInitialUsers as $oUser) {
-            $aRoleUsers[$oUser->getId()] = $oUser;
+            $aRoleUsers[] = $oUser->getId();
         }
         foreach ($aAllUsers as $oUser) {
-            if (!array_key_exists($oUser->getId(), $aRoleUsers)) {
-                $aFreeUsers[$oUser->getId()] = $oUser;
+            $aUsers[$oUser->getId()] = array("id" => $oUser->getId(),"displayName" => $oUser->getUserName(), "name" => $oUser->getName(), "selected" => 0);
+            if (in_array($oUser->getId(), $aRoleUsers)) {
+                $aUsers[$oUser->getId()]["selected"] = 1;
             }
         }
 
@@ -619,8 +603,8 @@ class KTRoleAllocationPlugin extends KTFolderAction {
         $aTemplateData = array(
             "context" => $this,
             "edit_rolealloc" => $oRoleAllocation,
-			'unused_users' => $aFreeUsers,
-			'role_users' => $aRoleUsers,
+			'users' => $aUsers,
+			//'role_users' => $aRoleUsers,
 			'input' => $input
         );
         return $oTemplate->render($aTemplateData);
@@ -643,12 +627,14 @@ class KTRoleAllocationPlugin extends KTFolderAction {
         $oRole = Role::get($oRoleAllocation->getRoleId());
         $this->oPage->setBreadcrumbDetails(_kt('Manage Groups for Role'));
         $this->oPage->setTitle(sprintf(_kt('Manage Groups for Role "%s"'), $oRole->getName()));
-
+/*
         $initJS = 'var optGroup = new OptionTransfer("groupSelect","chosenGroups"); ' .
         'function startTrans() { var f = getElement("grouproleform"); ' .
         ' optGroup.saveNewRightOptions("groupFinal"); ' .
         ' optGroup.init(f); }; ' .
         ' addLoadEvent(startTrans); ';
+        */
+        $initJS = "ko.applyBindings(new ElementSelection(groups, 'groupFinal','grouproleform'), document.grouproleform);";
         $this->oPage->requireJSStandalone($initJS);
 
         $aInitialUsers = $oRoleAllocation->getGroups();
@@ -659,14 +645,22 @@ class KTRoleAllocationPlugin extends KTFolderAction {
         $aRoleUsers = array();
         $aFreeUsers = array();
         foreach ($aInitialUsers as $oGroup) {
-            $aRoleUsers[$oGroup->getId()] = $oGroup;
+            //$aRoleUsers[$oGroup->getId()] = $oGroup;
+            $aRoleUsers[] = $oGroup->getId();
         }
+  //      print_r($aRoleUsers);
         foreach ($aAllUsers as $oGroup) {
+            $aFreeUsers[$oGroup->getId()] = array("id" => $oGroup->getId(), "displayName" => $oGroup->getName(), "name" => $oGroup->getName(), "selected" => 0);
+            if(in_array($oGroup->getId(), $aRoleUsers)){
+                $aFreeUsers[$oGroup->getId()]["selected"] = 1;
+            }
+            /*
             if (!array_key_exists($oGroup->getId(), $aRoleUsers)) {
                 $aFreeUsers[$oGroup->getId()] = $oGroup;
             }
+            */
         }
-
+//print_r($aFreeUsers);
         // Include the electronic signature on the permissions action
         global $default;
         if($default->enableESignatures){
@@ -684,8 +678,8 @@ class KTRoleAllocationPlugin extends KTFolderAction {
         $aTemplateData = array(
             "context" => $this,
             "edit_rolealloc" => $oRoleAllocation,
-			'unused_groups' => $aFreeUsers,
-			'role_groups' => $aRoleUsers,
+			'groups' => $aFreeUsers,
+			//'role_groups' => $aRoleUsers,
 			'rolename' => $oRole->getName(),
 			'input' => $input
         );

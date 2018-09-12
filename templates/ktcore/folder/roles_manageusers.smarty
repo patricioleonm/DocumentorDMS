@@ -1,7 +1,10 @@
 <h2>{i18n}Allocate User to Role{/i18n}</h2>
 
-{$context->oPage->requireJSResource('thirdpartyjs/OptionTransfer.js')}
-
+{$context->oPage->requireJSResource('assets/js/knockout.js')}
+{$context->oPage->requireJSResource('assets/js/element_selection.js')}
+<script type="text/javascript">
+var users = {$users|@json_encode nofilter};
+</script>
 <p class="descriptiveText">{i18n}Add or remove users for this role. {/i18n}</p>
 
 <form action="{$smarty.server.PHP_SELF}" method="POST" id="userroleform" name="userroleform">
@@ -9,19 +12,37 @@
    <input type="hidden" name="allocation_id" value="{$edit_rolealloc->getId()}" />
    <input type="hidden" name="fFolderId" value="{$context->oFolder->getId()}" />
    <!-- erk. FIXME clean up and remove OptionTransfer.js. -->
-
    <input type="hidden" name="userFinal" />
-
 
    <fieldset>
       <legend>{i18n}Allocate User to Role{/i18n}</legend>
       <p class="descriptiveText">{i18n}
-To add users to this role, select one or more user names in the Available Users field; then, double click or use the right pointing arrow to populate the Member users field.
-To remove users from this role, select one or more user names in the Member users field; then, double click, or use the left pointing arrow to move these names to Available Users.{/i18n}</p>
+            To add users to this role, select one or more user names in the Available Users field; then, double click or use the right pointing arrow to populate the Member users field.
+            To remove users from this role, select one or more user names in the Member users field; then, double click, or use the left pointing arrow to move these names to Available Users.{/i18n}</p>
 
-<p>{i18n}Use the Filter fields to display names in order of specified criteria.
-Use the Ctrl key to multi-select user names.{/i18n}</p>
-
+      <p>{i18n}Use the Filter fields to display names in order of specified criteria.
+      Use the Ctrl key to multi-select user names.{/i18n}</p>
+      <div class="row">
+            <div class="col-12">
+                  <div class="form-group">
+                        <label for="search">{i18n}Users{/i18n}</label>
+                        <input type="search" placeholder="{i18n}Search{/i18n}" class="form-control" data-bind="textInput : filter">
+                  </div>
+                  <div class="card">
+                        <div class="card-body">                        
+                              <h5 class="card-title">{i18n}Available Users{/i18n}</h5>                              
+                              <ul class="list-group list-group-flush" data-bind="foreach: eListFiltered">
+                                    <li class="list-group-item" data-bind="css: { 'list-group-item-success': selected() }, click : $parent.select_element">                              
+                                          <b><span data-bind="text : displayName"></span></b> (<span data-bind="text : name"></span>)
+                                          <span class="float-right text-muted" data-bind="visible : !selected()"><i class="far fa-circle fa-2x"></i></span>
+                                          <span class="float-right text-primary" data-bind="visible : selected()"><i class="fa fa-circle fa-2x"></i></span>
+                                    </li>
+                              </ul>
+                        </div>
+                  </div>
+            </div>
+      </div>
+<!--
 <table class="table table-sm table-bordered table-striped">
    <thead>
       <tr>
@@ -39,7 +60,7 @@ Use the Ctrl key to multi-select user names.{/i18n}</p>
                {/foreach}
            </select>
          </td>
-         <td align="center">
+         <td>
             <input name="right" style="width: 60px;" value="&raquo;" onclick="optGroup.transferRight()" type="button"><br /><br />
             <input name="left" style="width: 60px;" value="&laquo;" onclick="optGroup.transferLeft()" type="button">
          </td>
@@ -61,11 +82,12 @@ Use the Ctrl key to multi-select user names.{/i18n}</p>
          </td>
       </tr>
 </tbody></table>
-
+-->
       <div class="form_actions">
-         <input type="{$input.type}" value="{i18n}save changes{/i18n}" onclick="{$input.onclick}" />
-         {capture assign=link}{addQS}fFolderId={$context->oFolder->getId()}{/addQS}{/capture}
-         <input type="submit" name="kt_cancel[{$link}]" value="{i18n}Cancel{/i18n}" />
+            <hr>
+            <button class="btn btn-primary float-right" data-bind="click: submit">{i18n}save changes{/i18n}</button>
+            {capture assign=link}{addQS}fFolderId={$context->oFolder->getId()}{/addQS}{/capture}
+            <a href="{$link}" class="btn btn-warning float-left">{i18n}Cancel{/i18n}</a>
       </div>
    </fieldset>
-   </form>
+</form>
