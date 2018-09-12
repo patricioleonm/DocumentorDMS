@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="{$rootUrl}/resources/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{$rootUrl}/assets/css/login.css">
-	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css"<
+	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css">
 	<script language="javascript" src="{$rootUrl}/assets/bootstrap/js/bootstrap.min.js"></script>
 	<script language="javascript" src="{$rootUrl}/assets/fontawesome/js/fontawesome.min.js"></script>
 </head>
