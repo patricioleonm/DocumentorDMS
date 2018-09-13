@@ -191,7 +191,7 @@ class KTCorePlugin extends KTPlugin {
         $this->registerWidget('KTCoreTreeMetadataWidget', 'ktcore.widgets.treemetadata', 'KTWidgets.php');
         $this->registerWidget('KTDescriptorSelectionWidget', 'ktcore.widgets.descriptorselection', 'KTWidgets.php');
         $this->registerWidget('KTCoreFolderCollectionWidget', 'ktcore.widgets.foldercollection', 'KTWidgets.php');
-        $this->registerWidget('KTCoreFolderCollectionWidget', 'ktcore.widgets.foldercollection', 'KTWidgets.php');
+        //$this->registerWidget('KTCoreFolderCollectionWidget', 'ktcore.widgets.foldercollection', 'KTWidgets.php');
 
         $this->registerWidget('KTCoreTextAreaWidget', 'ktcore.widgets.textarea', 'KTWidgets.php');
         $this->registerWidget('KTCoreDateWidget', 'ktcore.widgets.date', 'KTWidgets.php');
