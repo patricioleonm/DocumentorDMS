@@ -1,11 +1,8 @@
 
-<input name="{$name}" id="div_{$name}" class="kt_date_field form-control form-control-sm" type="date">
+<input name="{$name}" id="div_{$name}" class="kt_date_field form-control form-control-sm" type="date" value="{if $has_value}{$value|sanitize_input}{/if}" />
 
 {literal}
 <script type="text/javascript">
-    $(".kt_date_field".datepicker({
-        uiLibrary: 'bootstrap'
-    });
 /*
 Ext.onReady(function(){
 
