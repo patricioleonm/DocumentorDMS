@@ -80,7 +80,22 @@ class KTUserAdminDispatcher extends KTAdminDispatcher {
         $search_fields[] =  new KTStringWidget(_kt('Username'), _kt("Enter part of the person's username.  e.g. <strong>ra</strong> will match <strong>brad</strong>."), 'search_name', $name, $this->oPage, true);
 
         // FIXME handle group search stuff.
-        $search_results = null;
+        //$search_results = null;
+        $search_results =& User::getList('id > 0');
+        /*
+        $users = array();
+        foreach($search_results as $oUser){
+            $users[] = array(
+                    "id" => $oUser->getId(),
+                    "userName" => $oUser->getUserName(),
+                    "name" => $oUser->getName(),
+                    "email" => $oUser->getEmail(),
+                    "disabled" => $oUser->getDisabled(),
+                    "lastLogin" => $oUser->getLastLogin()
+                );
+        };
+        */
+        /*
         if (!empty($name)) {
             $search_results =& User::getList('WHERE username LIKE \'%' . DBUtil::escapeSimple($name) . '%\' AND id > 0');
         } else if ($show_all !== false) {
@@ -88,7 +103,7 @@ class KTUserAdminDispatcher extends KTAdminDispatcher {
             $no_search = false;
 			$name = '*';
         }
-
+        */
         $aAuthenticationSources =& KTAuthenticationSource::getList();
 
         $bCanAdd = true;
@@ -103,11 +118,12 @@ class KTUserAdminDispatcher extends KTAdminDispatcher {
 
         $oTemplating =& KTTemplating::getSingleton();
         $oTemplate = $oTemplating->loadTemplate("ktcore/principals/useradmin");
+        $this->oPage->requireJSStandalone("$('#userstable').DataTable();");
         $aTemplateData = array(
             "context" => $this,
-            "search_fields" => $search_fields,
+            //"search_fields" => $search_fields,
             "search_results" => $search_results,
-            "no_search" => $no_search,
+            //"no_search" => $no_search,
             "authentication_sources" => $aAuthenticationSources,
             "old_search" => $name,
             "can_add" => $bCanAdd,
@@ -343,62 +359,6 @@ class KTUserAdminDispatcher extends KTAdminDispatcher {
         exit();
     }
 
-    function do_editgroups() {
-        $user_id = KTUtil::arrayGet($_REQUEST, 'user_id');
-        $oUser = User::get($user_id);
-        $old_search = KTUtil::arrayGet($_REQUEST, 'old_search');
-        if ((PEAR::isError($oUser)) || ($oUser === false)) {
-            $this->errorRedirectToMain(_kt('No such user.'), sprintf("old_search=%s&do_search=1", $old_search));
-        }
-
-
-
-        $this->aBreadcrumbs[] = array('name' => $oUser->getName());
-        $this->oPage->setBreadcrumbDetails(_kt('edit groups'));
-        $this->oPage->setTitle(sprintf(_kt("Edit %s's groups"), $oUser->getName()));
-        // generate a list of groups this user is authorised to assign.
-
-        /* FIXME there is a nasty side-effect:  if a user cannot assign a group
-        * to a user, and that user _had_ that group pre-edit,
-        * then their privileges are revoked.
-        * is there _any_ way to fix that?
-        */
-
-        $aInitialGroups = GroupUtil::listGroupsForUser($oUser);
-        $aAllGroups = GroupUtil::listGroups();
-
-        $aUserGroups = array();
-        $aFreeGroups = array();
-        foreach ($aInitialGroups as $oGroup) {
-            $aUserGroups[$oGroup->getId()] = $oGroup;
-        }
-        foreach ($aAllGroups as $oGroup) {
-            if (!array_key_exists($oGroup->getId(), $aUserGroups)) {
-                $aFreeGroups[$oGroup->getId()] = $oGroup;
-            }
-        }
-
-	$oJSONWidget = new KTJSONLookupWidget(_kt('Groups'),
-					      _kt('Select the groups which this user should belong to from the left-hand list and then click the <strong>right pointing arrows</strong>. Once you have added all the groups that you require, press <strong>save changes</strong>.'),
-					      'groups', '', $this->oPage, false, null, null,
-					      array('action'=>'getGroups',
-						    'assigned' => $aUserGroups,
-						    'multi'=>'true',
-						    'size'=>'8'));
-
-        $oTemplating =& KTTemplating::getSingleton();
-        $oTemplate = $oTemplating->loadTemplate("ktcore/principals/usergroups");
-        $aTemplateData = array(
-            "context" => $this,
-            "unused_groups" => $aFreeGroups,
-            "user_groups" => $aUserGroups,
-            "edit_user" => $oUser,
-	    "widget" => $oJSONWidget,
-            'old_search' => $old_search,
-        );
-        return $oTemplate->render($aTemplateData);
-    }
-
 
     function json_getGroups() {
         $sFilter = KTUtil::arrayGet($_REQUEST, 'filter', false);
@@ -582,12 +542,72 @@ class KTUserAdminDispatcher extends KTAdminDispatcher {
         $this->successRedirectToMain(_kt('User deleted') . ': ' . $oUser->getName(), sprintf("old_search=%s&do_search=1", $old_search));
     }
 
-    function do_updateGroups() {
+    function do_editgroups() {
+        $user_id = KTUtil::arrayGet($_REQUEST, 'user_id');
+        $oUser = User::get($user_id);
         $old_search = KTUtil::arrayGet($_REQUEST, 'old_search');
+        if ((PEAR::isError($oUser)) || ($oUser === false)) {
+            $this->errorRedirectToMain(_kt('No such user.'), sprintf("old_search=%s&do_search=1", $old_search));
+        }
+
+
+
+        $this->aBreadcrumbs[] = array('name' => $oUser->getName());
+        $this->oPage->setBreadcrumbDetails(_kt('edit groups'));
+        $this->oPage->setTitle(sprintf(_kt("Edit %s's groups"), $oUser->getName()));
+        // generate a list of groups this user is authorised to assign.
+
+        /* FIXME there is a nasty side-effect:  if a user cannot assign a group
+        * to a user, and that user _had_ that group pre-edit,
+        * then their privileges are revoked.
+        * is there _any_ way to fix that?
+        */
+
+        $aInitialGroups = GroupUtil::listGroupsForUser($oUser);
+        $aAllGroups = GroupUtil::listGroups();
+
+        $aUserGroups = array();
+        $aFreeGroups = array();
+        foreach ($aInitialGroups as $oGroup) {
+            $aUserGroups[] = $oGroup->getId();
+        }
+        $aGroups = array();
+        foreach ($aAllGroups as $oGroup) {
+            $aGroups[$oGroup->getId()] = array("id" => $oGroup->getId(), "name" => $oGroup->getName(), "selected" => 0, "current" => 0);
+            if (in_array($oGroup->getId(), $aUserGroups)) {
+                $aGroups[$oGroup->getId()]["selected"] = 1;
+                $aGroups[$oGroup->getId()]["current"] = 1;
+            }
+        }
+/*
+	$oJSONWidget = new KTJSONLookupWidget(_kt('Groups'),
+					      _kt('Select the groups which this user should belong to from the left-hand list and then click the <strong>right pointing arrows</strong>. Once you have added all the groups that you require, press <strong>save changes</strong>.'),
+					      'groups', '', $this->oPage, false, null, null,
+					      array('action'=>'getGroups',
+						    'assigned' => $aUserGroups,
+						    'multi'=>'true',
+						    'size'=>'8'));
+*/
+        $oTemplating =& KTTemplating::getSingleton();
+        $oTemplate = $oTemplating->loadTemplate("ktcore/principals/usergroups");
+        $aTemplateData = array(
+            "context" => $this,
+            "groups" => $aGroups,
+            //"unused_groups" => $aFreeGroups,
+            //"user_groups" => $aUserGroups,
+            "edit_user" => $oUser,
+	    //"widget" => $oJSONWidget,
+         //   'old_search' => $old_search,
+        );
+        return $oTemplate->render($aTemplateData);
+    }
+
+    function do_updateGroups() {
+        //$old_search = KTUtil::arrayGet($_REQUEST, 'old_search');
         $user_id = KTUtil::arrayGet($_REQUEST, 'user_id');
         $oUser = User::get($user_id);
         if ((PEAR::isError($oUser)) || ($oUser === false)) {
-            $this->errorRedirectToMain(_kt('Please select a user first.'), sprintf("old_search=%s&do_search=1", $old_search));
+            $this->errorRedirectToMain(_kt('Please select a user first.'),"old_search=*&do_search=1");
         }
         $groupAdded = KTUtil::arrayGet($_REQUEST, 'groups_items_added','');
         $groupRemoved = KTUtil::arrayGet($_REQUEST, 'groups_items_removed','');

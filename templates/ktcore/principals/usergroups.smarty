@@ -1,24 +1,45 @@
+{$context->oPage->requireJSResource('assets/js/knockout.js')}
+{$context->oPage->requireJSResource('assets/js/element2_selection.js')}
+{capture assign=sJavascript}var groups = {$groups|@json_encode nofilter};ko.applyBindings(new ElementSelection(groups,'groups_items_added','groups_items_removed','usergroupform'),document.usergroupform);{/capture}
+{$context->oPage->requireJSStandalone($sJavascript)}
+
 <h2>{i18n arg_name=$edit_user->getName()}Change #name#'s Groups{/i18n}</h2>
-
-
-
-
 
 <p class="descriptiveText">{i18n}Users may be classed together as Groups and these groups may be used to set security privileges throughout the document management system.{/i18n}</p>
 
 <form action="{$smarty.server.PHP_SELF}" method="POST" id="usergroupform">
    <input type="hidden" name="action" value="updateGroups" />
    <input type="hidden" name="user_id" value="{$edit_user->getId()}" />
-   <input type="hidden" name="old_search" value="{$old_search}" />    
+   <!--input type="hidden" name="old_search" value="{$old_search}" /-->
+    <input name="groups_items_added" id="groups_items_added" type="hidden" />
+    <input name="groups_items_removed" id="groups_items_removed" type="hidden" />
    
    <fieldset>
       <legend>{i18n arg_name=$edit_user->getName()}Change #name#'s Groups{/i18n}</legend>
-
-	{$widget->render()}
-
+      <div class="row">
+            <div class="col-12">
+                  <div class="form-group">
+                        <label for="search">{i18n}Groups{/i18n}</label>
+                        <input type="search" placeholder="{i18n}Search{/i18n}" class="form-control" data-bind="textInput : filter">
+                  </div>
+                  <div class="card">
+                        <div class="card-body">                        
+                              <h5 class="card-title">{i18n}Available Groups{/i18n}</h5>                              
+                              <ul class="list-group list-group-flush" data-bind="foreach: eListFiltered">
+                                    <li class="list-group-item" data-bind="css: {literal}{ 'list-group-item-success': selected() }{/literal}, click : $parent.select_element">                              
+                                          <b><span data-bind="text : name"></span></b>
+                                          <span class="float-right text-muted" data-bind="visible : !selected()"><i class="far fa-circle fa-2x"></i></span>
+                                          <span class="float-right text-primary" data-bind="visible : selected()"><i class="fa fa-circle fa-2x"></i></span>
+                                    </li>
+                              </ul>
+                        </div>
+                  </div>
+            </div>
+      </div>
 	<div class="form_actions">
-            <input type="submit" value="{i18n}save changes{/i18n}" />
-            <input type="submit" name="kt_cancel[{addQS}old_search={$old_search}&do_search=1{/addQS}]" value="{i18n}Cancel{/i18n}" />
+            <hr>
+            <input type="submit" value="{i18n}save changes{/i18n}" class="btn btn-primary float-right" data-bind="click : submit"/>
+            <a href="{addQS}&do_search=1{/addQS}" class="btn btn-warning float-left">{i18n}Cancel{/i18n}</a>
         </div>
    </fieldset>
    </form>

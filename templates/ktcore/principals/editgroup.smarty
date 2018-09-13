@@ -3,7 +3,7 @@
 <p class="descriptiveText">{i18n arg_name=$edit_group->getName()}Change
 the system's information about group <strong>#name#</strong>{/i18n}</p>
 
-<form action="{$smarty.server.PHP_SELF}" method="POST">
+<form action="{$smarty.server.PHP_SELF}" method="POST">x
    <input type="hidden" name="action" value="saveGroup" />
    <input type="hidden" name="group_id" value="{$edit_group->getId()}" />
    <input type="hidden" name="old_search" value="{$old_search}" />   
