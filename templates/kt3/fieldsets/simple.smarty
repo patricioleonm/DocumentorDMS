@@ -1,25 +1,27 @@
-<div class="card">
+<div class="card mb-2">
     <div class="card-body">
-        <h4 class="card-title"><i class="fa fa-list-ul"></i> {$fieldset->getName()}</h4>
+        <h5 class="card-title"><i class="fa fa-list-ul"></i> {$fieldset->getName()}</h5>
         <p class="card-subtitle text-muted">{$description}</p>
         <br>
-        <table class="table table-sm table-bordered table-striped">
-        {foreach item=aFieldPair from=$fieldset_values name=fields}
-        <tr>
-            <th>{$aFieldPair.field->getName()}</th>
-            <td>
-            {if ($aFieldPair.value !== null)}
-                {if ($aFieldPair.field->getIsHTML())}
-                    {$aFieldPair.value}
-                {else}
-                    {$aFieldPair.value|sanitize}
-                {/if}
-            {else}
-                <span class="text-secondary">{i18n}no value{/i18n}</span>
-            {/if}
-            </td>
-        </tr>
-        {/foreach}
-        </table>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-striped">
+            {foreach item=aFieldPair from=$fieldset_values name=fields}
+                <tr>
+                    <th>{$aFieldPair.field->getName()}</th>
+                    <td>
+                    {if ($aFieldPair.value !== null)}
+                        {if ($aFieldPair.field->getIsHTML())}
+                            {$aFieldPair.value}
+                        {else}
+                            {$aFieldPair.value|sanitize}
+                        {/if}
+                    {else}
+                        <span class="text-secondary">{i18n}no value{/i18n}</span>
+                    {/if}
+                    </td>
+                </tr>
+            {/foreach}
+            </table>
+        </div>
     </div>
 </div>

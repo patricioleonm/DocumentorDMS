@@ -280,7 +280,7 @@ class GenericFieldsetDisplay extends KTFieldsetDisplay {
     }
 
     function renderComparison($aDocumentData, $aComparisonData) {
-// we do a fair bit of fetching, etc. in here.
+    // we do a fair bit of fetching, etc. in here.
         $document = $aDocumentData['document'];
         $comparison_document = $aComparisonData['document'];
 
@@ -314,8 +314,6 @@ class GenericFieldsetDisplay extends KTFieldsetDisplay {
         } else {
            $owner_user = $owner_user->getName();
         }
-
-
 
         $comparison_modified_user =& User::get($comparison_document->getVersionCreatorId());
         if (PEAR::isError($comparison_modified_user)) {
@@ -387,7 +385,6 @@ class GenericFieldsetDisplay extends KTFieldsetDisplay {
         return $oTemplate->render($aTemplateData);
     }
 }
-
 
 // The generic object
 class SimpleFieldsetDisplay extends KTFieldsetDisplay {
@@ -498,7 +495,6 @@ class SimpleFieldsetDisplay extends KTFieldsetDisplay {
     }
 
 }
-
 
 // Handle the conditional case.
 class ConditionalFieldsetDisplay extends SimpleFieldsetDisplay {

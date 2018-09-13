@@ -167,7 +167,6 @@ class KTCorePasswordWidget extends KTWidget {
     }
 }
 
-
 class KTCoreSelectionWidget extends KTWidget {
     var $sNamespace = 'ktcore.widgets.selection';
 
@@ -317,7 +316,6 @@ class KTCoreEntitySelectionWidget extends KTCoreSelectionWidget {
         $this->aVocab = $new_vocab;
     }
 }
-
 
 class KTDescriptorSelectionWidget extends KTWidget {
     var $sNamespace = 'ktcore.widgets.descriptorselection';
@@ -565,8 +563,6 @@ class KTCoreTransparentFieldsetWidget extends KTCoreFieldsetWidget {
     }
 }
 
-
-
 class KTExtraConditionalFieldsetWidget extends KTCoreFieldsetWidget {
     var $sNamespace = 'ktextra.conditionalmetadata.fieldset';
 
@@ -582,7 +578,6 @@ class KTExtraConditionalFieldsetWidget extends KTCoreFieldsetWidget {
         return $oTemplate->render($aTemplateData);
     }
 }
-
 
 class KTCoreCollectionWidget extends KTWidget {
     var $sNamespace = 'ktcore.widgets.collection';
@@ -617,8 +612,6 @@ class KTCoreCollectionWidget extends KTWidget {
         $_SESSION['collection_widgets'][$this->sCode] = serialize($this);
 
         $this->requireJSResource('resources/js/collectionframe.js');
-
-
     }
 
     function getTargetURL() {
@@ -643,14 +636,12 @@ class KTCoreCollectionWidget extends KTWidget {
         $oCR =& KTColumnRegistry::getSingleton();
         //print '<pre>';
         foreach($this->aCols as $ns) {
-
             $oCR->getColumn($ns);
         }
         $this->oCollection = unserialize($this->sCollection);
         return $this->oCollection;
     }
 }
-
 
 class KTCoreFolderCollectionWidget extends KTCoreCollectionWidget {
     var $sNamespace = 'ktcore.widgets.foldercollection';
@@ -775,8 +766,6 @@ class KTCoreCollectionPage extends KTStandardDispatcher {
     }
 }
 
-
-
 // based on the selection widget, this carries a mapping array,
 // which is converted to JSON and inserted into the output. javascript
 // enforces the various relationships between conditional fields.
@@ -799,7 +788,7 @@ class KTCoreConditionalSelectionWidget extends KTCoreSelectionWidget {
 	if (PEAR::isError($res)) {
 	    return false;
 	}
-	return $res;
+	    return $res;
     }
 
 

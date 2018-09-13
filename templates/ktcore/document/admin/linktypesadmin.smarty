@@ -7,8 +7,7 @@
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <fieldset>
 <legend>{i18n}Add a link type{/i18n}</legend>
-<p class="descriptiveText">{i18n}Specify the details for a new link type
-below.{/i18n}</p>
+<p class="descriptiveText">{i18n}Specify the details for a new link type below.{/i18n}</p>
 
 {foreach item=oWidget from=$add_form}
   {$oWidget->render()}

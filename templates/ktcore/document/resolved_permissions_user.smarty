@@ -1,4 +1,4 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Resolved permissions per user{/i18n}:<br />{$context->oDocument->getName()|sanitize}</h2>
+<h4><i class="fa fa-caret-right"></i> {i18n}Resolved permissions per user{/i18n}: <span class="text-muted">{$context->oDocument->getName()|sanitize}</span></h2>
 
 <p class="descriptiveText">{i18n}This page shows the permissions that
 individual users have on this document.  Only the users which have permissions
@@ -9,40 +9,38 @@ document due to membership of a group, or fulfilling a specific role on
 this document.{/i18n}</p>
 
 {if (empty($users)) }
-<div class="ktInfoMessage"><span>{i18n}No users have permissions on this item.{/i18n}</span></div>
+<div class="alert alert-warning"><span>{i18n}No users have permissions on this item.{/i18n}</span></div>
 {else}
-
-<table  class="kt_collection"cellspacing="0" cellpadding="0" border="0">
-<thead>
-<tr>
-<th width="40%">{i18n}User{/i18n}</th>
-{ foreach item=oPerm from=$permissions }
-<th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}{assign var=iPermId value=$oPerm->getId()}
-{if ($workflow_controls.$iPermId)}<br /><span class="descriptiveText">(workflow controlled)</span>{/if}
-{if ($conditions_control.$iPermId)}<br /><span class="descriptiveText">(condition affected)</span>{/if}</th>
-{ /foreach }
-</tr>
-</thead>
-<tbody>
-
-{ foreach item=oUser from=$users }
-<td><span class="descriptiveText">{i18n}User: {/i18n}</span> {$oUser->getName()}</td>
-  { assign var=iUserId value=$oUser->getId() }
-  { foreach item=oPerm from=$permissions }
-    { assign var=iPermId value=$oPerm->getId() }
-    { assign var=bHasPerm value=$aMapPermissionUser[$iPermId][$iUserId] }
-
-{ if $bHasPerm }
-<td class="centered"><span class="ktAction ktInline ktAllowed">{i18n}Allowed{/i18n}</span></td>
-{ else }
-<td class="centered"><span class="ktAction ktInline ktDenied">{i18n}Denied{/i18n}</span></td>
-{ /if }
-
-  { /foreach }
-</tr>
-{ /foreach }
-
-</tbody>
+<div class="table-responsive">
+  <table  class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th>{i18n}User{/i18n}</th>
+      { foreach item=oPerm from=$permissions }
+      <th title="{$oPerm->getName()}" class="centered">{$oPerm->getHumanName()}{assign var=iPermId value=$oPerm->getId()}
+      {if ($workflow_controls.$iPermId)}<br /><span class="descriptiveText">(workflow controlled)</span>{/if}
+      {if ($conditions_control.$iPermId)}<br /><span class="descriptiveText">(condition affected)</span>{/if}</th>
+      { /foreach }
+    </tr>
+  </thead>
+  <tbody>
+    { foreach item=oUser from=$users }
+    <tr>
+      <td><span class="text-weight-normal">{i18n}User: {/i18n}</span> {$oUser->getName()}</td>
+      { assign var=iUserId value=$oUser->getId() }
+      { foreach item=oPerm from=$permissions }
+        { assign var=iPermId value=$oPerm->getId() }
+        { assign var=bHasPerm value=$aMapPermissionUser[$iPermId][$iUserId] }
+        { if $bHasPerm }
+      <td><i class="fa fa-check text-success"></i> <span class="sr-only">{i18n}Allowed{/i18n}</span></td>
+      { else }
+      <td><i class="fa fa-ban text-danger"></i> <span class="sr-only">{i18n}Denied{/i18n}</span></td>
+      { /if }
+      { /foreach }
+    </tr>
+    { /foreach }
+  </tbody>
 </table>
+</div>
 { /if }
 

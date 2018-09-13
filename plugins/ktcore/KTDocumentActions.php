@@ -2042,7 +2042,8 @@ class KTOwnershipChangeAction extends KTDocumentAction {
                 'label_method' => 'getName',
                 'vocab' => User::getList('id > 0'),
                 'value' => $this->oDocument->getOwnerID(),
-                'name' => 'user_id'
+                'name' => 'user_id',
+                'simple_select' => FALSE
             )),
         ));
         $oForm->setValidators(array(

@@ -3,46 +3,57 @@
 {/foreach}
 
 {if ($thread->getState()!=DISCUSSION_CLOSED)}
-<form method="POST" action="{$smarty.server.PHP_SELF}">
-<input type="hidden" name="action" value="postreply" />
-<input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
-<input type="hidden" name="fThreadId" value="{$thread->getId()}" />
-<fieldset><legend>{i18n}Post a reply{/i18n}</legend>
-<a name="kt-discussion-post"></a>
-{foreach from=$replyfields item=oWidget}
-    {$oWidget->render()}
-{/foreach}
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{i18n}Post a reply{/i18n}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{i18n}Change the state of this thread{/i18n}</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <form method="POST" action="{$smarty.server.PHP_SELF}">
+        <input type="hidden" name="action" value="postreply" />
+        <input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
+        <input type="hidden" name="fThreadId" value="{$thread->getId()}" />
+        <div class="card card-body">
+            <h5 class="card-title">{i18n}Post a reply{/i18n}</h5>
+            <a name="kt-discussion-post"></a>
+            {foreach from=$replyfields item=oWidget}
+                {$oWidget->render()}
+            {/foreach}
 
-<div class="form_actions ">
-  <input type="submit" name="submit" value="{i18n}Post reply{/i18n}" />
+            <div class="form_actions">
+                <hr>
+                <input type="submit" name="submit" value="{i18n}Post reply{/i18n}" class="btn btn-primary float-right"/>
+            </div>
+        </div>
+    </form>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+      {if $closefields}
+    <form method="POST" action="{$smarty.server.PHP_SELF}">
+        <input type="hidden" name="action" value="changestate" />
+        <input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
+        <input type="hidden" name="fThreadId" value="{$thread->getId()}" />
+        <div class="card card-body">
+            <h5 class="card-title">{i18n}Change the state of this thread{/i18n}</h5>
+            {foreach from=$closefields item=oWidget}
+                {$oWidget->render()}
+            {/foreach}
+
+            <div class="form_actions">
+                <hr>
+                <input type="submit" name="submit" value="{i18n}Change state{/i18n}" class="btn btn-primary float-right"/>
+            </div>
+        </div>
+    </form>
+    {/if}
+  </div>
 </div>
-</fieldset>
-</form>
-
-
-{if $closefields}
-
-<form method="POST" action="{$smarty.server.PHP_SELF}">
-<input type="hidden" name="action" value="changestate" />
-<input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
-<input type="hidden" name="fThreadId" value="{$thread->getId()}" />
-<fieldset><legend>{i18n}Change the state of this thread{/i18n}</legend>
-{foreach from=$closefields item=oWidget}
-    {$oWidget->render()}
-{/foreach}
-
-<div class="form_actions ">
-  <input type="submit" name="submit" value="{i18n}Change state{/i18n}" />
-</div>
-</fieldset>
-</form>
-
-{/if}
-
 {else}
-
-<div>
-    {i18n}Thread closed{/i18n} ({$thread->getCloseReason()})
-</div>
-
+    <div class="alert alert-warning">
+        {i18n}Thread closed{/i18n} ({$thread->getCloseReason()})
+    </div>
 {/if}

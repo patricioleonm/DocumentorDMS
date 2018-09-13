@@ -5,12 +5,14 @@
 
 {$context->oPage->requireCSSResource('resources/css/kt-treewidget.css')}
 
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Edit Metadata{/i18n}:<br />{$context->oDocument->getName()|sanitize}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Edit Metadata{/i18n}: <span class="text-muted">{$context->oDocument->getName()|sanitize}</span></h4>
 
 {capture assign=link}{addQS}action=selectType&fDocumentId={$document->getId()}{/addQS}{/capture}
-<p class="descriptiveText">{i18n arg_link=$link arg_name=$type_name}Change the <strong><a href="#link#">document type</a></strong>. The current type is "#name#"{/i18n}</p>
-
-<p class="descriptiveText">{i18n}The following document metadata is available for editing.{/i18n}</p>
+<p class="alert alert-info">
+{i18n arg_link=$link arg_name=$type_name}Change the <strong><a href="#link#">document type</a></strong>. The current type is "#name#"{/i18n}
+<br>
+{i18n}The following document metadata is available for editing.{/i18n}
+</p>
 
 {$form->render()}
 

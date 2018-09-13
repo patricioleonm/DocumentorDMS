@@ -1,86 +1,107 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Workflow for{/i18n}:<br />{$oDocument->getName()|sanitize}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Workflow for{/i18n}: <span class="text-muted">{$oDocument->getName()|sanitize}</span></h4>
 
-<p class="descriptiveText">
+<p class="alert alert-info">
     {i18n}Workflow is a description of a document's lifecycle.  It is made up of
     workflow states, which describe where in the lifecycle the document is,
     and workflow transitions, which describe the next steps within the
     lifecycle of the document.{/i18n}
 </p>
 
-{if !$oWorkflow}
-    <h3>{i18n}No workflow{/i18n}</h3>
-
-    <p>{i18n}Document has no assigned workflow.{/i18n}</p>
-
-{else}
-
-    <h3>{i18n}Current workflow settings{/i18n}</h3>
-
-    <dl class="metadata">
-        <dt>{i18n}Workflow{/i18n}</dt><dd>{$oWorkflow->getName()}</dd>
-        <dt>{i18n}State{/i18n}</dt><dd>{$oState->getName()}</dd>
-    </dl>
-
-    {if $aTransitions}
-        <form action="{$smarty.server.PHP_SELF}" method="POST" name="transition_wf_form">
-            <input type="hidden" name="action" value="performTransition" />
-            <input type="hidden" name="fDocumentId" value="{$oDocument->getId()}" />
-            <fieldset><legend>{i18n}Transition to another workflow state{/i18n}</legend>
-            {foreach from=$transition_fields item=oWidget }
-                {$oWidget->render()}
-            {/foreach}
-            <div class="form_actions">
-            <input type="{$submit.type}" onclick="{$submit2.onclick}" name="form_submit" value="{i18n}Perform Transition{/i18n}" />
-            </div>
-            </fieldset>
-        </form>
-    {/if}
-{/if}
-
-<fieldset>
-{if $bIsCheckedOut}
-    <div class="ktInfoMessage">
-        <span>{i18n}The workflow cannot be changed while the document is checked out.{/i18n}</span>
-    </div>
-{else}
-    {if !$oWorkflow}
-      <legend>{i18n}Start workflow on document{/i18n}</legend>
-      {assign var=none value=""}
-    {else}
-      <legend>{i18n}Change workflow on document{/i18n}</legend>
-      {assign var=none value=true}
-    {/if}
-    {if $aWorkflows}
-        {if $bHasPerm}
-            <form action="{$smarty.server.PHP_SELF}" method="POST" name="start_workflow_form">
-                <input type="hidden" name="action" value="startWorkflow" />
-                <input type="hidden" name="fDocumentId" value="{$oDocument->getId()}" />
-
-                <p class="descriptiveText">{i18n}Please note that changing the workflow on a document will start the workflow
-                at the beginning of the new workflow.  <strong>This is true even if the new workflow is identical to the old one.</strong>{/i18n}</p>
-
-                {entity_select entities=$aWorkflows name=fWorkflowId none=$none}
-                <div class="form_actions">
-                    {if !$oWorkflow}
-                        <input type="{$submit.type}" onclick="{$submit.onclick}" name="form_submit" value="{i18n}Start Workflow{/i18n}" />
-                    {else}
-                        <input type="{$submit.type}" onclick="{$submit.onclick}" name="form_submit" value="{i18n}Change Workflow{/i18n}" />
-                    {/if}
-                </div>
-            </form>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+        {if !$oWorkflow}
+        {i18n}Start workflow on document{/i18n}
         {else}
-            <div class="ktInfoMessage">
-            <span>{i18n}You do not have permission to change the workflow that is assigned to this document.{/i18n}</span>
-            </div>
-        {/if}
-    {else}
-        <h3>{i18n}No defined workflows{/i18n}</h3>
-            <div class="ktInfoMessage">
-                <span>{i18n}There are no defined workflows which can be started on this
-                document.  An administrator can create workflows to map the lifecycle of
-                a document.  Contact your administrator to discuss
-                workflows.{/i18n}</span>
-            </div>
+        {i18n}Change workflow on document{/i18n}
+        {/if}    
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{if !$oWorkflow} disabled{/if}" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+        {i18n}Current workflow settings{/i18n}
+    </a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="card card-body">
+    {if !$oWorkflow}
+    <h5>{i18n}No workflow{/i18n}</h5>
+    <p>{i18n}Document has no assigned workflow.{/i18n}</p>
     {/if}
-{/if}
-</fieldset>
+    {if $bIsCheckedOut}
+        <div class="alert alert-info">
+            <span>{i18n}The workflow cannot be changed while the document is checked out.{/i18n}</span>
+        </div>
+    {else}
+        {if !$oWorkflow}
+        {assign var=none value=""}
+        {else}
+        {assign var=none value=true}
+        {/if}
+        {if $aWorkflows}
+            {if $bHasPerm}
+                <form action="{$smarty.server.PHP_SELF}" method="POST" name="start_workflow_form">
+                    <input type="hidden" name="action" value="startWorkflow" />
+                    <input type="hidden" name="fDocumentId" value="{$oDocument->getId()}" />
+
+                    <p class="alert alert-info">{i18n}Please note that changing the workflow on a document will start the workflow
+                    at the beginning of the new workflow.  <strong>This is true even if the new workflow is identical to the old one.</strong>{/i18n}</p>
+
+                    {entity_select entities=$aWorkflows name=fWorkflowId none=$none class="form-control"}
+                    <div class="form_actions">
+                        <hr>
+                        {if !$oWorkflow}
+                            <input type="{$submit.type}" onclick="{$submit.onclick}" name="form_submit" value="{i18n}Start Workflow{/i18n}" class="btn btn-primary float-right"/>
+                        {else}
+                            <input type="{$submit.type}" onclick="{$submit.onclick}" name="form_submit" value="{i18n}Change Workflow{/i18n}" class="btn btn-primary float-right"/>
+                        {/if}
+                    </div>
+                </form>
+            {else}
+                <div class="alert alert-info">
+                    <span>{i18n}You do not have permission to change the workflow that is assigned to this document.{/i18n}</span>
+                </div>
+            {/if}
+        {else}
+            <h5>{i18n}No defined workflows{/i18n}</h5>
+                <div class="alert alert-info">
+                    <span>{i18n}There are no defined workflows which can be started on this
+                    document.  An administrator can create workflows to map the lifecycle of
+                    a document.  Contact your administrator to discuss
+                    workflows.{/i18n}</span>
+                </div>
+        {/if}
+    {/if}
+    </div>
+  </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        {if $oWorkflow}
+        <div class="card card-body">
+            <div class="alert alert-primary">
+            <dl class="metadata">
+                <dt>{i18n}Workflow{/i18n}</dt><dd>{$oWorkflow->getName()}</dd>
+                <dt>{i18n}State{/i18n}</dt><dd>{$oState->getName()}</dd>
+            </dl>
+            </div>
+            {if $aTransitions}
+            <form action="{$smarty.server.PHP_SELF}" method="POST" name="transition_wf_form">
+                <input type="hidden" name="action" value="performTransition" />
+                <input type="hidden" name="fDocumentId" value="{$oDocument->getId()}" />
+                <fieldset>
+                    <legend>{i18n}Transition to another workflow state{/i18n}</legend>
+                    {foreach from=$transition_fields item=oWidget }
+                    {$oWidget->render()}
+                    {/foreach}
+                    <div class="form_actions">
+                        <hr>
+                        <input type="{$submit.type}" onclick="{$submit2.onclick}" name="form_submit" value="{i18n}Perform Transition{/i18n}" class="btn btn-primary float-right"/>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        {/if}
+        {/if}  
+    </div>
+</div>

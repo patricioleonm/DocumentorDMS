@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-12">
-		<h3>{i18n}Document Details{/i18n}: {$context->oDocument->getName()|sanitize}</h3>
+		<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Document Details{/i18n}: <span class="text-muted">{$context->oDocument->getName()|sanitize}</span></h4>
 	</div>
 </div>
 <div class="row">

@@ -1,5 +1,4 @@
-{$context->oPage->requireCSSResource('resources/css/kt-discussion.css')}
-
+<!--
 {if $cycle}
 <dl class="kt-discussion-comment">
 {else}
@@ -17,6 +16,10 @@
   <dd>{$comment->getBody()}</dd>
 
 </dl>
-
-
-
+-->
+<div class="alert alert-dark">
+<blockquote class="blockquote">
+  <p class="mb-0">{$comment->getSubject()}</p>
+  <footer class="blockquote-footer">by {$creator->getName()} <span class="text-muted">({$comment->getDate()})</span></footer>
+</blockquote>
+</div>

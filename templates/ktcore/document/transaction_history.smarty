@@ -1,4 +1,4 @@
-<h2>{i18n}Document Transaction History{/i18n}:<br />{$document->getName()|sanitize}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Document Transaction History{/i18n}: <span class="text-muted">{$document->getName()|sanitize}</span></h4>
 
 <p class="alert alert-info">{i18n}This page provides details of all activities that have been carried out on the document.{/i18n}</p>
 

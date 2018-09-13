@@ -1,55 +1,62 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{i18n}Discussion{/i18n}:<br />{$context->oDocument->getName()|sanitize}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Discussion{/i18n}: <span class="text-muted">{$context->oDocument->getName()|sanitize}</span></h2>
 
 {if $threads}
 <h3>{i18n}Existing threads{/i18n}</h3>
-<table class="kt_collection" cellspacing="0" cellpadding="0">
-  <thead>
-    <tr>
-      <th>{i18n}Subject{/i18n}</th>
-      <th>{i18n}Creator{/i18n}</th>
-      <th>{i18n}Views{/i18n}</th>
-      <th>{i18n}Replies{/i18n}</th>
-      <th>{i18n}Last activity{/i18n}</th>
-      <th>{i18n}State{/i18n}</th>
-    </tr>
-  </thead>
-  <tbody>
-    {foreach from=$threads item=thread}
-        {$threadrenderer->render($context, $thread)}
-    {/foreach}
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-bordered table-sm table-striped">
+    <thead>
+      <tr>
+        <th>{i18n}Subject{/i18n}</th>
+        <th>{i18n}Creator{/i18n}</th>
+        <th>{i18n}Views{/i18n}</th>
+        <th>{i18n}Replies{/i18n}</th>
+        <th>{i18n}Last activity{/i18n}</th>
+        <th>{i18n}State{/i18n}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {foreach from=$threads item=thread}
+          {$threadrenderer->render($context, $thread)}
+      {/foreach}
+    </tbody>
+  </table>
+</div>
 {else}
-    <p class="descriptiveText">    {if ($closed_threads != 0)}
+    <p class="alert alert-info">
+    {if ($closed_threads != 0)}
     {i18n arg_closed=$closed_threads}There are #closed# closed threads - use the "View All" option below to view them.{/i18n}
-     {else}
-{i18n}There are no open threads for this document.{/i18n}
+    {else}
+    {i18n}There are no open threads for this document.{/i18n}
     {/if}
     </p>
 {/if}
 
 <form method="POST" action="{$smarty.server.PHP_SELF}">
-<input type="hidden" name="action" value="newthread" />
-<input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
-<fieldset><legend>{i18n}Create a new thread{/i18n}</legend>
-{foreach from=$fields item=oWidget}
-    {$oWidget->render()}
-{/foreach}
+  <input type="hidden" name="action" value="newthread" />
+  <input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
+  <fieldset>
+    <legend>{i18n}Create a new thread{/i18n}</legend>
+    {foreach from=$fields item=oWidget}
+      {$oWidget->render()}
+    {/foreach}
 
-<div class="form_actions ">
-  <input type="submit" name="submit" value="{i18n}Create thread{/i18n}" />
-</div>
-</fieldset>
+    <div class="form_actions ">
+      <hr>
+      <input type="submit" name="submit" value="{i18n}Create thread{/i18n}" class="btn btn-primary float-right"/>
+    </div>
+  </fieldset>
 </form>
 
 <form method="POST" action="{$smarty.server.PHP_SELF}">
-<input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
-<input type="hidden" name="fIncludeClosed" value="1" />
-<fieldset><legend>{i18n}View all threads{/i18n}</legend>
-<p class="descriptiveText">{i18n}Click below to view all discussion threads on this document, including those that are closed.{/i18n}</p>
+  <input type="hidden" name="fDocumentId" value="{$context->oDocument->getId()}" />
+  <input type="hidden" name="fIncludeClosed" value="1" />
+  <fieldset>
+    <legend>{i18n}View all threads{/i18n}</legend>
+    <p class="alert alert-info">{i18n}Click below to view all discussion threads on this document, including those that are closed.{/i18n}</p>
 
-<div class="form_actions ">
-  <input type="submit" name="submit" value="{i18n}View threads{/i18n}" />
-</div>
-</fieldset>
+    <div class="form_actions ">
+      <hr>
+      <input type="submit" name="submit" value="{i18n}View threads{/i18n}" class="btn btn-primary float-right"/>
+    </div>
+  </fieldset>
 </form>

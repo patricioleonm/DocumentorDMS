@@ -1,6 +1,6 @@
-<div class="card">
+<div class="card mb-2">
     <div class="card-body">
-        <h4 class="card-title"><i class="fa fa-list-ul"></i> {i18n}Generic Information{/i18n}</h4>
+        <h5 class="card-title"><i class="fa fa-list-ul"></i> {i18n}Generic Information{/i18n}</h5>
         <p class="card-subtitle text-muted">{i18n arg_appname="$appname"}The information in this section is stored by #appname# for every document.{/i18n}</p>
         <br>
         <table class="table table-sm table-striped table-bordered">

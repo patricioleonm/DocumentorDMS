@@ -100,6 +100,7 @@ class KTDocumentRenameAction extends KTDocumentAction {
 
         $oTemplate->setData(array(
             'context' => &$this,
+            'filename' => $this->oDocument->getFileName(),
             'fields' => $fields,
             'submit' => $submit
         ));
