@@ -1,4 +1,4 @@
-<h2>{i18n}Permissions Overview{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Permissions Overview{/i18n}</h4>
 
 <p class="descriptiveText">{i18n}A particular workflow state can override some, all, 
 or none of the permissions that would normally apply to a document.  In this
@@ -11,15 +11,15 @@ the "Control" column.  Permissions which are not controlled by a state (e.g. whi
 are controlled by the folder a document is in) are marked with a dash (&mdash;). 
 Controlled permissions are marked with a tick. <strong>Click on the state name to 
 specify how it controls permissions.</strong>{/i18n}</p>
-
-<table class="kt_collection" cellspacing="0">
+<div class="table-responsive">
+  <table class="table table-sm table-striped">
     <thead>
         <tr>
             <th>{i18n}States{/i18n}</th>
-            <th class="centered">{i18n}Control{/i18n}</th>            
-          {foreach from=$perms item=oPerm}
-            <th class="centered">{i18n}{$oPerm->getHumanName()}{/i18n}</th>
-          {/foreach}
+            <th class="text-center">{i18n}Control{/i18n}</th>            
+            {foreach from=$perms item=oPerm}
+            <th class="text-center">{i18n}{$oPerm->getHumanName()}{/i18n}</th>
+            {/foreach}
         </tr>
     </thead>
     <tbody>
@@ -27,12 +27,22 @@ specify how it controls permissions.</strong>{/i18n}</p>
         {assign value=$oState->getId() var=state_id}
         <tr>
             <td><a href="{addQS context=$context}action=managepermissions&fStateId={$state_id}{/addQS}">{$oState->getName()}</a></td>
-            <td class="centered">{if ($controllers.$state_id)} <span class="ktAction ktAllowed">yes</span> {else} <span class="ktAction ktDenied">no</span> {/if}</td>
+            <td class="text-center">
+              {if ($controllers.$state_id)}
+                <span class="text-success">yes</span> {else} <span class="text-danger">no</span> {/if}
+              </td>
           {foreach from=$perms item=oPerm}
           {assign value=$oPerm->getId() var=perm_id}
-            <td class="centered">{if ($perm_grid.$state_id.$perm_id)} <span class="ktAction ktAllowed">managed</span> {else} &mdash; {/if}</td>
+            <td class="text-center">
+              {if ($perm_grid.$state_id.$perm_id)}
+              <i class="fa fa-check text-success"></i> <span class="sr-only">managed</span> 
+              {else}
+              &mdash;
+              {/if}
+            </td>
           {/foreach}            
         </tr>
         {/foreach}
     </tbody>
-</table>
+  </table>
+</div>

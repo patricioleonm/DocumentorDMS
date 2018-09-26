@@ -1,6 +1,8 @@
 
 //confirm dialog
+/*
 document.addEventListener('click', (e) => {
+    console.log("click");
     if(e.target.classList.contains('ktDelete')){
         var msg = e.target.getAttribute('kt:deleteMessage');
         var v = confirm(msg);
@@ -16,3 +18,4 @@ document.addEventListener('click', (e) => {
         return v;
     }
 });
+*/

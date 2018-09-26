@@ -1,4 +1,4 @@
-<h2>{i18n}Role Administration{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Role Administration{/i18n}</h4>
 
 <p class="descriptiveText">{i18n}Workflow actions may be assigned to certain roles within the DMS. User groups are allocated to roles on a per-directory basis and are inherited from the root folder of the DMS. Roles may for example include "Document Creator", "Document Reviewer", "Document Publisher".{/i18n}</p>
 
@@ -9,13 +9,13 @@
    <legend>{i18n}Add a Role{/i18n}</legend>
    
    <input type="hidden" name="action" value="createRole" />
-   
+   <div class="mb-2">
    {foreach item=oWidget from=$add_fields}
      {$oWidget->render()}
    {/foreach}
-
+  </div>
    <div class="form_actions">
-      <input type="submit" value="{i18n}create new role{/i18n}" />
+      <input type="submit" value="{i18n}create new role{/i18n}" class="btn btn-primary float-right mb-2"/>
    </div class="form_actions">
 </fieldset>
 </form>
@@ -23,8 +23,8 @@
 {else}
 
 <form action="{$smarty.server.PHP_SELF}" method="POST">
-<fieldset>
-   <legend>{i18n}Change a role's details{/i18n}</legend>
+<div class="card card-body card-sm">
+   <h5 class="card-title">{i18n}Change a role's details{/i18n}</h5>
    
    <input type="hidden" name="action" value="updateRole" />
    <input type="hidden" name="role_id" value="{$edit_role->getId()}" />
@@ -34,20 +34,21 @@
    {/foreach}
    
    <div class="form_actions">
-      <input type="submit" value="{i18n}update role information{/i18n}" />
-      <input type="submit" name="kt_cancel[]" value="{i18n}Cancel{/i18n}" />
-   </div class="form_actions">
-</fieldset>
+   <hr>
+      <input type="submit" value="{i18n}update role information{/i18n}" class="btn btn-primary float-right"/>
+      <input type="submit" name="kt_cancel[]" value="{i18n}Cancel{/i18n}" class="btn btn-warning float-left"/>
+   </div>
+</div>
 </form>
 
 {/if}
 
-<table class="listing">
+<table class="table table-striped table-bordered table-sm">
 <thead>
    <tr>
       <th>{i18n}Role Name{/i18n}</th>
-      <th>{i18n}Edit{/i18n}</th>
-      <th>{i18n}Delete{/i18n}</th>
+      <th class="text-center">{i18n}Edit{/i18n}</th>
+      <th class="text-center">{i18n}Delete{/i18n}</th>
    </tr>
 </thead>
 <tbody>
@@ -55,13 +56,13 @@
      {foreach item=oRole from=$roles}
      <tr>
         <td>{$oRole->getName()}</td>
-        <td><a href="{addQS}action=editRole&role_id={$oRole->getId()}{/addQS}" class="ktAction ktEdit">{i18n}Edit{/i18n}</a></td>
-        <td><a href="{addQS}action=deleteRole&role_id={$oRole->getId()}{/addQS}" class="ktAction ktDelete">{i18n}Delete{/i18n}</a></td>
+        <td class="text-center"><a href="{addQS}action=editRole&role_id={$oRole->getId()}{/addQS}"><i class="far fa-edit fa-2x"></i> <span class="sr-only">{i18n}Edit{/i18n}</span></a></td>
+        <td class="text-center"><a href="{addQS}action=deleteRole&role_id={$oRole->getId()}{/addQS}"><i class="fa fa-trash fa-2x"></i> <span class="sr-only">{i18n}Delete{/i18n}</span></a></td>
      </tr>   
      {/foreach}
      {else}
      <tr>
-        <td class="ktInfoMessage" colspan="3"><span>{i18n}There are currently no roles created within the system.{/i18n}</td>
+        <td class="alert alert-info" colspan="3"><span>{i18n}There are currently no roles created within the system.{/i18n}</td>
      </tr>   
      {/if}
 </tbody>

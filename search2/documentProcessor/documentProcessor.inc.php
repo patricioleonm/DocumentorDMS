@@ -193,10 +193,12 @@ class DocumentProcessor
         }
 
         // Setup indexing - load extractors, run diagnostics
+        /*
         if($this->indexer->preIndexingSetup() === false){
             $default->log->error('documentProcessor: stopping - indexer setup failed.');
             return;
         }
+        */
 
         // Get document queue
         $queue = $this->indexer->getDocumentsQueue($this->limit);

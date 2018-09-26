@@ -1,50 +1,29 @@
-<p>
-{i18n}Creating zip file. Compressing and archiving in progress ...{/i18n}
-</p>
-<p style='margin-bottom: 10px;'>
-<br /><b>{i18n}Warning! Please wait for archiving to complete before closing the page.{/i18n} </b>
-<br />{i18n}Note: Closing the page before the download link displays will cancel your Bulk Download.{/i18n}
-</p>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Bulk Download{/i18n}</h4>
 
-
-<div id='download_link' style='visibility: hidden'>
-<p style='margin-bottom: 5px;'>
-<a href="{$download_url}">{i18n}Download Zipped File{/i18n}</a>
-</p>
-<p style='margin-bottom: 10px;'>
-<a href="{$folder_url}">{i18n}Return to Folder{/i18n}</a>
-<br />
-</p>
+<div class="alert alert-warning">
+    <i class="fa fa-exclamation-triangle fa-3x float-left text-danger mr-3"></i>
+    <h6>{i18n}Warning! Please wait for archiving to complete before closing the page.{/i18n}</h6>
+    <p>{i18n}Note: Closing the page before the download link displays will cancel your Bulk Download.{/i18n}</p>
 </div>
 
+<div class="alert alert-info" id="download-progress">
+    {i18n}Creating zip file. Compressing and archiving in progress ...{/i18n}
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>
+</div>
 
-<script type='text/javascript'>
-{literal}
-function ping()
-{
-    Ext.Ajax.request({
-        url: {/literal}'{$url}'{literal},
-        success: function(response) {
-            if(response.responseText == 'wait'){
-                setTimeout("ping()", 2000);
-                return;
-            }
+<hr>
+<div class="buttons">
+    <a href="{$download_url}" class="btn btn-success float-right disabled" id="download-link"><i class="fa fa-file-download"></i> {i18n}Download Zipped File{/i18n}</a>
+    <a href="{$folder_url}" class="btn btn-warning float-left">{i18n}Return to Folder{/i18n}</a>
+</div>
 
-            var div = document.getElementById('download_link');
-            div.style.visibility = 'visible';
-            div.innerHTML = div.innerHTML + response.responseText;
-        },
-        failure: function(response) {
-            alert({/literal}{i18n}'There was an error connecting to the server. Please refresh the page.'{/i18n}{literal});
-        },
-        params: {
-            ping: 'ping',
-            code: {/literal}'{$code}'{literal}
-        }
-    });
+<div class="alert alert-danger d-none" id="error-message">
+    <i class="fa fa-unlink fa-2x"></i>{i18n} There was an error connecting to the server. Please refresh the page.{/i18n}
+</div>
 
-}
-{/literal}
+<input type="hidden" value="{$url}" id="download_url_check" />
+<input type="hidden" value="{$code}" id="code" />
 
-ping();
-</script>
+

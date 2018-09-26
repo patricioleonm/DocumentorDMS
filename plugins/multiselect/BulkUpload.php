@@ -68,13 +68,14 @@ class InetBulkUploadFolderAction extends KTFolderAction {
 		{
 			//$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
 			//$aJavascript[] = 'thirdpartyjs/jquery/jquery_noconflict.js';
+			$aJavascript[] = 'resources/js/kt_hidelink.js';
 
 			$oPage =& $GLOBALS['main'];
 			if (method_exists($oPage, 'requireJSResources')) {
 				$oPage->requireJSResources($aJavascript);
 			}
 
-			$js = "<script src='resources/js/kt_hidelink.js' type='text/javascript'></script>";
+			//$js = "<script src='resources/js/kt_hidelink.js' type='text/javascript'></script>";
 			return $js._kt('Bulk Upload');
 		}
 		else
@@ -129,23 +130,11 @@ class InetBulkUploadFolderAction extends KTFolderAction {
 		$this->oPage->setBreadcrumbDetails(_kt("bulk upload"));
 
 		//Adding the required Bulk Upload javascript includes
-		$aJavascript[] = 'resources/js/taillog.js';
+		//$aJavascript[] = 'resources/js/taillog.js';
 		$aJavascript[] = 'resources/js/conditional_usage.js';
 		$aJavascript[] = 'resources/js/kt_bulkupload.js';
 
-		//Loading the widget js libraries to support dynamic "Ajax Loaded" widget rendering
-		//FIXME: The widgets can support this via dynamic call to place libs in the head if they aren't loaded
-		//       jQuery can do this but need time to implement/test.
-
-		//$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
-		//$aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/tiny_mce.js';
-		//$aJavascript[] = 'resources/js/kt_tinymce_init.js';
-    	//$aJavascript[] = 'thirdpartyjs/tinymce/jscripts/tiny_mce/jquery.tinymce.js';
-
 		$this->oPage->requireJSResources($aJavascript);
-
-		//FIXME: Might really not need to load these styles, will check l8r
-		//$this->oPage->requireCSSResource('resources/css/kt-treewidget.css')}
 
         //Creating the form
 		$oForm = new KTForm;
@@ -210,7 +199,7 @@ class InetBulkUploadFolderAction extends KTFolderAction {
                 'value' => _kt('Add'),
 				'id' => 'quick_add',
                 'description' => _kt('If you do not need to modify any the metadata for this document (see below), then you can simply click "Add" here to finish the process and add the document.'),
-                'name' => 'btn_quick_submit',
+				'name' => 'btn_quick_submit'
 		));
 
 		$oFReg =& KTFieldsetRegistry::getSingleton();

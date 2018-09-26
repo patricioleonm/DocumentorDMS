@@ -6,30 +6,26 @@
 	}
 </script>
 {/literal}
-<h2>{i18n}Existing permissions{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Existing permissions{/i18n}</h4>
 
 <p class="descriptiveText">{i18n}Permissions are descriptors used to ascertain whether groups of users have access to certain functionality. The built-in permissions below facilitate the default functionality of the DMS and can't be changed. Plugin developers may choose to add additional permissions below that manage access to their plugins functionality.{/i18n}</p>
 
 <form method="POST" action="{$smarty.server.PHP_SELF}">
-<fieldset>
-<legend>{i18n}Create a new permission{/i18n}</legend>
-<input type="hidden" name="action" value="newPermission">
-
-
-
-{foreach item=oWidget from=$add_fields}
-  {$oWidget->render()}
-{/foreach}
-
-<div class="form_actions">
-<input type="submit" name="submit" value="{i18n}Create{/i18n}">
-</div>
-</fieldset>
-
+    <div class="card card-body mb-2">
+        <h5 class="card-title">{i18n}Create a new permission{/i18n}</h5>
+        <input type="hidden" name="action" value="newPermission">
+        {foreach item=oWidget from=$add_fields}
+        {$oWidget->render()}
+        {/foreach}
+        <div class="form_actions">
+            <hr>
+            <input type="submit" name="submit" value="{i18n}Create{/i18n}" class="btn btn-primary float-right">
+        </div>
+    </div>
 </form>
 
 
-<table class="table table-hover table-striped table-bordered mt-sm">
+<table class="table table-hover table-striped table-bordered table-sm">
     <thead>
         <tr>
             <th>{i18n}Permission{/i18n}</th>
@@ -53,10 +49,8 @@
             <!-- <td>
                 Edit
             </td> -->
-            <td>
-               <a
-href="{addQS}action=deletePermission&id={$oPerm->getId()}{/addQS}"
-class="ktAction ktDelete">{i18n}Delete Permission{/i18n}</a>
+            <td class="text-center">
+               <a href="{addQS}action=deletePermission&id={$oPerm->getId()}{/addQS}"><i class="fa fa-trash fa-2x"></i> <span class="sr-only">{i18n}Delete Permission{/i18n}</span></a>
             </td>
           { /if }
         </tr>

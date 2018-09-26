@@ -1,146 +1,151 @@
-{$context->oPage->requireJSResource("assets/js/knockout.min.js")}
-{$context->oPage->requireJSResource("assets/js/queryBuilder.js")}
-
+{$context->oPage->requireJSresource('assets/js/queryBuilder.js')}
 {literal}
-<script>
+<script type="text/javascript">
 	var meta_workflows = {/literal}{$metainfo.workflow_str}{literal};
 	var meta_fieldsets = {/literal}{$metainfo.fieldset_str}{literal};
 	var meta_fields = {/literal}{$metainfo.fields_str}{literal};
-	var criteria_groups = [
-						{ "id" : 0, "name" : "{/literal}{i18n}Available Criteria{/i18n}{literal}", "meta" : meta_fields}, 
-						{ "id" : 1, "name" : "{/literal}{i18n}Available Fieldsets{/i18n}{literal}", "meta" : meta_fieldsets}, 
-						{ "id" : 2, "name" : "{/literal}{i18n}Available Workflows{/i18n}{literal}", "meta" : meta_workflows}
-					];
 	var meta_users = {/literal}{$metainfo.users_str}{literal};
 	var meta_mimetypes = {/literal}{$metainfo.mimetypes_str}{literal};
 	var meta_documenttypes = {/literal}{$metainfo.documenttypes_str}{literal};
-	var criteria = [ {fields: 0, visible: 0}];
+    var remove = "{/literal}{i18n}Remove{/i18n}{literal}";
+    var is_isnot = [
+        {"is" : "{/literal}{i18n}is{/i18n}{literal}"},
+        {"is not" : "{/literal}{i18n}is not{/i18n}{literal}"}
+    ];
+
+    var conditions1 = [
+            {">" : "{/literal}{i18n}after{/i18n}{literal}"},
+			{"between" : "{/literal}{i18n}between{/i18n}{literal}"},
+			{"<" : "{/literal}{i18n}before{/i18n}{literal}"},
+			{"is" : "{/literal}{i18n}on{/i18n}{literal}"},
+			{"is not" : "{/literal}{i18n}not on{/i18n}{literal}"}
+    ];
+
+    var conditions2 = [
+            {"is" : "{/literal}{i18n}equal to{/i18n}{literal}"},
+			{"is not" : "{/literal}{i18n}not equal to{/i18n}{literal}"},
+			{">" : "{/literal}{i18n}greater than{/i18n}{literal}"},
+			{">=" : "{/literal}{i18n}greater than or equal to{/i18n}{literal}"},
+			{"<" : "{/literal}{i18n}less than{/i18n}{literal}"},
+			{"<=" : "{/literal}{i18n}less than or equal to{/i18n}{literal}"},
+			{"between" : "{/literal}{i18n}between{/i18n}{literal}"}
+    ];
+
+    var conditions3 = [
+        {"is" : "{/literal}{i18n}is{/i18n}{literal}"},
+        {"is not" : "{/literal}{i18n}is not{/i18n}{literal}"},
+        {"contains" : "{/literal}{i18n}contains{/i18n}{literal}"},
+        {"does not contain" : "{/literal}{i18n}does not contain{/i18n}{literal}"},
+        {"like" : "{/literal}{i18n}like{/i18n}{literal}"},
+        {"not like" : "{/literal}{i18n}not like{/i18n}{literal}"},
+        {"starts with" : "{/literal}{i18n}starts with{/i18n}{literal}"},
+        {"ends with" : "{/literal}{i18n}ends with{/i18n}{literal}"}
+    ];
+
+    var filesizes = [
+        {"bytes" : "{/literal}{i18n}bytes{/i18n}{literal}"},
+        {"kilobytes" : "{/literal}{i18n}kilobytes{/i18n}{literal}"},
+        {"megabytes" : "{/literal}{i18n}megabytes{/i18n}{literal}"},
+        {"gigabytes" : "{/literal}{i18n}gigabytes{/i18n}{literal}"}
+    ];
+
+    var less_greater = [
+            {"<" : "{/literal}{i18n}less than{/i18n}{literal}"},
+	        {">" : "{/literal}{i18n}greater than{/i18n}{literal}"}];
+
+    var times = [
+        {"days" : "{/literal}{i18n}days{/i18n}{literal}"},
+	    {"months" : "{/literal}{i18n}months{/i18n}{literal}"},
+	    {"years" : "{/literal}{i18n}years{/i18n}{literal}"}
+    ];
+
+    var contains_notcontains = [
+		{"contains" : "{/literal}{i18n}contains{/i18n}{literal}"},
+		{"does not contain" : "{/literal}{i18n}does not contain{/i18n}{literal}"}
+    ];
+
+    var contains_notcontains2 = [
+        {"contains" : "{/literal}{i18n}is{/i18n}{literal}"},
+		{"does not contain" : "{/literal}{i18n}is not{/i18n}{literal}"}
+    ];
+
+    var and_or = [
+        {"AND" : "{/literal}{i18n}all{/i18n}{literal}"},
+		{"OR" : "{/literal}{i18n}any{/i18n}{literal}"}
+    ];
+
+    var true_false = [
+        {"true" : "{/literal}{i18n}True{/i18n}{literal}"},
+        {"false" : "{/literal}{i18n}False{/i18n}{literal}"}
+    ];
 </script>
 {/literal}
-<div>
-	<fieldset>
-		<legend>{i18n}Advanced Search{/i18n}</legend>
+<h4>{i18n}Advanced Search{/i18n}</h4>
 
-		{capture assign=options}
-		<a href="{$rootUrl}/search2.php?action=queryBuilder">{i18n}Search Criteria Editor{/i18n}</a>
-		{/capture}
+{capture assign=options}
+<a href="{$rootUrl}/search2.php?action=queryBuilder">{i18n}Search Criteria Editor{/i18n}</a>
+{/capture}
 
-		{i18n arg_options=$options}The #options# may also be used to create more complex search criteria expressions.{/i18n}
-		<br><br>
-		{capture assign=options}
-		<select id="allop">
-			<option value="AND">{i18n}all{/i18n}
-			<option value="OR" SELECTED>{i18n}any{/i18n}
-		</select>
-		{/capture}
-
-		{i18n arg_options=$options}Return items which match #options# of the criteria groups specified.{/i18n}
-	<div class="form-group">
-		<select class="form-control form-control-sm" data-bind="options : criteriaGroups, optionsText : 'name', value : selectedCriteria "></select>
-	</div>
-	<div class="form-group">
-		<select class="form-control form-control-sm" data-bind="options : selectedCriteria().meta, optionsText : 'name', value : selectedMeta"></select>
-	</div>
-	<div class="form-group" data-bind="if : selectedCriteria().id == 1">
-		<select class="form-control form-control-sm" data-bind="options : selectedMeta().fields, optionsText : 'name', optionsValue : 'id' "></select>
-	</div>
-	<div class="form-group" data-bind="if : selectedCriteria().id == 2">
-		<select class="form-control form-control-sm" data-bind="options : selectedMeta().states, optionsText : 'name', optionsValue : 'id' "></select>
-	</div>
-
-
-		<div id="groupwrapping">
-			<div id="groupwrapper0">
-				<fieldset>
-					<legend>{i18n}Criteria Group{/i18n}</legend>
-
-					{capture assign=options}
-						<select id="groupop0">
-							<option value="AND">{i18n}all{/i18n}
-							<option value="OR" SELECTED>{i18n}any{/i18n}
-						</select>
-					{/capture}
-
-					{i18n arg_options=$options}Return items which match #options# of the criteria specified below.{/i18n}
-					<br>
-
-					<div id="criteria0">
-						<form id="form0" onsubmit="return false;">
-
-							<table width="100%">
-							<tr>
-								<td width="50%" valign="top">
-									<br>
-									<div id="criteria_nofields0" style="color: brown">{i18n}No criteria have been selected for the criteria group.{/i18n}
-									<p>
-									<input type=button value="{i18n}Remove Criteria Group{/i18n}" onclick="removeCriteriaGroup(0)" id="removeCriteriaGroup0" style="display: none">
-									</div>
-									<div id="criteria_fields0">
-
-									</div>
-								</td>
-								<td valign="top">
-									<table >
-									<tr>
-										<td valign=top>
-											<select id="selector0" style="width: 200px" onchange="selectorChange(0)">
-												<option value="0">{i18n}Available Criteria{/i18n}
-												<option value="1">{i18n}Available Fieldsets{/i18n}
-												<option value="2">{i18n}Available Workflows{/i18n}
-											</select>
-											<br>
-											<div>
-											<select id="fields0" size="5" style="width: 200px; height: 100px; display: block" onclick="fieldChange(0)">
-											<option value="" selected>--- {i18n}Select some criteria{/i18n} ---
-											{foreach from=$metainfo.fields item=field}
-												<option>{$field.display}
-											{/foreach}
-											</select>
-											<select id="fieldsets0" size="5" style="width: 200px;   height: 100px; display: none" onclick="fieldsetsChange(0)">
-											<option value="" selected>--- {i18n}Select a fieldset{/i18n} ---
-											{foreach from=$metainfo.fieldsets item=fieldset}
-												<option>{$fieldset.name}
-											{/foreach}
-											</select>
-											<select id="workflows0" size="5" style="width: 200px;   height: 100px; display: none" onclick="workflowsChange(0)" >
-											<option value="" selected>--- {i18n}Select a workflow{/i18n} ---
-											{foreach from=$metainfo.workflows item=workflow}
-												<option>{$workflow.name}
-											{/foreach}
-											</select>
-											</div>
-
-										<td valign=top>
-											<div id="fieldset_fields_wrapper0" style="display: none">
-												<div id="fieldset_name0"></div>
-												<select id="fieldset_fields0" size=5 style="width: 150px" onclick="addMetadataField(0)">
-												</select>
-
-											</div>
-											<div id="workflow_states_wrapper0" style="display: none">
-												<div id="workflow_name0"></div>
-												<select id="workflow_states0" size=5 style="width: 150px" onclick="addWorkflowStateField(0)">
-												</select>
-
-											</div>
-										</td>
-									<tr>
-										<td colspan=5>
-											{i18n}Click on a field above to add it to the criteria group.{/i18n}
-										</td>
-									</tr>
-									</table>
-								</td>
-							</tr>
-							</table>
-						</form>
-					</div>
-				</fieldset>
-			</div>
-		</div>
-		<div id="">
-			<input type=button value="{i18n}Add another set of criteria{/i18n}" onclick="addCriteriaSet()">
-			<input type=button value="{i18n}Search{/i18n}" onclick="butSearchClick()">
-		</div>
-	</fieldset>
+<div class="alert alert-info">
+{i18n arg_options=$options}The #options# may also be used to create more complex search criteria expressions.{/i18n}
 </div>
+
+{capture assign=options}
+    <select id="allop" class="col-2 form-control form-control-sm d-inline">
+        <option value="AND">{i18n}all{/i18n}
+        <option value="OR" SELECTED>{i18n}any{/i18n}
+    </select>
+{/capture}
+
+<div class="card" id="criterias_groups">
+    <div class="card-header">
+        <div class="d-inline">
+        {i18n arg_options=$options}Return items which match #options# of the criteria groups specified.{/i18n}
+        </div>
+        <button class="btn btn-success btn-sm float-right" onclick="addCriteriaGroup()"><i class="fa fa-plus"></i> {i18n}Add another set of criteria{/i18n}</button>
+    </div>
+    <div class="card-body" id="criterias_groups_list">
+    </div>
+    <div class="card-footer">
+        <input type=button value="{i18n}Search{/i18n}" onclick="butSearchClick()" class="btn btn-primary float-right">
+    </div>
+</div>
+
+<template id="tpl_criteria_group">
+        <div class="card border-secondary mb-2">
+            <div class="card-header">
+                <h5 class="card-title d-inline"><i class="fa fa-filter"></i> {i18n}Criteria Group{/i18n}</h5>
+                <button class="btn btn-danger btn-sm float-right" data-id="XX" onclick="removeCriteriaGroup()"><i class="fa fa-trash"></i> {i18n}Remove Criteria Group{/i18n}</button>
+            </div>
+            <div class="card-body">
+                {capture assign=options}
+				<select id="groupop_XX" class="col-2 form-control form-control-sm d-inline" data-id="">
+					<option value="AND">{i18n}all{/i18n}</option>
+					<option value="OR" SELECTED>{i18n}any{/i18n}</option>
+				</select>
+			{/capture}
+
+			<p class="mt-1">{i18n arg_options=$options}Return items which match #options# of the criteria specified below.{/i18n}</p>
+            <div class="row">
+                <div class="col-3">
+                    <select class="form-control form-control-sm" id="selector0_XX" data-id="">
+                        <option value="0">{i18n}Available Criteria{/i18n}</option>
+                        <option value="1">{i18n}Available Fieldsets{/i18n}</option>
+                        <option value="2">{i18n}Available Workflows{/i18n}</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select class="form-control form-control-sm" id="selector1_XX" data-id=""></select>
+                </div>
+                <div class="col-3">
+                    <select class="form-control form-control-sm" id="selector2_XX" data-id="" disabled></select>
+                </div>
+                <div class="col-3">
+                <button class="btn btn-sm btn-success btn-block" data-id="XX" id="btnAdd_XX"><i class="fa fa-plus"></i> {i18n}Add{/i18n}</button>
+                </div>
+            </div>
+            <hr>
+            <div id="criteria_fieldsXX"></div>
+            </div>
+        </div>
+</template>

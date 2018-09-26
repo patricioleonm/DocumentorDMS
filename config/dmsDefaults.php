@@ -61,6 +61,7 @@ ini_set('display_errors', '0');
 ini_set('display_startup_errors', '1');
 ini_set('magic_quotes_runtime', '0');
 ini_set('arg_separator.output', '&');
+date_default_timezone_set("America/Argentina/Buenos_Aires");
 
 $microtime_simple = explode(' ', microtime());
 

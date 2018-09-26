@@ -1,4 +1,4 @@
-<h2>{i18n}Add a new unit{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Add a new unit{/i18n}</h4>
 
 <p class="descriptiveText">{i18n}Units allow you to delegate a portion
 of the document management system to a particular part of your
@@ -17,8 +17,9 @@ membership of groups that belong to the unit.{/i18n}</p>
       {/foreach}
 
       <div class="form_actions">
-         <input type="submit" value="{i18n}Next{/i18n}" />
-         <input type="submit" name="kt_cancel[]" value="{i18n}Cancel{/i18n}" />
+        <hr>
+         <input type="submit" value="{i18n}Next{/i18n}" class="btn btn-primary float-right"/>
+         <input type="submit" name="kt_cancel[]" value="{i18n}Cancel{/i18n}" class="btn btn-warning float-left"/>
       </div>
    </fieldset>
    </form>

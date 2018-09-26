@@ -101,9 +101,9 @@ class AdminSplashDispatcher extends KTAdminDispatcher {
         //Removing bad documents/fieldmanagement links from the Document Metadata and Workflow Configuration page.
 		if ($category == 'documents') {
 	        $oPage =& $GLOBALS['main'];			
-			$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
-			$oPage->requireJSResources($aJavascript);
-			$jscript .= "<script src='resources/js/kt_hideadminlink.js' type='text/javascript'></script>";
+			//$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
+			$oPage->requireJSResource('resources/js/kt_hideadminlink.js');
+			//$jscript .= "<script src='resources/js/kt_hideadminlink.js' type='text/javascript'></script>";
 		}
         
         $oRegistry =& KTAdminNavigationRegistry::getSingleton();

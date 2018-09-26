@@ -1,9 +1,8 @@
-<h2>{i18n}Edit Group Details{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Edit Group Details{/i18n}</h4>
 
-<p class="descriptiveText">{i18n arg_name=$edit_group->getName()}Change
-the system's information about group <strong>#name#</strong>{/i18n}</p>
+<p class="descriptiveText">{i18n arg_name=$edit_group->getName()}Change the system's information about group <strong>#name#</strong>{/i18n}</p>
 
-<form action="{$smarty.server.PHP_SELF}" method="POST">x
+<form action="{$smarty.server.PHP_SELF}" method="POST">
    <input type="hidden" name="action" value="saveGroup" />
    <input type="hidden" name="group_id" value="{$edit_group->getId()}" />
    <input type="hidden" name="old_search" value="{$old_search}" />   
@@ -14,8 +13,9 @@ the system's information about group <strong>#name#</strong>{/i18n}</p>
         {$oWidget->render()}
       {/foreach}
       <div class="form_actions">
-         <input type="submit" value="{i18n}save changes to group{/i18n}" />
-         <input type="submit" name="kt_cancel[{addQS}old_search={$old_search}&do_search=1{/addQS}]" value="{i18n}Cancel{/i18n}" />
+        <hr>
+        <input type="submit" value="{i18n}save changes to group{/i18n}" class="btn btn-primary float-right"/>
+        <input type="submit" name="kt_cancel[{addQS}old_search={$old_search}&do_search=1{/addQS}]" value="{i18n}Cancel{/i18n}" class="btn btn-warning float-left"/>
       </div>
    </fieldset>
    </form>

@@ -1,4 +1,4 @@
-<h2>{i18n}Guard permissions for Transition{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Guard permissions for Transition{/i18n}</h4>
 
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <fieldset>
@@ -12,12 +12,15 @@
 <p class="descriptiveText">{i18n}Specify which permissions the user will require in order to perform this transition.  Note that 
 the user will be required to have <strong>all</strong> these permissions.{/i18n}</p>
 
+<div class="list-group">
 {foreach from=$perms item=oPerm key=sPermName}
-   <input type="checkbox" name="trigger_perms[{$sPermName}]" {if ($current_perms.$sPermName)}checked="true"{/if}/> {i18n}{$oPerm->getHumanName()}{/i18n} <br />
+   <label class="list-group-item"><input type="checkbox" name="trigger_perms[{$sPermName}]" {if ($current_perms.$sPermName)}checked="true"{/if} class="float-left"/> <span class="float-right">{i18n}{$oPerm->getHumanName()}{/i18n}</span></label>
 {/foreach}
+</div>
 
 <div class="form_action">
-    <input type="submit" value="{i18n}Save Trigger{/i18n}" />
+    <hr>
+    <input type="submit" value="{i18n}Save Trigger{/i18n}" class="btn btn-primary float-right"/>
 </div>
 </fieldset>
 </form>

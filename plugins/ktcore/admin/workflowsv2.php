@@ -1409,6 +1409,7 @@ class KTWorkflowAdminV2 extends KTAdminDispatcher {
         $oTemplate->setData(array(
             'context' => $this,
             'perm_grid' => $aPermissionGrid,
+            'permissions' => $aPermissionsToJSON,
             'perms' => $aUsefulPermissions,
             'form' => $oForm,
             'jsonpermissions' => $sJSONPermissions,

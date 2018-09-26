@@ -25,12 +25,12 @@ if($ping == 'ping'){
         $str = '';
         // display any error messages
         if(!empty($status)){
-            $str = '<div><b>'._kt('The following errors occurred during the download').': </><br />';
-            $str .= '<table style="padding-top: 5px;" cellspacing="0" cellpadding="5">';
+            $str = '<p><b>'._kt('The following errors occurred during the download').': </b></p>';
+            $str .= '<ul>';
             foreach ($status as $msg){
-                $str .= '<tr><td style="border: 1px #888 solid;">'.$msg.'</td></tr>';
+                $str .= '<li>'.$msg.'</li>';
             }
-            $str .= '</table></div>';
+            $str .= '</ul>';
         }
         echo $str;
     }

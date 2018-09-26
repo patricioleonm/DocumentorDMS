@@ -10,7 +10,7 @@
   <div class="ktInfoMessage"><span>{i18n}Anybody (with the ability to see the document) can perform this transition.{/i18n}</span></div>    
 {else}
     
-<table class="kt_collection narrow" cellspacing="0">
+<table class="table table-sm table-striped">
     <thead>
         <tr>
             <th>{i18n}Restriction{/i18n}</th>        

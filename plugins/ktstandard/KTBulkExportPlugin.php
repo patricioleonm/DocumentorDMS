@@ -71,6 +71,7 @@ class KTBulkExportAction extends KTFolderAction {
     }
 
     function do_main() {
+        $this->oPage->setBreadcrumbDetails(_kt('Bulk Download'));
         $config = KTConfig::getSingleton();
         $useQueue = $config->get('export/useDownloadQueue', true);
 
@@ -94,10 +95,10 @@ class KTBulkExportAction extends KTFolderAction {
             DownloadQueue::addItem($exportCode, $sCurrentFolderId, $sCurrentFolderId, 'folder');
 
             $task_url = KTUtil::kt_url() . '/presentation/lookAndFeel/knowledgeTree/bulkdownload/downloadTask.php';
-
+            
           	$oTemplating =& KTTemplating::getSingleton();
-          	$oTemplate = $oTemplating->loadTemplate('ktcore/action/bulk_download');
-
+            $oTemplate = $oTemplating->loadTemplate('ktcore/action/bulk_download');
+            $this->oPage->requireJSResource('assets/js/bulk-download.js');
           	$aParams = array(
                     'folder_url' => $folderurl,
                     'url' => $task_url,
@@ -107,7 +108,8 @@ class KTBulkExportAction extends KTFolderAction {
             return $oTemplate->render($aParams);
         }
 
-        // Get all folders and sub-folders
+    // Get all folders and sub-folders
+    /*
         $sWhereClause = "parent_folder_ids = '{$sCurrentFolderId}' OR
         parent_folder_ids LIKE '{$sCurrentFolderId},%' OR
         parent_folder_ids LIKE '%,{$sCurrentFolderId},%' OR
@@ -214,6 +216,7 @@ class KTBulkExportAction extends KTFolderAction {
                 </script>', $url);
 
         exit(0);
+    */
     }
 
     function buildQuery($aFolderIds) {

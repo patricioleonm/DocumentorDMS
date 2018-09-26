@@ -7,7 +7,8 @@
 {/foreach}
 
 <div class="form_actions ">
-  <input type="submit" name="submit" value="{i18n}Add a new source{/i18n}" />
+  <hr>
+  <input type="submit" name="submit" value="{i18n}Add a new source{/i18n}" class="btn btn-primary"/>
 </div>
 </fieldset>
 </form>

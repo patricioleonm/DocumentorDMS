@@ -190,9 +190,9 @@ class schedulerEntity extends KTEntity
         $sId = $this->getId();
         $sStatus = $this->getStatus();
 
-        $sDiv = "<span id='font{$sId}' ";
-        $sDiv .= ($sStatus != 'disabled') ? 'class="">' : 'class="descriptiveText">';
-        $sDiv .= $this->getTask().'</span>';
+        $sDiv = "<span id=\"font{$sId}\" ";
+        $sDiv .= ($sStatus != 'disabled') ? "class=\"\">" : "class=\"text-danger\">";
+        $sDiv .= $this->getTask()."</span>";
         return $sDiv;
     }
 
@@ -201,9 +201,9 @@ class schedulerEntity extends KTEntity
         $sStatus = $this->getStatus();
         $sFreqs = $this->getFrequencyByLang();
 
-        $sLink = "<div id='div{$sId}'";
-        $sLink .= ($sStatus == 'disabled') ? 'style="visibility: hidden;" >' : '>';
-        $sLink .= $sFreqs.'</div>';
+        $sLink = "<div id=\"div{$sId}\"";
+        $sLink .= ($sStatus == "disabled") ? "style=\"visibility: hidden;\" >" : ">";
+        $sLink .= $sFreqs."</div>";
         return $sLink;
     }
 
@@ -214,9 +214,9 @@ class schedulerEntity extends KTEntity
         $sId = $this->getId();
         $sStatus = $this->getStatus();
 
-        $sLink = "<input type=\"button\" class=\"btn btn-primary btn-sm\" id=\"freqLink{$this->getId()}' onclick='javascript: showFrequencyDiv(\"{$sId}\");\"";
-        //$sLink .= " value=\""._kt('Change Frequency')."\" ";
-        $sLink .= ($sStatus == 'disabled') ? 'style="visibility: hidden;" />' : ' />';
+        $sLink = "<input type=\"button\" class=\"btn btn-primary btn-sm\" id=\"freqLink{$this->getId()}\" onclick=\"javascript: showFrequencyDiv({$sId});\"";
+        $sLink .= " value=\""._kt('Change Frequency')."\" ";
+        $sLink .= ($sStatus == "disabled") ? "style=\"visibility: hidden;\" />" : " />";
 
         return $sLink;
     }
@@ -230,9 +230,9 @@ class schedulerEntity extends KTEntity
         $sUrl = KTUtil::ktLink('admin.php', 'misc/scheduler', 'action=updateRunTime');
 
         $sTitle = _kt('This task will run the next time the Scheduler runs'); //, and then revert to the frequency you set on this page');
-        $sLink = "<input type='button' class=\"btn btn-warning btn-sm\" id='runnowLink{$this->getId()}' onclick='javascript: runOnNext(\"{$sId}\", \"{$sUrl}\");'";
-        $sLink .= " title='$sTitle' value='"._kt('Run on Next Iteration')."' ";
-        $sLink .= ($sStatus == 'disabled') ? 'style="visibility: hidden;" />' : ' />';
+        $sLink = "<input type=\"button\" class=\"btn btn-warning btn-sm\" id=\"runnowLink{$this->getId()}\" onclick=\"javascript: runOnNext({$sId}, '{$sUrl}');\"";
+        $sLink .= " title=\"$sTitle\" value=\""._kt('Run on Next Iteration')."\" ";
+        $sLink .= ($sStatus == "disabled") ? "style=\"visibility: hidden;\" />" : " />";
 
         return $sLink;
     }
@@ -253,7 +253,7 @@ class schedulerEntity extends KTEntity
         $sLinkText = ($sStatus == 'enabled') ? $sDisableText : $sEnableText;
         $sUrl = KTUtil::ktLink('admin.php', 'misc/scheduler', 'action=updateStatus');
         $sLink = "<input type=\"button\" class=\"btn btn-danger btn-sm\" id=\"statusLink{$this->getId()}\"
-            onclick=\"javascript: toggleStatus(\"{$sId}\", \"{$sUrl}\", \"{$sDisableText}\", \"{$sEnableText}\");\" value=\"{$sLinkText}\" />";
+            onclick=\"javascript: toggleStatus({$sId}, '{$sUrl}', '{$sDisableText}', '{$sEnableText}');\" value=\"{$sLinkText}\" />";
         return $sLink;
     }
 }

@@ -1,23 +1,19 @@
-<h2>{i18n}Document Types{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Document Types{/i18n}</h4>
 
 <form method="POST">
-
-<fieldset>
-<legend>{i18n}Create a new document type{/i18n}</legend>
-
-<p class="descriptiveText">{i18n}To start the process of creating a new document type,
-please enter a name for the type below.{/i18n}</p>
-
-{foreach item=oWidget from=$add_fields}
-  {$oWidget->render()}
-{/foreach}
-
-<div class="form_actions">
-<input type="hidden" name="action" value="new">
-<input type="submit" name="submit" value="{i18n}Create{/i18n}">
-</div>
-</fieldset>
-
+    <div class="card card-body">
+        <h5 class="card-title">{i18n}Create a new document type{/i18n}</h5>
+        <p class="descriptiveText">{i18n}To start the process of creating a new document type,
+        please enter a name for the type below.{/i18n}</p>
+        {foreach item=oWidget from=$add_fields}
+        {$oWidget->render()}
+        {/foreach}
+        <div class="form_actions">
+            <hr>
+            <input type="hidden" name="action" value="new">
+            <input type="submit" name="submit" value="{i18n}Create{/i18n}" class="btn btn-primary float-right">
+        </div>
+    </div>
 </form>
 
 <fieldset>
@@ -25,74 +21,52 @@ please enter a name for the type below.{/i18n}</p>
 
 <p class="descriptiveText">{i18n}Select a document type from the list below to change
 its details, or use the enable/disable buttons to change its availability state.{/i18n}</p>
-
-<table class="kt_collection narrow" cellspacing="0" cellpadding="5">
-
-  <thead>
-    <tr>
-      <th>{i18n}Document Type{/i18n}</th>
-      <th>{i18n}Associated Fieldsets{/i18n}</th>
-      <th>{i18n}Edit{/i18n}</th>
-      <th>{i18n}Disable/Enable{/i18n}</th>
-      <th>{i18n}Delete{/i18n}</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-
-{foreach from=$document_types item=oDocumentType}
-<tr>
-
-<td>
-    { $oDocumentType->getName() }
-</td>
-
-      <td>
-{assign var="aFieldsets" value=$oDocumentType->getFieldsets()}
-{if $aFieldsets}
-
-{foreach from=$aFieldsets item=oFieldset name=fieldsets}
-
-    {capture assign=fsid}{$oFieldset->getId()}{/capture}
-<a title="{i18n}Edit fieldset.{/i18n}"
-href="{ktLink base="admin.php" subpath="/documents/fieldmanagement2" query="action=edit&fFieldsetId=`$fsid`"}">{$oFieldset->getName()}</a>{if (!$smarty.foreach.fieldsets.last)}, {/if} 
-
-{/foreach}
-
-{else}
-&mdash;
-{/if}
-      </td>
-
-
-<td style="text-align:center">
-    <a title="{i18n}Edit document type.{/i18n}" 
-    class="ktAction ktEdit" href="{addQS}action=edit&fDocumentTypeId={$oDocumentType->getId()}{/addQS}">{i18n}Edit{/i18n}</a>
-</td>
-
-<td style="text-align:center">
-{if $oDocumentType->getDisabled()}
-    <a title="{i18n}Enable document type.{/i18n}" 
-    class="ktAction ktAdd" href="{addQS}action=enable&fDocumentTypeId={$oDocumentType->getId()}{/addQS}">{i18n}Enable{/i18n}</a>
-{else}
-    <a title="{i18n}Disable document type.{/i18n}"class="ktAction ktDenied" 
-    kt:deleteMessage="{i18n}Are you sure you wish to disable this document type?{/i18n}" 
-    href="{addQS}action=disable&fDocumentTypeId={$oDocumentType->getId()}{/addQS}">{i18n}Disable{/i18n}</a>
-{/if}
-</td>
-
-<td style="text-align:center">
-    {if $oDocumentType->checkDelete($associated_types, $oDocumentType->getId())}
-        <a title="{i18n}Delete document type.{/i18n}" class="ktAction ktDelete" 
-        kt:deleteMessage="{i18n}Are you sure you wish to delete this document type? It will be permanently removed from the system.{/i18n}" 
-        href="{addQS}action=delete&fDocumentTypeId={$oDocumentType->getId()}{/addQS}">{i18n}Delete{/i18n}</a>
-    {else}
-        <span title="{i18n}Document type cannot be deleted{/i18n}" class="ktAction ktDenied"></span> 
-    {/if}
-</td>
-
-</tr>
-  </tbody>
-{/foreach}
-</table>
+<div class="table-resposive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>{i18n}Document Type{/i18n}</th>
+                <th>{i18n}Associated Fieldsets{/i18n}</th>
+                <th class="text-center">{i18n}Edit{/i18n}</th>
+                <th class="text-center">{i18n}Disable/Enable{/i18n}</th>
+                <th class="text-center">{i18n}Delete{/i18n}</th>
+            </tr>
+        </thead>  
+        <tbody>
+            {foreach from=$document_types item=oDocumentType}
+            <tr>
+                <td>{ $oDocumentType->getName() }</td>
+                <td>
+                    {assign var="aFieldsets" value=$oDocumentType->getFieldsets()}
+                    {if $aFieldsets}
+                        {foreach from=$aFieldsets item=oFieldset name=fieldsets}
+                            {capture assign=fsid}{$oFieldset->getId()}{/capture}
+                            <a title="{i18n}Edit fieldset.{/i18n}" href="{ktLink base="admin.php" subpath="/documents/fieldmanagement2" query="action=edit&fFieldsetId=`$fsid`"}">{$oFieldset->getName()}</a>{if (!$smarty.foreach.fieldsets.last)}, {/if} 
+                        {/foreach}
+                    {else}
+                        &mdash;
+                    {/if}
+                </td>
+                <td class="text-center">
+                    <a title="{i18n}Edit document type.{/i18n}" href="{addQS}action=edit&fDocumentTypeId={$oDocumentType->getId()}{/addQS}"><i class="far fa-edit fa-2x"></i> <span class="sr-only">{i18n}Edit{/i18n}</span></a>
+                </td>
+                <td class="text-center">
+                    {if $oDocumentType->getDisabled()}
+                        <a title="{i18n}Enable document type.{/i18n}" href="{addQS}action=enable&fDocumentTypeId={$oDocumentType->getId()}{/addQS}"><i class="fa fa-toggle-off fa-2x text-muted"></i> <span class="sr-only">{i18n}Enable{/i18n}</span></a>
+                    {else}
+                        <a title="{i18n}Disable document type.{/i18n}" class="ktDelete" kt:deleteMessage="{i18n}Are you sure you wish to disable this document type?{/i18n}" href="{addQS}action=disable&fDocumentTypeId={$oDocumentType->getId()}{/addQS}"><i class="fa fa-toggle-on fa-2x"></i> <span class="sr-only">{i18n}Disable{/i18n}</span></a>
+                    {/if}
+                </td>
+                <td class="text-center">
+                    {if $oDocumentType->checkDelete($associated_types, $oDocumentType->getId())}
+                        <a title="{i18n}Delete document type.{/i18n}" kt:deleteMessage="{i18n}Are you sure you wish to delete this document type? It will be permanently removed from the system.{/i18n}" href="{addQS}action=delete&fDocumentTypeId={$oDocumentType->getId()}{/addQS}" class="ktDelete"><i class="fa fa-trash fa-2x"></i> <span class="sr-only">{i18n}Delete{/i18n}</span></a>
+                    {else}
+                        <span title="{i18n}Document type cannot be deleted{/i18n}"><i class="fa fa-trash fa-2x text-muted"></i></span> 
+                    {/if}
+                </td>
+            </tr>  
+            {/foreach}
+        </tbody>
+    </table>
+</div>
 </fieldset>

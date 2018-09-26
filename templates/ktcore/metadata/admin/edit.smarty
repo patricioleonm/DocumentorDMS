@@ -1,8 +1,8 @@
-<h2>{i18n arg_fieldset_name=$fieldset_name}Edit Fieldset: #fieldset_name#{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n arg_fieldset_name=$fieldset_name}Edit Fieldset: #fieldset_name#{/i18n}</h4>
 
-<table class="table tale-striped table-bordered">
+<table class="table tale-striped table-bordered table-sm">
     <tbody>
-        <tr class="first">
+        <tr>
             <th>{i18n}Name{/i18n}</th><td>{$context->oFieldset->getName()}</td>
         </tr>
         <tr>

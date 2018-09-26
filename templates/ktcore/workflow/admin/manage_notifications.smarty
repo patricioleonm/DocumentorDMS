@@ -1,12 +1,12 @@
-<h2>{i18n}Workflow Notifications{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Workflow Notifications{/i18n}</h4>
 
 <p class="descriptiveText">{i18n}Please select which roles or groups should be informed when each state is reached.{/i18n}</p>
 
-<table class="kt_collection narrow" cellspacing="0">
+<table class="table table-sm table-striped">
     <thead>
-        <th>{i18n}State{/i18n}</th>
-        <th>{i18n}Edit{/i18n}</th>
+        <th>{i18n}State{/i18n}</th>        
         <th>{i18n}Existing Notifications{/i18n}</th>        
+        <th>{i18n}Edit{/i18n}</th>
     </thead>
     
     <tbody>
@@ -14,8 +14,12 @@
       {assign value=$oState->getId() var=state_id}
         <tr>
             <td>{$oState->getName()}</td>
-            <td class="centered"><a href="{addQS context=$context}action=editnotifications&fStateId={$state_id}{/addQS}" class="ktAction ktEdit"></a></td>
-            <td><span class="descriptiveText">{$context->describeStateNotifications($oState)}</span></td>
+            <td>
+                <span class="descriptiveText">{$context->describeStateNotifications($oState)}</span>
+            </td>
+            <td class="text-center">
+                <a href="{addQS context=$context}action=editnotifications&fStateId={$state_id}{/addQS}"><i class="fas fa-edit fa-2x"></i> <span class="sr-only">{i18n}edit{/i18n}</span></a>
+            </td>
         </tr>
       {/foreach}
     </tbody>

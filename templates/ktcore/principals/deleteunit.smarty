@@ -1,4 +1,4 @@
-<h2>{i18n}Delete Unit{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Delete Unit{/i18n}</h4>
 
 <p class="descriptiveText">{i18n arg_name=$unit->getName()}Delete
 unit <strong>#name#</strong> from the system{/i18n}</p>
@@ -12,8 +12,9 @@ unit <strong>#name#</strong> from the system{/i18n}</p>
         {$oWidget->render()}
       {/foreach}
       <div class="form_actions">
-         <input type="submit" value="{i18n}Delete unit{/i18n}" />
-         <input type="submit" name="kt_cancel[]" value="{i18n}Cancel{/i18n}" />
+        <hr>
+        <input type="submit" value="{i18n}Delete unit{/i18n}" class="btn btn-primary float-right"/>
+        <input type="submit" name="kt_cancel[]" value="{i18n}Cancel{/i18n}" class="btn btn-warning float-left"/>
       </div>
    </fieldset>
    </form>

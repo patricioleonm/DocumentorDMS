@@ -5,82 +5,89 @@
 <p class="alert alert-info">
     {i18n}The scheduler runs document indexing and various house keeping tasks, etc in the background.{/i18n}
 </p>
-
-<table class="kt_collection table table-bordered table-striped table-hover table-sm" cellspacing = "0" cellpadding = "4">
-
-{if $aHeadings}
-<thead class="thead-light">
-    <tr>
-        {foreach from=$aHeadings item=head}
-            <th>
-                {$head}
-            </th>
-        {/foreach}
-    </tr>
-</thead>
-{/if}
-
-{if $aList}
-{foreach from=$aList item=task}
-{assign var=taskId value=$task->getId()}
-
-    <tr>
-        <td width='2%'>
-            {$i++}
-        </td>
-        <td>
-            {$task->getTaskDiv()}
-        </td>
-        <td>
-            {$task->getFreqDiv()}
-            <div id="col_{$taskId}">
-            </div>
-            <div style="visibility: hidden; display: none;">
-                <input type="hidden" name="freq_{$taskId}" id="freq_{$taskId}" value="{$task->getFrequency()}" />
-            </div>
-        </td>
-        <td>
-            <div id="runDiv{$taskId}">
-                {if $task->getStatus() != 'disabled'}
-                    {$task->getRunTime()}
-                {/if}
-            </div>
-        </td>
-        <td>
-            <div id="prevDiv{$taskId}" style="display:none; visibility:hidden;">
-                <input type="hidden" name="prev{$taskId}" id="prev{$taskId}" value="{$task->getPrevious()}" />
-            </div>
-            {$task->getPrevious(TRUE)}
-        </td>
-        <td width="10%">
-            {$task->getRunDuration()}
-        </td>
-        <td>
-            {$task->getAlterFreqLink()}
-            {$task->getRunNowLink()}
-            {$task->getStatusLink()}
-        </td>
-    </tr>
-
-{/foreach}
-
-{else}
-    <tr>
-        <td class="descriptiveText" colspan="7">
-            {i18n}No tasks have been scheduled{/i18n}
-        </td>
-    </tr>
-{/if}
-</table>
-
+<div class="table-responsive">
+    <table class="table table-sm table-bordered table-striped table-hover">
+        {if $aHeadings}
+        <thead>
+            <tr>
+                {foreach from=$aHeadings item=head}
+                    <th>
+                        {$head}
+                    </th>
+                {/foreach}
+            </tr>
+        </thead>
+        {/if}
+        <tbody>
+        {if $aList}
+            {foreach from=$aList item=task}
+            {assign var=taskId value=$task->getId()}
+            <tr>
+                <td width="2%">
+                    {$i++}
+                </td>
+                <td>
+                    {$task->getTaskDiv()}
+                </td>
+                <td>
+                    {$task->getFreqDiv()}
+                    <div id="col_{$taskId}">
+                    </div>
+                    <div style="visibility: hidden; display: none;">
+                        <input type="hidden" name="freq_{$taskId}" id="freq_{$taskId}" value="{$task->getFrequency()}" />
+                    </div>
+                </td>
+                <td>
+                    <div id="runDiv{$taskId}">
+                        {if $task->getStatus() != 'disabled'}
+                            {$task->getRunTime()}
+                        {/if}
+                    </div>
+                </td>
+                <td>
+                    <div id="prevDiv{$taskId}" style="display:none; visibility:hidden;">
+                        <input type="hidden" name="prev{$taskId}" id="prev{$taskId}" value="{$task->getPrevious()}" />
+                    </div>
+                    {$task->getPrevious(TRUE)}
+                </td>
+                <td width="10%">
+                    {$task->getRunDuration()}
+                </td>
+                <td>
+                    {$task->getAlterFreqLink()}
+                    {$task->getRunNowLink()}
+                    {$task->getStatusLink()}
+                </td>
+            </tr>
+            {/foreach}
+        {else}
+            <tr>
+                <td class="descriptiveText" colspan="7">
+                    {i18n}No tasks have been scheduled{/i18n}
+                </td>
+            </tr>
+        {/if}
+        </tbody>
+    </table>
+</div>
 
 <div id="formDiv" style="display: none; visibility: hidden;">
     <form name="changefreq" id="changefreq" method="post" action="{$sUrl}">
-
-        <select name="frequency" id="frequency" class="form-control">
+        <div class="input-group mb-3">
+            <select name="frequency" id="frequency" class="form-control form-control-sm">
+            {html_options options=$aFrequencies}
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-sm btn-primary" type="button"  onclick="javascript: saveFreq('{$sUrl}');" id="button-addon2">{i18n}Save{/i18n}</button>
+            </div>
+        </div>
+        <input type="hidden" name="fId" id="fId" value="" />
+        <!--
+        <select name="frequency" id="frequency" class="form-control form-control-sm">
             {html_options options=$aFrequencies}
         </select>
-        <input type="hidden" name="fId" id="fId" value="" />
-        <input type="button" class="btn btn-primary" name="save" id="save" onclick='javascript: saveFreq("{$sUrl}");' value="{i18n}Save{/i18n}" />
+        
+        <input type="button" class="btn btn-sm btn-primary" name="save" id="save" onclick='javascript: saveFreq("{$sUrl}");' value="{i18n}Save{/i18n}" />
+        -->
     </form>
 </div>

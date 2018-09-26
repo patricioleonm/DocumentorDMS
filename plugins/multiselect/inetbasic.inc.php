@@ -648,35 +648,7 @@ class InetBasicFieldsetManagementDispatcher extends KTAdminDispatcher {
         $this->oPage->setBreadcrumbDetails(_kt('manage lookup values'));
 
         // Add javascript to create the edit form
-        $sJavaScript = "\nfunction editLookup(id)\n
-            {\n
-                var div = document.getElementById(id);\n
-                var value = div.innerHTML;
-
-                <!-- Replace all double quotes with &#34; -->\n
-                matches = value.match(/\"/g);\n
-                var newValue = value;\n
-                if(matches){\n
-                    for(var i = 0; i < matches.length; i++){\n
-                        newValue = newValue.replace('\"', '&#34;');\n
-                    }\n
-                }\n\n
-
-                var inner = '<input type=\"text\" name=\"lookup['+id+']\" id=\"lookup_'+id+'\" value=\"'+newValue+'\" />';\n
-                inner += '<input type=\"hidden\" id=\"original_'+id+'\" value=\"'+newValue+'\" />';\n
-                inner += '<input type=\"submit\" name=\"submit[edit]\" value=\""._kt('Save')."\" />';\n
-                inner += '<input type=\"button\" onclick=\"javascript: closeLookupEdit('+id+');\" name=\"cancel\" value=\""._kt('Cancel')."\" />';\n
-                div.innerHTML = inner;\n
-                document.getElementById('lookup_'+id).focus();\n
-            }\n\n
-
-            function closeLookupEdit(id)
-            {\n
-                value = document.getElementById('original_'+id).value;\n
-                document.getElementById(id).innerHTML = value;\n
-            }\n\n";
-
-        $this->oPage->requireJSStandalone($sJavaScript);
+        //$this->oPage->requireJSStandalone($sJavaScript);
 
         $lookups =& MetaData::getByDocumentField($this->oField);
         $args = $this->meldPersistQuery("","metadataMultiAction", true);
@@ -1113,7 +1085,8 @@ class InetBasicFieldsetManagementDispatcher extends KTAdminDispatcher {
             // leaves are handled differently.
             if ($node_id !== "leaves") {
                 // $default->log->debug("EVILRENDER: " . print_r($subtree_nodes, true));
-                $treeStr .= '<li class="treenode active"><a class="pathnode" onclick="toggleElementClass(\'active\', this.parentNode);toggleElementClass(\'inactive\', this.parentNode);">' . $treeToRender->mapnodes[$subtree_nodes]->getName() . '</a>';
+                $treeStr .= '<li class="treenode active">' .
+                            '<a class="pathnode" onclick="toggleElementClass(\'active\', this.parentNode);toggleElementClass(\'inactive\', this.parentNode);">' . $treeToRender->mapnodes[$subtree_nodes]->getName() . '</a>';
                 $treeStr .= $this->_evilActionHelper($iFieldsetId, $iFieldId, false, $subtree_nodes);
                 $treeStr .= $this->_evilTreeRecursion($subtree_nodes, $treeToRender);
                 $treeStr .= '</li>';

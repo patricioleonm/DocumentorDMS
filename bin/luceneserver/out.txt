@@ -25,3 +25,144 @@
 130  [main] INFO  com.knowledgetree.lucene  - Result fragment seperator: ...
 130  [main] INFO  com.knowledgetree.lucene  - Result fragment size: 40
 180  [main] INFO  com.knowledgetree  - Starting web server on port: 8875
+0    [main] INFO  com.knowledgetree  - XML-RPC Server starting up...
+0    [main] INFO  com.knowledgetree  - Loading properties file: KnowledgeTreeIndexer.properties
+228  [main] INFO  com.knowledgetree  - Server trusting everyone!
+239  [main] INFO  com.knowledgetree.lucene  - Indexer starting up...
+241  [main] INFO  com.knowledgetree.lucene  - Loading properties file: KnowledgeTreeIndexer.properties
+253  [main] INFO  com.knowledgetree.lucene  - Using index directory: ../../var/indexes
+273  [main] INFO  com.knowledgetree.lucene  - Starting: Fri Sep 14 22:31:29 CLT 2018
+273  [main] INFO  com.knowledgetree.lucene  - Client IPs: 127.0.0.1
+273  [main] INFO  com.knowledgetree.lucene  - Max query result: 1000
+273  [main] INFO  com.knowledgetree.lucene  - Result fragments: 3
+273  [main] INFO  com.knowledgetree.lucene  - Result fragment seperator: ...
+273  [main] INFO  com.knowledgetree.lucene  - Result fragment size: 40
+340  [main] INFO  com.knowledgetree  - Starting web server on port: 8875
+42063871 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - Read timed out
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:218)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:235)
+	at org.apache.xmlrpc.webserver.Connection.readLine(Connection.java:195)
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:126)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+134281061 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - Read timed out
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:218)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:235)
+	at org.apache.xmlrpc.webserver.Connection.readLine(Connection.java:195)
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:126)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+140004797 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - Read timed out
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:218)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:235)
+	at org.apache.xmlrpc.webserver.Connection.readLine(Connection.java:195)
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:126)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+147101198 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - Read timed out
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:218)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:235)
+	at org.apache.xmlrpc.webserver.Connection.readLine(Connection.java:195)
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:126)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+172212457 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - Read timed out
+java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:218)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:235)
+	at org.apache.xmlrpc.webserver.Connection.readLine(Connection.java:195)
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:126)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+0    [main] INFO  com.knowledgetree  - XML-RPC Server starting up...
+0    [main] INFO  com.knowledgetree  - Loading properties file: KnowledgeTreeIndexer.properties
+70   [main] INFO  com.knowledgetree  - Server trusting everyone!
+80   [main] INFO  com.knowledgetree.lucene  - Indexer starting up...
+80   [main] INFO  com.knowledgetree.lucene  - Loading properties file: KnowledgeTreeIndexer.properties
+90   [main] INFO  com.knowledgetree.lucene  - Using index directory: ../../var/indexes
+110  [main] INFO  com.knowledgetree.lucene  - Starting: Mon Sep 17 23:59:12 CLT 2018
+110  [main] INFO  com.knowledgetree.lucene  - Client IPs: 127.0.0.1
+110  [main] INFO  com.knowledgetree.lucene  - Max query result: 1000
+110  [main] INFO  com.knowledgetree.lucene  - Result fragments: 3
+110  [main] INFO  com.knowledgetree.lucene  - Result fragment seperator: ...
+110  [main] INFO  com.knowledgetree.lucene  - Result fragment size: 40
+150  [main] INFO  com.knowledgetree  - Starting web server on port: 8875
+21391 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21396 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21418 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21422 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21426 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21429 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21432 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21445 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21449 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)
+21457 [XML-RPC-0] ERROR org.apache.xmlrpc.webserver.WebServer  - GET
+org.apache.xmlrpc.webserver.Connection$BadRequestException: GET
+	at org.apache.xmlrpc.webserver.Connection.getRequestConfig(Connection.java:139)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:171)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.runTask(ThreadPool.java:71)
+	at org.apache.xmlrpc.util.ThreadPool$MyThread.run(ThreadPool.java:87)

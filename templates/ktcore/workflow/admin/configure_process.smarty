@@ -1,13 +1,14 @@
-<h2>{i18n arg_name=$context->oWorkflow->getName()}States and Transitions: #name#{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n arg_name=$context->oWorkflow->getName()}States and Transitions: #name#{/i18n}</h4>
 
 {capture assign=widgets}
-    <table class="kt_collection table table-bordered table-striped">
+<div class="table-responsive">
+    <table class="table table-sm table-striped">
         <thead>
             <tr>
                 <th>{i18n}Transition{/i18n}</th>
                 <th>{i18n}Leads to state{/i18n}</th>                
                 {foreach from=$states item=oState}
-                <th>{$oState->getName()}</th>                
+                <th class="text-center">{$oState->getName()}</th>                
                 {/foreach}                
             </tr>
         </thead>
@@ -15,24 +16,25 @@
             {foreach from=$transitions item=oTransition}
                 <tr>
                     <td>{$oTransition->getName()}</td>
-                    <td><select name="fTo[{$oTransition->getId()}]">
+                    <td>
+                        <select name="fTo[{$oTransition->getId()}]" class="form-control">
                         {foreach from=$states item=oState}
-                            <option value="{$oState->getId()}"
-                              {if ($oState->getId() == $oTransition->getTargetStateId())}selected="true"{/if}
-                            >{$oState->getName()}</option>
+                            <option value="{$oState->getId()}" {if ($oState->getId() == $oTransition->getTargetStateId())}selected="true"{/if}>{$oState->getName()}</option>
                         {/foreach}
-                    </select></td>     
+                        </select>
+                    </td>     
                     {foreach from=$states item=oState}
                         {assign value=$oTransition->getId() var=trans_id}
                         {assign value=$oState->getId() var=state_id}                        
-                        <td><input type="checkbox" name="fFrom[{$trans_id}][{$state_id}]" 
-                            {if ($availability.$trans_id.$state_id)}checked="true"{/if}/></td>
+                        <td class="text-center">
+                            <input type="checkbox" name="fFrom[{$trans_id}][{$state_id}]" {if ($availability.$trans_id.$state_id)}checked="true"{/if}/>
+                        </td>
                     {/foreach}               
                 </tr>
             {/foreach}
         </tbody>
     </table>
-
+</div>
 {/capture}
 {assign value=$form->renderButtons() var=buttons}
 

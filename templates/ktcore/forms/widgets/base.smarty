@@ -1,5 +1,6 @@
     <div class="form-group">
-      <label for="{$name}">{$label}{if ($required === true)} <span class="text text-warning">({i18n}Required{/i18n})</span>{/if}</label>
+      <label for="{$name}">{$label}{if ($required === true)} <span class="text-danger">* {i18n}Required{/i18n}</span>{/if}</label>
+      <div class="clearfix"></div>
       {if ($has_errors)}
         <div class="alert alert-danger">
           <ul>
@@ -11,9 +12,12 @@
       {else}
         <!--p class="errorMessage"></p-->
       {/if}
-      {if ($options.important_description)}<div class="alert alert-danger" role="alert">{$options.important_description}</div>{/if}
+      {if ($options.important_description)}
+        <div class="alert alert-danger" role="alert">{$options.important_description}</div>
+      {/if}
         {$widget}
+        <div class="clearfix"></div>
       {if ($description)}
-      <small class="form-text text-muted">{$description}</small>
+        <span class="text-muted">{$description}</span>
       {/if}
      </div>

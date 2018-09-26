@@ -1,4 +1,4 @@
-<h2>{i18n}Copy Workflow{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Copy Workflow{/i18n}</h4>
 <p class="descriptiveText">
 {i18n}You are about to make a copy of <strong>{$workFlowName}</strong>. This will make and exact copy of the selected workflow,
  including all associated permissions, actions and triggers. Enter the desired name for the resulting workflow 
@@ -18,6 +18,6 @@
 			<td colspan="2"><hr></td>
 		</tr>
 	</table>
-	
-	<input type="submit" name="submit[confirmCopy]" value="{i18n}Copy{/i18n}" />
+	<hr>
+	<input type="submit" name="submit[confirmCopy]" value="{i18n}Copy{/i18n}" class="btn btn-primary float-right"/>
 </form>

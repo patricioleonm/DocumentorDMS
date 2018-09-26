@@ -82,7 +82,7 @@ function addNewCriteria(add_button) {
     simpleLog('DEBUG','got boolean group id'+tableId);
 
     // ok, warn the user that we\'re loading the item.
-    replaceChildNodes(notify_message, _('loading...'));
+    replaceChildNodes(notify_message, 'loading...');
     var newCriteriaText = scrapeText(select.options[select.selectedIndex])+' '; // FIXME insert the "input" here.
     replaceChildNodes(select.parentNode, newCriteriaText, INPUT({'type':'hidden', 'name':'boolean_search[subgroup]['+tableId+'][values]['+critId+'][type]','value':select.value}));           // works thanks to DOM co-ercion.
     createAdditionalCriteriaOption(parent_table);
@@ -228,9 +228,10 @@ function addBooleanGroup(addbutton) {
 // FIXME yes, and its easy (find parent, find ITS parent, toast.)
 function initialiseChecks() {
    
-    var initialTables = getElementsByTagAndClassName('TABLE','advanced-search-form');
+    var initialTables = document.getElementsByClassName('advanced-search-form');
+    console.log(initialTables);
     simpleLog('DEBUG','initialising '+initialTables.length+' criteria groups.');
-    var t = TABLE(null);
+    var t = document.createElement("table");
     for (var i=0; i<initialTables.length; i++) {
         if (typeof(initialTables[i]) == typeof(t)) {
             getBooleanGroupId(initialTables[i]);
@@ -238,4 +239,7 @@ function initialiseChecks() {
     } 
 }
 
-addLoadEvent(initialiseChecks);
+function replaceChildNodes(target, content){
+    target.innerHTML = content;
+};
+window.onload = initialiseChecks;

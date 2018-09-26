@@ -57,7 +57,7 @@ class KTGroupAdminDispatcher extends KTAdminDispatcher {
     
     function predispatch() {
         $this->aBreadcrumbs[] = array('url' => $_SERVER['PHP_SELF'], 'name' => _kt('Group Management'));    
-        $this->persistParams(array('old_search'));
+        //$this->persistParams(array('old_search'));
     }
     
     function do_main() {
@@ -65,15 +65,15 @@ class KTGroupAdminDispatcher extends KTAdminDispatcher {
         $this->oPage->setBreadcrumbDetails(_kt('select a group'));
         $this->oPage->setTitle(_kt("Group Management"));
         
-        $KTConfig =& KTConfig::getSingleton();
-        $alwaysAll = $KTConfig->get("alwaysShowAll");
+        //$KTConfig =& KTConfig::getSingleton();
+        //$alwaysAll = $KTConfig->get("alwaysShowAll");
         
-        $name = KTUtil::arrayGet($_REQUEST, 'search_name', KTUtil::arrayGet($_REQUEST, 'old_search'));
-        $show_all = KTUtil::arrayGet($_REQUEST, 'show_all', $alwaysAll);
+        //$name = KTUtil::arrayGet($_REQUEST, 'search_name', KTUtil::arrayGet($_REQUEST, 'old_search'));
+        //$show_all = KTUtil::arrayGet($_REQUEST, 'show_all', $alwaysAll);
         $group_id = KTUtil::arrayGet($_REQUEST, 'group_id');
     
-        $no_search = true;
-        
+        //$no_search = true;
+        /*
         if (KTUtil::arrayGet($_REQUEST, 'do_search', false) != false) {
             $no_search = false;
         }
@@ -82,27 +82,28 @@ class KTGroupAdminDispatcher extends KTAdminDispatcher {
             $show_all = true;
             $name = '';
         }    
-                
-        $search_fields = array();
-        $search_fields[] =  new KTStringWidget(_kt('Group Name'), _kt("Enter part of the group's name.  e.g. <strong>ad</strong> will match <strong>administrators</strong>."), 'search_name', $name, $this->oPage, true);
-        
+        */        
+        //$search_fields = array();
+        //$search_fields[] =  new KTStringWidget(_kt('Group Name'), _kt("Enter part of the group's name.  e.g. <strong>ad</strong> will match <strong>administrators</strong>."), 'search_name', $name, $this->oPage, true);
+        /*
         if (!empty($name)) {
             $search_results =& Group::getList('WHERE name LIKE \'%' . DBUtil::escapeSimple($name) . '%\' AND id > 0');
         } else if ($show_all !== false) {
+        */
             $search_results =& Group::getList('id > 0');
-            $no_search = false;
-            $name = '*';
-        }
+            //$no_search = false;
+            //$name = '*';
+        //}
 
             
         $oTemplating =& KTTemplating::getSingleton();        
         $oTemplate = $oTemplating->loadTemplate("ktcore/principals/groupadmin");
         $aTemplateData = array(
             "context" => $this,
-            "search_fields" => $search_fields,
-            "search_results" => $search_results,
-            'no_search' => $no_search,
-            'old_search' => $name,             
+            //"search_fields" => $search_fields,
+            "search_results" => $search_results
+            //'no_search' => $no_search,
+            //'old_search' => $name,             
         );
         return $oTemplate->render($aTemplateData);
     }
@@ -400,14 +401,14 @@ class KTGroupAdminDispatcher extends KTAdminDispatcher {
         
         
         $aMemberGroupsUnkeyed = $oGroup->getMemberGroups();        
-    $aMemberGroups = array();
-        $aMemberIDs = array();
-        foreach ($aMemberGroupsUnkeyed as $oMemberGroup) {
-            $aMemberIDs[] = $oMemberGroup->getID();        
-        $aMemberGroups[$oMemberGroup->getID()] = $oMemberGroup;
-    }
-        
-    $oJSONWidget = new KTJSONLookupWidget(_kt('Groups'), 
+        $aMemberGroups = array();
+            $aMemberIDs = array();
+            foreach ($aMemberGroupsUnkeyed as $oMemberGroup) {
+                $aMemberIDs[] = $oMemberGroup->getID();        
+            $aMemberGroups[$oMemberGroup->getID()] = $oMemberGroup;
+        }
+            
+        $oJSONWidget = new KTJSONLookupWidget(_kt('Groups'), 
                           _kt('Select the groups from the left-hand list that you would like to add to this group and then click the <b>right pointing arrows</b>. Once you have added all the groups that you require, press <b>save changes</b>. Only groups that are logically capable of being included in this group will be available to be added.'), 
                           'groups', '', $this->oPage, false, null, null, 
                           array('action'   => sprintf('getSubGroups&group_id=%d', $oGroup->getID()),
@@ -420,7 +421,7 @@ class KTGroupAdminDispatcher extends KTAdminDispatcher {
         $aTemplateData = array("context" => $this,
                    "edit_group" => $oGroup,
                    'widget'=>$oJSONWidget,
-            "old_search" => $old_search,            
+                    "old_search" => $old_search,            
         );
         return $oTemplate->render($aTemplateData);        
     }    

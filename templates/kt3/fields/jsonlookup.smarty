@@ -1,10 +1,9 @@
 {$context->oPage->requireJSResource('resources/js/jsonlookup.js')}
-{capture assign=sJavascript}addLoadEvent(initJSONLookup('{$name}','{addQS}action=json&json_action={$options.action}{/addQS}')){/capture}
+{capture assign=sJavascript}document.addEventListener('DOMContentLoaded',() => {literal}{{/literal} initJSONLookup('{$name}','{addQS}action=json&json_action={$options.action}{/addQS}')});{/capture}
 {$context->oPage->requireJSStandalone($sJavascript)}
 
 <div class="field {if ($has_errors)}error{/if}">
-  
-  <p class="descriptiveText">{$description}</p>
+    <p class="descriptiveText">{$description}</p>
 
   {if ($has_errors)}
       {foreach item=sError from=$errors}
@@ -13,53 +12,46 @@
   {else}
       <p class="errorMessage"></p>
   {/if}
-      
-<table>
+    <div class="text-center" id="{$name}_loading">
+        <h1><i class="fas fa-cog fa-spin"></i> {i18n}Loading {/i18n} {$name}</h1>
+    </div>
+    <div class="table-responsive d-none" id="{$name}_content">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td class="text-center col-5"><label for="select_{$name}_avail">{i18n}Available{/i18n} {$label}</label></td>
+                    <td class="col-2">&nbsp;</td>
+                    <td class="text-center col-5"><label for="select_{$name}_assigned">{i18n}Assigned{/i18n} {$label}</label></td>
+                </tr>
+            </thead>
 
-<thead>
-    <tr>
-        <td style="width:45%"><label for="select_{$name}_avail">{i18n}Available{/i18n} {$label}</label></td>
-        <td style="width:10%">&nbsp;</td>
-        <td style="width:45%"><label for="select_{$name}_assigned">{i18n}Assigned{/i18n} {$label}</label></td>
-    </tr>
-</thead>
+            <tbody>
+                <tr>
+                    <td>
 
-<tbody>
-    <tr>
-    <td style="vertical-align: top">
-
-  <select name="{$name}" id="select_{$name}_avail" {if $options.multi}multiple="true"{/if} {if $options.size}size="{$options.size}"{/if}>
-  {foreach item=lookup key=lookup_key from=$options.vocab}
-       <option value="{$lookup_key}" {if ($value == $lookup_key)}selected="selected"{/if}>{$lookup}</option>
-  {/foreach}
-  </select>
-
-  <div><label for="filter_{$name}_avail">{i18n}Filter{/i18n}</label><input type="text" id="filter_{$name}_avail" /><br/><a href="#" id="{$name}_show_all">{i18n}Show All{/i18n}</a></div>
-    </td>
-
-    <td>
-    
-    <input type="button" id="{$name}_add" value="&raquo;" />
-    <br /><br/>
-    <input type="button" id="{$name}_remove" value="&laquo;" />
-    
-    </td>
-
-    <td style="vertical-align: top">
-
-  <select name="{$name}" id="select_{$name}_assigned" {if $options.multi}multiple="true"{/if} {if $options.size}size="{$options.size}"{/if}>
-  {foreach item=lookup key=lookup_key from=$options.assigned}
-       <option value="{$lookup_key}" {if ($value == $lookup_key)}selected="selected"{/if}>{$lookup->getName()}</option>
-  {/foreach}
-  </select>
-  <div><label for="filter_{$name}_assigned">{i18n}Filter{/i18n}</label><input type="text" id="filter_{$name}_assigned" /></div>
-    </td>
-    </tr>
-</tbody>
-</table>
-
+                        <select name="{$name}" id="select_{$name}_avail" {if $options.multi}multiple="true"{/if} {if $options.size}size="{$options.size}"{/if} class="form-control">
+                        {foreach item=lookup key=lookup_key from=$options.vocab}
+                            <option value="{$lookup_key}" {if ($value == $lookup_key)}selected="selected"{/if}>{$lookup}</option>
+                        {/foreach}
+                        </select>
+                    </td>
+                    <td class="text-center">        
+                        <button id="{$name}_add" class="btn btn-lg btn-success"><i class="fa fa-arrow-right" title="{i18n}add{/i18n}"></i></button>
+                        <br /><br/>
+                        <button id="{$name}_remove" class="btn btn-lg btn-danger"><i class="fa fa-arrow-left" title="{i18n}remove{/i18n}"></i></button>
+                    </td>
+                    <td>
+                        <select name="{$name}" id="select_{$name}_assigned" {if $options.multi}multiple="true"{/if} {if $options.size}size="{$options.size}"{/if} class="form-control">
+                        {foreach item=lookup key=lookup_key from=$options.assigned}
+                            <option value="{$lookup_key}" {if ($value == $lookup_key)}selected="selected"{/if}>{$lookup->getName()}</option>
+                        {/foreach}
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
   <input name="{$name}_items_added" id="{$name}_items_added" type="hidden" />
-  <input name="{$name}_items_removed" id="{$name}_items_removed" type="hidden" />
-  
+  <input name="{$name}_items_removed" id="{$name}_items_removed" type="hidden" />  
   <input type="hidden" name="kt_core_fieldsets_expect[{$name}]" value ="1" />
 </div>

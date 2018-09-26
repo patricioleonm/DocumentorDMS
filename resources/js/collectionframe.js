@@ -1,7 +1,7 @@
 function _getParentElm(elm, type) {
     var n = elm.parentNode;
 
-    if(isUndefinedOrNull(n)) {
+    if(typeof(n) == undefined || n == null) {
         return false;
     }
 
@@ -29,7 +29,7 @@ function _getContentDocument(id) {
 
 function resizeFrame(elm) {
     var frame = $(elm);
-    var size = _getContentDocument(elm).body.offsetHeight;
+    var size = frame.body.offsetHeight;
     frame.style.display = 'block';
     frame.style.height = (parseInt(size) + 32) + 'px';
 }
@@ -60,8 +60,10 @@ function setupFrame(frame) {
 }
 
 
-addLoadEvent(function() {
-                 var frames = getElementsByTagAndClassName('iframe', 'browse-frame');
-                 forEach(frames, setupFrame);
-	     });
+window.onload = () => {
+                    var frames = document.getElementsByTagName('iframe');//, 'browse-frame');
+                    Object.values(frames).forEach((f) => {
+                        setupFrame(f);
+                    });
+	            };
     

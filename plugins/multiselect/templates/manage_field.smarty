@@ -1,88 +1,55 @@
-{capture assign=sCSS}
-{literal}
-.twocolumn {
-    width: 60%;
-    margin-right: 1em;
-    float: left;
-    min-width: 28em;
-}
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n arg_field_name=$field_name}Manage Field: #field_name#{/i18n}</h4>
 
-.second {
-    width: 30%;
-    margin-right: 0;
-}
+<p class="descriptiveText">{i18n}This page will allow you to manage the different aspects of this particular field.{/i18n}</p>
 
-{/literal}
-{/capture}
-{$context->oPage->requireCSSStandalone($sCSS)}
+<div class="row">
+    <div class="col-sm-12 col-md-7 col-lg-8">
+        <div class="card card-body">
+            {$form->render()}
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-5 col-lg-4">
+        {if ($field->getHasLookup() or $field->getHasInetLookup())}
+        <div class="card card-body">
+            <h4 class="card-title">{i18n}Extra Options{/i18n}</h4>
+            <p class="card-subtitle text-muted mb-2">{i18n}Different fields have different actions and options available.{/i18n}</p>
+            <div class="list-group list-group-flush">
+            <a class="list-group-item" href="{addQS context=$context}fieldset_action=addlookupvalues{/addQS}"><i class="fa fa-plus-circle fa-2x"></i> {i18n}Add Lookup Values{/i18n}</a>
+            <a class="list-group-item" href="{addQS context=$context}fieldset_action=managelookups{/addQS}"><i class="far fa-edit fa-2x"></i> {i18n}Manage Lookup Values{/i18n}</a>
+            {if $field->getHasLookupTree()}
+                <a class="list-group-item" href="{addQS context=$context}fieldset_action=managetree{/addQS}"><i class="far fa-edit fa-2x"></i> {i18n}Manage Lookup Tree Structure{/i18n}</a>
+            {/if}
+            </div>
+        </div>
+        {/if}
 
-<h2>{i18n arg_field_name=$field_name}Manage Field: #field_name#{/i18n}</h2>
+        {if ($field->getDataType() == "LARGE TEXT")}
+        <div class="card card-body">
+            <h4 class="card-title">{i18n}Extra Options{/i18n}</h4>
 
-<p class="descriptiveText">{i18n}This page will allow you to manage the different 
-aspects of this particular field.{/i18n}</p>
+            <p class="card-subtitle text-muted mb-2">{i18n}Different fields have different actions and options available.{/i18n}</p>
 
-{if ($field->getHasLookup() or $field->getHasInetLookup())}
-<div class="twocolumn">
-{/if}
-{if ($field->getDataType() == "LARGE TEXT")}
-<div class="twocolumn">
-{/if}
-{$form->render()}
-{if ($field->getHasLookup() or $field->getHasInetLookup())}
+            <form method="POST" action="{$rootUrl}/admin.php?kt_path_info=documents/ratpfieldset&fieldset_action=updatelargetextoptions&fFieldId={$field_id}&fFieldsetId={$field->getParentFieldsetId()}&action=edit">
+                <div class="form-group">
+                    <label for="largefield[size]">Max Length</label>
+                    <input type="text" name="largefield[size]" value="{$field->getMaxLength()}" size="3" class="form-control" />
+                    <span class="form-text text-muted">Maximum length allowed for the field.</span>
+                    <p class="errorMessage"></p>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" name="largefield[html]" id="largefield[html]"{if $field->getIsHTML()==1}checked="true"{/if} class="form-check-input"/>
+                    <label class="form-check-label" for="largefield[html]">HTML</label>
+                    <span class="form-text text-muted">Defines the format of the field.</span>
+                    <p class="errorMessage"></p>
+                </div>
+
+                <div class="form_actions">
+                    <hr>
+                    <input type="submit" name="" value="Update Options" class="btn btn-primary float-right"/> 
+                </div>
+            </form>
+        </div>
+        {/if}
+    </div>
 </div>
-<div class="twocolumn second">
-<fieldset>
-<legend>{i18n}Extra Options{/i18n}</legend>
-
-<p class="descriptiveText">{i18n}Different fields have different actions and options
-available.{/i18n}</p>
-
-<p><a class="ktAction ktAdd ktActionDescribed" href="{addQS context=$context}fieldset_action=addlookupvalues{/addQS}">{i18n}Add Lookup Values{/i18n}</a>
-<a href="{addQS context=$context}fieldset_action=addlookupvalues{/addQS}">{i18n}Add Lookup Values{/i18n}</a></p>
-
-
-<p><a class="ktAction ktEdit ktActionDescribed" href="{addQS context=$context}fieldset_action=managelookups{/addQS}">{i18n}Manage Lookup Values{/i18n}</a>
-<a href="{addQS context=$context}fieldset_action=managelookups{/addQS}">{i18n}Manage Lookup Values{/i18n}</a></p>
-
-{if $field->getHasLookupTree()}
-<p><a class="ktAction ktEdit ktActionDescribed" href="{addQS context=$context}fieldset_action=managetree{/addQS}">{i18n}Manage Lookup Tree Structure{/i18n}</a>
-<a href="{addQS context=$context}fieldset_action=managetree{/addQS}">{i18n}Manage Lookup Tree Structure{/i18n}</a></p>
-{/if}
-</fieldset>
-</div>
-{/if}
-{if ($field->getDataType() == "LARGE TEXT")}
-</div>
-<div class="twocolumn second">
-<fieldset>
-<legend>{i18n}Extra Options{/i18n}</legend>
-
-<p class="descriptiveText">{i18n}Different fields have different actions and options
-available.{/i18n}</p>
-
-<form method="POST" action="{$rootUrl}/admin.php?kt_path_info=documents/ratpfieldset&fieldset_action=updatelargetextoptions&fFieldId={$field_id}&fFieldsetId={$field->getParentFieldsetId()}&action=edit">
-
-<div class="field">
-<label for="largefield[size]">Max Length</label>
-<p class="descriptiveText">Maximum length allowed for the field.</p>
-<p class="errorMessage"></p>
-<input type="text" name="largefield[size]" value="{$field->getMaxLength()}" size="3" />
-</div>
-
-<div class="field ">
-<label for="largefield[html]">HTML</label>
-<p class="descriptiveText">Defines the format of the field.</p>
-<p class="errorMessage"></p>
-<input type="checkbox" name="largefield[html]" {if $field->getIsHTML()==1}checked="true"{/if} class="noborder"/>
-</div>
-
-<div class="form_actions">
-<input type="submit" name="" value="Update Options" /> 
-</div>
-
-</form>
-
-</fieldset>
-</div>
-{/if}
-<hr class="floatClear" />

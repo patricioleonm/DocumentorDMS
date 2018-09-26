@@ -1780,7 +1780,7 @@ abstract class Indexer
     public function diagnoseExtractors()
     {
 		$diagnosis = $this->_diagnose($this->extractorPath, 'DocumentExtractor', 'Extractor.inc.php');
-		$diagnosis = array_merge($diagnosis, $this->_diagnose($this->hookPath, 'Hook', 'Hook.inc.php'));
+		//$diagnosis = array_merge($diagnosis, $this->_diagnose($this->hookPath, 'Hook', 'Hook.inc.php'));
 
 		return $diagnosis;
     }
@@ -1800,7 +1800,12 @@ abstract class Indexer
     	$diagnoses = array();
 
     	$dir = opendir(SearchHelper::correctPath($path));
-    	$extlen = - strlen($extension);
+		$extlen = - strlen($extension);
+
+		if(!file_exists(SearchHelper::correctPath($path))){
+			$default->log->error("Document Indexer : ".$path." does not exist");
+			return;
+		}
 
 		while (($file = readdir($dir)) !== false)
 		{

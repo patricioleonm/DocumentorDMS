@@ -15,49 +15,42 @@
 </script>
 {/literal}
 
-<h2>{i18n}Document Indexing Diagnostics{/i18n}</h2>
-<p class="descriptiveText">{i18n}This report will help to diagnose problems with document indexing.{/i18n}</p>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Document Indexing Diagnostics{/i18n}</h4>
+<p class="alert alert-info">{i18n}This report will help to diagnose problems with document indexing.{/i18n}</p>
 
-<br>
 {if $indexErrors}
 
 <form name="scheduleForm" action="{$smarty.server.PHP_SELF}" method="POST">
-<input type="hidden" name="rescheduleValue" id="rescheduleValue" value="" />
-<input type="hidden" name="pageValue" id="pageValue" value="" />
+	<input type="hidden" name="rescheduleValue" id="rescheduleValue" value="" />
+	<input type="hidden" name="pageValue" id="pageValue" value="" />
 
-<table class=kt_collection>
-<thead>
-	<tr>
-		<th width="10"></th>
-
-		<th ><nobr>{i18n}Filename{/i18n}</th>
-		<th width="100"><nobr>{i18n}Extractor{/i18n}</th>
-		<th width="100"><nobr>{i18n}Index Date{/i18n}</th>
-	</tr>
-</thead>
-
-<tbody>
-{foreach key=key from=$indexErrors item=indexError}
-<tr>
-	<td class="centered"><input type="checkbox" name="index_error[{$indexError.document_id}]" value="1"/></td>
-	<td><a href="{$root_url}/view.php?fDocumentId={$indexError.document_id}">{$indexError.filename|truncate:40:'...'}</a></td>
-	<td>{if $indexError.extractor}{$indexError.extractor}{else}<p><font color="#FF9933">{i18n}n/a{/i18n}</font></p>{/if}</td>
-	<td>{$indexError.indexdate}</td>
-
-</tr>
-<tr>
-	<td>&nbsp;</td>
-	<td colspan="4"><pre>{$indexError.status_msg}</pre></td>
-</tr>
-
-
-{/foreach}
-
-</tbody>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>{i18n}Filename{/i18n}</th>
+			<th>{i18n}Extractor{/i18n}</th>
+			<th>{i18n}Index Date{/i18n}</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach key=key from=$indexErrors item=indexError}
+		<tr>
+			<td class="centered"><input type="checkbox" name="index_error[{$indexError.document_id}]" value="1"/></td>
+			<td><a href="{$root_url}/view.php?fDocumentId={$indexError.document_id}">{$indexError.filename|truncate:40:'...'}</a></td>
+			<td>{if $indexError.extractor}{$indexError.extractor}{else}<p><font color="#FF9933">{i18n}n/a{/i18n}</font></p>{/if}</td>
+			<td>{$indexError.indexdate}</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td colspan="4"><pre>{$indexError.status_msg}</pre></td>
+		</tr>
+		{/foreach}
+	</tbody>
 <tfoot>
 <tr>
 <td colspan="4">
-    <div align="center">
+    <div>
         {foreach item=page from=$pageList}
             {if $pageNum == $page}
                 {$page}&nbsp;
@@ -72,7 +65,7 @@
         <td  colspan="2">
         <div> {$itemCount} {i18n}items{/i18n}, {$itemsPerPage} {i18n}items per page{/i18n}.</div>
         </td>
-        <td align="right">
+        <td>
                 <select name="itemsPerPage">
                     <option value='10' {if $itemsPerPage == 10}selected='true'{/if} onclick="nextSearchPage({$pageNum});" >10</option>
                     <option value='20' {if $itemsPerPage == 20}selected='true'{/if} onclick="nextSearchPage({$pageNum});">20</option>

@@ -1,16 +1,17 @@
 // Clean up tasks marked as completed
 var clearTasks = function(sUrl) {
 
-    Ext.Ajax.request({
+    $.ajax({
         url: sUrl,
-        success: function(response) {
-            alert('The tasks have been successfully cleaned up');
-        },
-        failure: function(response) {
-            alert('Error. The clean up failed.');
-        }
+        type : 'POST'
+    })
+    .done(function(response) {
+        alert('The tasks have been successfully cleaned up');
+    })
+    .fail(function(response) {
+        alert('Error. The clean up failed.');
     });
-}
+};
 
 //<!-- Reschedule the task to run the next time the scheduler runs -->
 var runOnNext = function(fId, sUrl) {
@@ -19,17 +20,18 @@ var runOnNext = function(fId, sUrl) {
     //<!-- Display the new runtime -->
     var displayDate = formatDate('','no');
 
-    Ext.Ajax.request({
+    $.ajax({
         url: sUrl,
-        success: function(response) {
-            runDiv.innerHTML = displayDate;
-        },
-        failure: function(response) {
-            alert('Error. The update failed, please refresh the page and try again.');
-        },
-        params: { fId: fId }
+        data: { fId: fId },
+        type : 'POST'
+    })
+    .done(function(response) {
+        runDiv.innerHTML = displayDate;
+    })
+    .fail(function(response) {
+        alert('Error. The update failed, please refresh the page and try again.');
     });
-}
+};
 
 //<!-- Enable / disable the task -->
 var toggleStatus = function(fId, sUrl, sDisableText, sEnableText) {
@@ -48,34 +50,35 @@ var toggleStatus = function(fId, sUrl, sDisableText, sEnableText) {
     var runTime = calculateFreq(freq, now);
     var displayDate = formatDate(runTime);
 
-    Ext.Ajax.request({
+    $.ajax({
         url: sUrl,
-        success: function(response) {
-            if(statusLink.value == sDisableText){
-                statusLink.value = sEnableText;
-                freqLink.style.visibility = "hidden";
-                runnowLink.style.visibility = "hidden";
-                runDiv.style.visibility = 'hidden';
-                fontClass.className = 'descriptiveText';
-                freqDiv.style.display = "none";
-            }else{
-                statusLink.value = sDisableText;
-                freqLink.style.visibility = "visible";
-                runnowLink.style.visibility = "visible";
-                freqDiv.style.display = "block";
-                freqDiv.style.visibility = "visible";
-                fontClass.className = '';
+        data : { fId : fId },
+        type : 'POST'
+    })
+    .done(function(response) {
+        if(statusLink.value == sDisableText){
+            statusLink.value = sEnableText;
+            freqLink.style.visibility = "hidden";
+            runnowLink.style.visibility = "hidden";
+            runDiv.style.visibility = 'hidden';
+            fontClass.className = 'descriptiveText';
+            freqDiv.style.display = "none";
+        }else{
+            statusLink.value = sDisableText;
+            freqLink.style.visibility = "visible";
+            runnowLink.style.visibility = "visible";
+            freqDiv.style.display = "block";
+            freqDiv.style.visibility = "visible";
+            fontClass.className = '';
 
-                runDiv.style.visibility = 'visible';
-                runDiv.innerHTML = displayDate;
-            }
-        },
-        failure: function(response) {
-            alert('Error. The status update failed, please refresh the page and try again.');
-        },
-        params: { fId: fId }
+            runDiv.style.visibility = 'visible';
+            runDiv.innerHTML = displayDate;
+        }
+    })
+    .fail(function(response) {
+        alert('Error. The status update failed, please refresh the page and try again.');
     });
-}
+};
 
 // Display the form to changed the frequency at which the task runs
 var showFrequencyDiv = function(fId) {
@@ -117,20 +120,21 @@ var saveFreq = function(sUrl) {
     var nextTime = calculateFreq(freq, prevNum);
     var displayDate = formatDate(nextTime);
 
-    Ext.Ajax.request({
+    $.ajax({
         url: sUrl,
-        success: function(response) {
-            freqDiv.innerHTML = freqLabel;
-            runDiv.innerHTML = displayDate;
-            document.getElementById('freq_'+fId).value = freq;
-        },
-        failure: function(response) {
-            alert('Error. The frequency update failed, please refresh the page and try again.');
-        },
-        params: {
+        data: {
             frequency: freq,
             fId: fId
-        }
+        },
+        type : 'POST'
+    })
+    .done(function(response) {
+        freqDiv.innerHTML = freqLabel;
+        runDiv.innerHTML = displayDate;
+        document.getElementById('freq_'+fId).value = freq;
+    })
+    .fail(function(response) {
+        alert('Error. The frequency update failed, please refresh the page and try again.');
     });
 }
 

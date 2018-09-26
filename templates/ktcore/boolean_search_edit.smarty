@@ -9,17 +9,6 @@
 
 {$context->oPage->requireCSSResource("thirdpartyjs/jscalendar-1.0/calendar-system.css")}
 
-{capture assign=sJS}
-{literal}
-function testStartup() {
-    simpleLog('INFO','Log initialised.');
-}
-
-addLoadEvent(testStartup);
-{/literal}
-{/capture}
-{$context->oPage->requireJSStandalone($sJS)}
-
 {capture assign=sCSS}
 {literal}
 fieldset { border: 1px dotted #999; }
@@ -132,7 +121,7 @@ legend { border: 1px dotted #999;}
 	</div>
 </form>
 
-<!--
+
 <table id="brad-log" width="100%">
 <thead>
     <tr>
@@ -145,5 +134,5 @@ legend { border: 1px dotted #999;}
    
 </tbody>
 </table>
--->
+
 

@@ -1,6 +1,6 @@
-<fieldset>
-    {if $label}<legend>{$label}</legend>{/if}
-    {if $description}<p class="descriptiveText">{$description|sanitize}</p>{/if}
-
+<div class="card card-body mb-2">
+    {if $label}<h5 class="card-title"><i class="fa fa-list-ul"></i> {$label}</h5>{/if}
+    {if $description}<p class="text-muted">{$description|sanitize}</p>{/if}
+<br>
     {$widgets}
-</fieldset>
+</div>

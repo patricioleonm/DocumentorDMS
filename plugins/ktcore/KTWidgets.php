@@ -321,15 +321,13 @@ class KTDescriptorSelectionWidget extends KTWidget {
     var $sNamespace = 'ktcore.widgets.descriptorselection';
     var $sTemplate = 'ktcore/forms/widgets/descriptor';
 
-    var $aJavascript = array('resources/js/jsonlookup.js');
+    //var $aJavascript = array('resources/js/jsonlookup.js');
 
     function configure($aOptions) {
         $res = parent::configure($aOptions);
         if (PEAR::isError($res)) {
             return $res;
         }
-
-
     }
 
     function getWidget() {
@@ -337,12 +335,11 @@ class KTDescriptorSelectionWidget extends KTWidget {
         $oTemplate = $oTemplating->loadTemplate($this->sTemplate);
 
         $src_location = $this->aOptions['src'];
-        $sJS = sprintf('addLoadEvent(initJSONLookup("%s", "%s"));', $this->sBasename, $src_location);
-
+        //$sJS = sprintf('addLoadEvent(initJSONLookup("%s", "%s"));', $this->sBasename, $src_location);
 
         // its bad, but that's life.
-        $oPage =& $GLOBALS['main'];
-        $oPage->requireJSStandalone($sJS);
+        $this->oPage =& $GLOBALS['main'];
+        //$oPage->requireJSStandalone($sJS);
 
         $this->aOptions['multi'] = true;
 
@@ -360,6 +357,7 @@ class KTDescriptorSelectionWidget extends KTWidget {
             'errors' => $this->aErrors,
             'short_name' => $this->sBasename,
             'options' => $this->aOptions,
+            'src' => $src_location
         );
         return $oTemplate->render($aTemplateData);
     }

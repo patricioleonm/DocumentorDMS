@@ -1,4 +1,4 @@
-<h2>{i18n}Edit Fieldset{/i18n}</h2>
+<h2>x{i18n}Edit Fieldset{/i18n}</h2>
 
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <fieldset>
@@ -11,7 +11,7 @@
 <p>{i18n}No fields associated with this fieldset.{/i18n}</p>
 {else}
 {foreach item=oField from=$children}
-    <input type="checkbox" name="fieldsToRemove[]" value="{$oField->getId()}">{$oField->getName()}</input>
+    <input type="checkbox" name="fieldsToRemove[]" value="{$oField->getId()}">{$oField->getName()}/>
 {/foreach}
 {/if}
 <div>

@@ -1,52 +1,46 @@
 
 {$context->oPage->requireJSResource("resources/js/jsonlookup.js")}
 {$context->oPage->requireJSResource("resources/js/permissions.js")}
-
-{capture assign=sJavascript}initializePermissions('entities', '{addQS context=$context}action=json&json_action=getEntities{/addQS}', {$jsonpermissions});{/capture}
+{capture assign=sJavascript}document.addEventListener('DOMContentLoaded', () => {literal}{{/literal} initializePermissions('entities', '{addQS context=$context}action=json&json_action=getEntities{/addQS}', {$jsonpermissions}) {literal}}{/lteral});{/capture}
 {$context->oPage->requireJSStandalone($sJavascript)}
 
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Allocate Permissions{/i18n}</h4>
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <div class="field">
   
   <p class="descriptiveText">{i18n}Select roles and groups for whom you wish to change permission assignment from the box on the left, and move them over to the box on the right using the button with right-pointing arrows. You can then allocate or remove permissions from these entities and save by pressing the 'Update Permission Assignments' button'.{/i18n}</p>
-      
-<table>
 
-<thead>
-    <tr>
-        <td style="width:45%"><label for="select_{$name}_avail">{i18n}Available Entities{/i18n}</label></td>
-        <td style="width:10%">&nbsp;</td>
-        <td style="width:45%"><label for="select_{$name}_assigned">{i18n}Assigned Entities{/i18n}</label></td>
-    </tr>
-</thead>
-
-<tbody>
-    <tr>
-    <td style="vertical-align: top">
-
-  <select name="entities" id="select_entities_avail" multiple="true"size="5">
-  </select>
-
-  <div><label for="filter_entities_avail">{i18n}Filter<{/i18n}/label><input type="text" id="filter_entities_avail" /><br/><a href="#" id="entities_show_all">{i18n}Show All{/i18n}</a></div>
-    </td>
-
-    <td>
-    
-    <input type="button" id="entities_add" value="&raquo;" />
-    <br /><br/>
-    <input type="button" id="entities_remove" value="&laquo;" />
-    
-    </td>
-
-    <td style="vertical-align: top">
-
-  <select name="entities" id="select_entities_assigned" multiple="true"size="5">
-  </select>
-  <div><label for="filter_entities_assigned">{i18n}Filter{/i18n}</label><input type="text" id="filter_entities_assigned" /></div>
-    </td>
-    </tr>
-</tbody>
-</table>
+  <div class="text-center" id="entities_loading">
+      <h1><i class="fas fa-cog fa-spin"></i> {i18n}Loading {/i18n} {$name}</h1>
+  </div>
+  <div class="table-responsive d-none" id="entities_content">
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <td class="col-5 text-center"><label for="select_entities_avail">{i18n}Available Entities{/i18n}</label></td>
+              <td class="col-2">&nbsp;</td>
+              <td class="col-5 text-center"><label for="select_entities_assigned">{i18n}Assigned Entities{/i18n}</label></td>
+          </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <select name="entities" id="select_entities_avail" multiple="true" size="10" class="form-control">
+            </select>
+          </td>
+          <td class="text-center">        
+              <button id="entities_add" class="btn btn-lg btn-success"><i class="fa fa-arrow-right" title="{i18n}add{/i18n}"></i></button>
+              <br /><br/>
+              <button id="entities_remove" class="btn btn-lg btn-danger"><i class="fa fa-arrow-left" title="{i18n}remove{/i18n}"></i></button>
+          </td>
+          <td>
+            <select name="entities" id="select_entities_assigned" multiple="true" size="10" class="form-control">
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <input name="entities_items_added" id="entities_items_added" type="hidden" />
   <input name="entities_items_removed" id="entities_items_removed" type="hidden" />

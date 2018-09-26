@@ -1,4 +1,4 @@
-{$context->oPage->requireJSResource('assets/js/knockout.min.js')}
+
 {literal}
 	<style>
 		fieldset { border: 1px dotted #999; }
