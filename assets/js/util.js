@@ -19,3 +19,19 @@ document.addEventListener('click', (e) => {
     }
 });
 */
+
+document.addEventListener("DOMContentLoaded", () => {
+    var searchForm = document.getElementById("frmQuickSearch");
+    if(searchForm != null){
+        searchForm.addEventListener("submit", (e) => {
+            var value = e.target.querySelector("input[type=search]").value;
+            if(value == ""){
+                e.preventDefault();
+                e.stopPropagation();
+            }else{
+                e.target.querySelector("input[name=txtQuery]").value = '(GeneralText contains "'+value+'")';
+            }            
+        });
+    };
+});
+

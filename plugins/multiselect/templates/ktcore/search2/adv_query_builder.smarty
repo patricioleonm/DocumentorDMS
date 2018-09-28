@@ -8,6 +8,7 @@
 	var meta_mimetypes = {/literal}{$metainfo.mimetypes_str}{literal};
 	var meta_documenttypes = {/literal}{$metainfo.documenttypes_str}{literal};
     var remove = "{/literal}{i18n}Remove{/i18n}{literal}";
+    var select_criteria = "{/literal}{i18n}Please select some search criteria{/i18n}{literal}";
     var is_isnot = [
         {"is" : "{/literal}{i18n}is{/i18n}{literal}"},
         {"is not" : "{/literal}{i18n}is not{/i18n}{literal}"}
@@ -102,7 +103,7 @@
         <div class="d-inline">
         {i18n arg_options=$options}Return items which match #options# of the criteria groups specified.{/i18n}
         </div>
-        <button class="btn btn-success btn-sm float-right" onclick="addCriteriaGroup()"><i class="fa fa-plus"></i> {i18n}Add another set of criteria{/i18n}</button>
+        <button class="btn btn-success btn-sm float-right" onclick="addCriteriaGroup()" id="btnAddCriteria"><i class="fa fa-plus"></i> {i18n}Add another set of criteria{/i18n}</button>
     </div>
     <div class="card-body" id="criterias_groups_list">
     </div>
@@ -112,10 +113,10 @@
 </div>
 
 <template id="tpl_criteria_group">
-        <div class="card border-secondary mb-2">
+        <div class="card border-secondary mb-2" id="fieldset_XX" data-id="XX">
             <div class="card-header">
                 <h5 class="card-title d-inline"><i class="fa fa-filter"></i> {i18n}Criteria Group{/i18n}</h5>
-                <button class="btn btn-danger btn-sm float-right" data-id="XX" onclick="removeCriteriaGroup()"><i class="fa fa-trash"></i> {i18n}Remove Criteria Group{/i18n}</button>
+                <button class="btn btn-danger btn-sm float-right" id="removeCriteriaGroup" data-id="XX" onclick="removeCriteriaGroup(this)"><i class="fa fa-trash"></i> {i18n}Remove Criteria Group{/i18n}</button>
             </div>
             <div class="card-body">
                 {capture assign=options}
@@ -145,7 +146,7 @@
                 </div>
             </div>
             <hr>
-            <div id="criteria_fieldsXX"></div>
+            <div id="criteria_fieldsXX" data-id=""></div>
             </div>
         </div>
 </template>

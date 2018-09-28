@@ -1,5 +1,5 @@
 	<div class="row" id="dashboard">
-		<div class="grid-sizer"></div>
+		<div class="card-columns">
     {foreach item=oDashlet from=$dashlets}
 		{if $oDashlet->sClass == 'ktBlock'}
 			{assign var=card_type value='bg-light'}
@@ -8,15 +8,16 @@
 		{else}
 			{assign var=card_type value='bg-warning text-white'}
 		{/if}
-		<div class="grid-item col-md-6 col-lg-4 mb-2">
-			<div class="grid-item-content">
-				<div class="card {$card_type}" id="{$context->_getDashletId($oDashlet)}">
-					<div class="card-header">{$oDashlet->sTitle}</div>
-					<div class="card-body">
-						{$oDashlet->render()}
-					</div>
+			<div class="card {$card_type}" id="{$context->_getDashletId($oDashlet)}">
+				<div class="card-header">{$oDashlet->sTitle}
+				<button type="button" class="close" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="card-body">
+					{$oDashlet->render()}
 				</div>
 			</div>
-		</div>
 	{/foreach}
+		</div>
 	</div>
