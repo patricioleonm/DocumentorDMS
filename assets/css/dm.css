@@ -2,10 +2,6 @@ body {
     background-color: #f8f3f3;
 }
 
-.fa-2 {
-    font-size: 2em;
-}
-
 .actionlist {
     list-style-type: none;
     margin: 0;
@@ -20,4 +16,8 @@ ul.actionlist li:before {
     position: relative;
     margin-right: 5px;
     bottom: 2px;
-    }
+}
+
+.font-1em {
+    font-size: 1em;
+}

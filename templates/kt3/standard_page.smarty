@@ -47,7 +47,7 @@
 		<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fa fa-user"></i>
+				<i class="fa fa-user fa-2x mr-1"></i>
 				{if ($page->user)}
 					{$page->user->getName()|mb_truncate:40:"..."}
 				{/if}
@@ -71,7 +71,7 @@
 			</li>
 		{if ($page->getHelpURL() != null)}
 			<li class="nav-item">
-				<a class="nav-link" href="{$page->getHelpURL()}"><i class="fa fa-question-circle"></i></a>
+				<a class="nav-link" href="{$page->getHelpURL()}"><i class="fa fa-question-circle fa-2x"></i></a>
 			</li>
 		{/if}
 		</ul>
@@ -87,6 +87,7 @@
                             <path
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"
                             /></svg>
+						Menu
                     </button>
 
                 <nav class="collapse bd-links" id="bd-docs-nav">
@@ -110,39 +111,41 @@
 			<main class="col-12 {if $page->portlets != NULL && $page->show_portlets}col-md-9 col-xl-10{/if} py-md-10 pl-md-1 bd-content" role="main">
 				<input type="hidden" name="kt-core-baseurl" id="kt-core-baseurl" value="{$rootUrl}" />
 				<div class="row">
-					<div class="col">
-					<form id="frmQuickSearch" class="bd-search d-flex align-items-center" method="post" action="{$rootUrl}/search2.php?action=process">
-						<input id="txtQuery" name="txtQuery" type="hidden">
-						<input type="hidden" name="cbQuickQuery" id="cbQuickQuery" value="1">
-						<input type="hidden" name="cbQuickGeneral" id="cbQuickGeneral" value="1">
-						<div class="input-group input-group-sm">
-							<input type="search" class="form-control btn-outline-primary" aria-label="{i18n}Enter search criteria...{/i18n}" placeholder="{i18n}Enter search criteria...{/i18n}">
-							<div class="input-group-append">
-								<button type="submit" class="btn btn-primary" title="{i18n}search{/i18n}"><i class="fa fa-search"></i><span class="sr-only">{i18n}search{/i18n}</span></button>
-								<button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="{$rootUrl}/search2.php?action=guiBuilder">{i18n}Advanced Search{/i18n}</a>
-									<a class="dropdown-item" href="{$rootUrl}/search2.php?action=searchResults">{i18n}Previous Search Results{/i18n}</a>
-									<div role="separator" class="dropdown-divider"></div>
-									<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Quick Search Options{/i18n}</span>
-									<a class="dropdown-item active" href="#">{i18n}content and metadata{/i18n}</a>
-									<a class="dropdown-item" href="#">{i18n}metadata{/i18n}</a>
-									<div role="separator" class="dropdown-divider"></div>
-									<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Toggle search results format{/i18n}</span>
-									<a class="dropdown-item active" href="{$rootUrl}/search2.php?action=searchResults&format=searchengine">{i18n}Search engine format{/i18n}</a>
-									<a class="dropdown-item" href="{$rootUrl}/search2.php?action=oldSearchResults">{i18n}Browse view format{/i18n}</a>
-									<div role="separator" class="dropdown-divider"></div>
-									<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Saved Searches{/i18n}</span>
-								{foreach item=searchitem from=$savedSearches}
-									<a class="dropdown-item" href="{$rootUrl}/search2.php?action=processSaved&fSavedSearchId={$searchitem.id}">{$searchitem.name|sanitize}</a>
-								{/foreach}
+					<div class="col-auto"></div>
+					<div class="col-12 col-md-10">
+						<form id="frmQuickSearch" class="bd-search d-flex align-items-center" method="post" action="{$rootUrl}/search2.php?action=process">
+							<input id="txtQuery" name="txtQuery" type="hidden">
+							<input type="hidden" name="cbQuickQuery" id="cbQuickQuery" value="1">
+							<input type="hidden" name="cbQuickGeneral" id="cbQuickGeneral" value="1">
+							<div class="input-group">
+								<input type="search" class="form-control btn-outline-primary" aria-label="{i18n}Enter search criteria...{/i18n}" placeholder="{i18n}Enter search criteria...{/i18n}">
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-primary" title="{i18n}search{/i18n}"><i class="fa fa-search"></i><span class="sr-only">{i18n}search{/i18n}</span></button>
+									<button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<div class="dropdown-menu font-1em">
+										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=guiBuilder">{i18n}Advanced Search{/i18n}</a>
+										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=searchResults">{i18n}Previous Search Results{/i18n}</a>
+										<div role="separator" class="dropdown-divider"></div>
+										<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Quick Search Options{/i18n}</span>
+										<a class="dropdown-item active" href="#">{i18n}content and metadata{/i18n}</a>
+										<a class="dropdown-item" href="#">{i18n}metadata{/i18n}</a>
+										<div role="separator" class="dropdown-divider"></div>
+										<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Toggle search results format{/i18n}</span>
+										<a class="dropdown-item active" href="{$rootUrl}/search2.php?action=searchResults&format=searchengine">{i18n}Search engine format{/i18n}</a>
+										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=oldSearchResults">{i18n}Browse view format{/i18n}</a>
+										<div role="separator" class="dropdown-divider"></div>
+										<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Saved Searches{/i18n}</span>
+									{foreach item=searchitem from=$savedSearches}
+										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=processSaved&fSavedSearchId={$searchitem.id}">{$searchitem.name|sanitize}</a>
+									{/foreach}
+									</div>
 								</div>
 							</div>
-						</div>
-					</form>
+						</form>
 					</div>
+					<div class="col-auto"></div>
 				</div>
 				<div class="row">
 					{if (!$page->hide_section)}
