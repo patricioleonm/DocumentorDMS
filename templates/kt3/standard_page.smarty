@@ -111,7 +111,7 @@
 			<main class="col-12 {if $page->portlets != NULL && $page->show_portlets}col-md-9 col-xl-10{/if} py-md-10 pl-md-1 bd-content" role="main">
 				<input type="hidden" name="kt-core-baseurl" id="kt-core-baseurl" value="{$rootUrl}" />
 				<div class="row">
-					<div class="col-auto"></div>
+					<div class="col"></div>
 					<div class="col-12 col-md-10">
 						<form id="frmQuickSearch" class="bd-search d-flex align-items-center" method="post" action="{$rootUrl}/search2.php?action=process">
 							<input id="txtQuery" name="txtQuery" type="hidden">
@@ -145,7 +145,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="col-auto"></div>
+					<div class="col"></div>
 				</div>
 				<div class="row">
 					{if (!$page->hide_section)}
