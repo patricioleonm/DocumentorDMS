@@ -1,208 +1,198 @@
-<h2>{i18n}Search Criteria Editor{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Search Criteria Editor{/i18n}</h4>
 
-	<p class="alert alert-info">
-		{i18n}The search criteria editor allows you to utilise the full power of the search engine by allowing you to perform more complicated searches by using the free text criteria format.{/i18n}
-		{capture assign=options}
-		<a href="{$rootUrl}/search2.php?action=guiBuilder">{i18n}Advanced Search{/i18n}</a>
-		{/capture}
-		{i18n arg_options=$options}The #options# may also be used to perform searches.{/i18n}
 
-	</P>
-	<div>
-	<table>
-		<tr>
-			<td valign="top">
-				<fieldset>
-					{if $txtQuery == ''}
-					{assign var=txtQuery value="Title contains \"something\" or \nMetadata contains \"else\""}
-					{/if}
-					{literal}
-						<script>
-							var parseSuccess = true;
-							var actionAfterParse = 'none';
-							var gotSearchParseStatus = function callBack(o)
-							{
-								if (o.responseText != '{}')
-								{
-									var resp = eval('(' + o.responseText + ')');
-									var butSearch = document.getElementById('butSearch');
-
-									if (resp.status == 0)
-									{
-										parseSuccess = true;
-										if (actionAfterParse == 'none')
-										{
-											alert('{/literal}{i18n}The expression parsed successfully.{/i18n}{literal}');
-										}
-										else if (actionAfterParse == 'search')
-										{
-											var frmQuery = document.getElementById('frmQuery');
-											frmQuery.submit();
-										}
-										else if (actionAfterParse == 'save')
-										{
-											actionAfterParse = 'saveCompleted';
-											var txtQuery = document.getElementById('txtAdvQuery');
-											url='{/literal}{$rootUrl}{literal}/search2/ajax/saveExpr.php?iSavedId={/literal}{$iSavedSearchId}{literal}';
-											//alert(url);
-
-											Ext.Ajax.request(
-											{
-												url: url,
-												method: 'GET',
-												success:gotSearchParseStatus,
-												failure:gotNoStatus,
-												params: {
-												txtQuery: txtQuery.value
-												}
-											});
-
-										}
-										else if (actionAfterParse == 'saveCompleted')
-										{
-											$('saved').style.display='block';
-										}
-									}
-									else
-									{
-										if (actionAfterParse == 'none' || actionAfterParse == 'save')
-										{
-											alert('{/literal}{i18n}There is a problem with the expression.{/i18n}{literal}\n\n' + resp.message );
-										}
-										else  if (actionAfterParse == 'saveCompleted')
-										{
-											alert('{/literal}{i18n}There is a problem saving the expression.{/i18n}{literal}\n\n' + resp.message );
-										}
-										parseSuccess = false;
-									}
-								}
-							}
-							var gotNoStatus = function callBack(o)
-							{
-								alert('{/literal}{i18n}There is a problem communicating with the server.{/i18n}{literal}' +  o.responseText);
-							}
-
-							function startParsing()
-							{
-								if (!parseSuccess)
-								{
-									alert('{/literal}{i18n}There has been a parsing problem. Please check the search expression.{/i18n}{literal}');
-									return;
-								}
-								var txtQuery = document.getElementById('txtAdvQuery');
-								url='{/literal}{$rootUrl}{literal}/search2/ajax/parseExpr.php';
-
-								Ext.Ajax.request(
-								{
-									url: url,
-									method: 'GET',
-									success:gotSearchParseStatus,
-									failure:gotNoStatus,
-									params: {
-									txtQuery: txtQuery.value
-									}
-								});
-							}
-							function butParseClick()
-							{
-								actionAfterParse = 'none';
-								parseSuccess = true;
-								startParsing();
-							}
-							function butClearClick()
-							{
-								var txtQuery = document.getElementById('txtAdvQuery');
-								txtQuery.value = '';
-							}
-							function butSearchClick()
-							{
-								actionAfterParse = 'search';
-								startParsing();
-							}
-
-							function butSaveClick()
-							{
-								actionAfterParse = 'save';
-								startParsing();
-							}
-							function txtQueryChange(el)
-							{
-								if($('saved') != null){
-								$('saved').style.display='none';
-								}
-							}
-						</script>
-					{/literal}
-					<legend>{i18n}Advanced Query{/i18n}</legend>
-					<div>
-						<form  id=frmQuery name=frmQuery method="POST" action="{addQS}action=process{/addQS}">
-							<textarea class="form-control" id="txtAdvQuery" name="txtQuery" cols=50 rows=10 onkeypress="txtQueryChange(this)">{$txtQuery}</textarea>
-							<input type="button" class="btn btn-primary" id="butSearch" value="{i18n}Search{/i18n}" onclick="butSearchClick()"/>
-							<input type="button" class="btn btn-primary" value="{i18n}Parse{/i18n}" onclick="butParseClick(true)"/>
-							<input type="reset" class="btn btn-primary" value="{i18n}Reset{/i18n}" />
-							<input type="button" class="btn btn-primary" value="{i18n}Clear{/i18n}" onclick="butClearClick()"/>
-						</form>
-					</div>
-				</fieldset>
-				{if $bSave}
-				<fieldset>
-					<legend>{i18n}Save{/i18n}</legend>
-						{i18n}You are currently editing the saved search:{/i18n}{$edtSaveQueryName}<br/>
-						<table>
-							<tr>
-								<td><input type="button" class="btn btn-primary" align="right" value="{i18n}Save{/i18n}" onclick="butSaveClick()"/></td>
-								<td><div id="saved" class="btn btn-primary" style="display: none"><font color=brown>{i18n}Saved{/i18n}</font></div></td>
-							</tr>
-						</table>
-				</fieldset>
-				{/if}
-			</td>
-			<td valign="top">
-				<fieldset>
-					<legend>{i18n}Grammar{/i18n}</legend>
-					<p>
-						{i18n}Criteria may be built up using the following grammar:{/i18n}<br/>
-						expr ::= expr {literal}{{/literal} AND | OR {literal}}{/literal} expr<br/>
-						expr ::= NOT expr<br/>
-						expr ::= (expr)<br/>
-						expr ::= field {literal}{ < | <= | = | > | >= | CONTAINS |STARTS WITH | ENDS WITH }{/literal} value<br/>
-						expr ::= field BETWEEN value AND value<br/>
-						expr ::= field DOES [ NOT ] CONTAIN value<br/>
-						expr ::= field IS [ NOT ] LIKE value<br/>
-
-						value ::= "{i18n}search text here{/i18n}"
-					</p>
-				</fieldset>
-				<p>
-					{literal}
-					<script>
-						function wordclicked(word)
-						{
-							var sq = document.getElementById('txtAdvQuery');
-							if (sq.value != '') sq.value += ' ';
-							sq.value += word + ' ';
-						}
-					</script>
-					{/literal}
-
-					<fieldset>
-						<legend>{i18n}Fields{/i18n}</legend>
-						<p class="alert alert-info">
-						{i18n}The following fields may be used in search criteria:{/i18n}
-						{assign var=i value=0}
-						{foreach item=alias from=$aliases}
-							{if (substr($alias,0,2) != '["')}
-								{if $i>0}, {/if}
-								{if (($i % 8) == 0)}<br>{/if}
-								<span onclick="wordclicked('{$alias|escape}')">{$alias}</span>
-								{assign var=i value=$i+1}
-							{/if}
-						{/foreach}
-						</p>
-					</fieldset>
-				</p>
-			</td>
-		</tr>
-	</table>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col">
+			<p class="alert alert-info">
+				{i18n}The search criteria editor allows you to utilise the full power of the search engine by allowing you to perform more complicated searches by using the free text criteria format.{/i18n}
+				{capture assign=options}
+				<a href="{$rootUrl}/search2.php?action=guiBuilder">{i18n}Advanced Search{/i18n}</a>
+				{/capture}
+				{i18n arg_options=$options}The #options# may also be used to perform searches.{/i18n}
+			</P>
+		</div>
 	</div>
+	<div class="row">
+		<div class="col-6">
+			<div class="card mb-2">
+				<div class="card-header">{i18n}Advanced Query{/i18n}</div>
+				<div class="card-body">
+					<form id=frmQuery name=frmQuery method="POST" action="{addQS}action=process{/addQS}">
+						<textarea class="form-control" id="txtAdvQuery" name="txtQuery" cols=50 rows=10 onkeypress="txtQueryChange(this)">{$txtQuery}</textarea>
+						<hr>
+						<input type="button" class="btn btn-primary" id="butSearch" value="{i18n}Search{/i18n}" onclick="butSearchClick()"/>
+						<input type="button" class="btn btn-primary" value="{i18n}Parse{/i18n}" onclick="butParseClick(true)"/>
+						<input type="reset" class="btn btn-primary" value="{i18n}Reset{/i18n}" />
+						<input type="button" class="btn btn-primary" value="{i18n}Clear{/i18n}" onclick="butClearClick()"/>
+					</form>
+				</div>
+			</div>
+			{if $bSave}
+			<div class="card">
+				<div class="card-header">{i18n}Save{/i18n}</div>
+				<div class="card-body">
+					{i18n}You are currently editing the saved search : {/i18n}<b>{$edtSaveQueryName}</b>
+					<div id="saved" class="alert alert-danger d-none">{i18n}Saved{/i18n}</div>
+					<hr>
+					<button class="btn btn-primary float-right" onclick="butSaveClick()">{i18n}Save{/i18n}</button>					
+				</div>
+			</div>
+			{/if}
+		</div>
+		<div class="col-6">
+			<fieldset>
+				<legend>{i18n}Grammar{/i18n}</legend>
+				<p>
+					{i18n}Criteria may be built up using the following grammar:{/i18n}<br/>
+					expr ::= expr {literal}{{/literal} AND | OR {literal}}{/literal} expr<br/>
+					expr ::= NOT expr<br/>
+					expr ::= (expr)<br/>
+					expr ::= field {literal}{ < | <= | = | > | >= | CONTAINS |STARTS WITH | ENDS WITH }{/literal} value<br/>
+					expr ::= field BETWEEN value AND value<br/>
+					expr ::= field DOES [ NOT ] CONTAIN value<br/>
+					expr ::= field IS [ NOT ] LIKE value<br/>
+					value ::= "{i18n}search text here{/i18n}"
+				</p>
+			</fieldset>
+			<p>
+			<fieldset>
+				<legend>{i18n}Fields{/i18n}</legend>
+				<p class="alert alert-info">
+				{i18n}The following fields may be used in search criteria:{/i18n}
+				{assign var=i value=0}
+				{foreach item=alias from=$aliases}
+					{if (substr($alias,0,2) != '["')}
+						{if $i>0}, {/if}
+						{if (($i % 8) == 0)}<br>{/if}
+						<span onclick="wordclicked('{$alias|escape}')">{$alias}</span>
+						{assign var=i value=$i+1}
+					{/if}
+				{/foreach}
+				</p>
+			</fieldset>
+			</p>
+		</div>
+	</div>
+</div>
+{if $txtQuery == ''}
+{assign var=txtQuery value="Title contains \"something\" or \nMetadata contains \"else\""}
+{/if}
+{literal}
+	<script>
+		var parseSuccess = true;
+		var actionAfterParse = 'none';
+		var gotSearchParseStatus = function callBack(data)
+		{
+			resp = JSON.parse(data);
+			if (data != "{}")
+			{
+				var butSearch = document.getElementById('butSearch');
 
+				if (resp.status == 0)
+				{
+					parseSuccess = true;
+					if (actionAfterParse == 'none')
+					{
+						alert('{/literal}{i18n}The expression parsed successfully.{/i18n}{literal}');
+					}
+					else if (actionAfterParse == 'search')
+					{
+						var frmQuery = document.getElementById('frmQuery');
+						frmQuery.submit();
+					}
+					else if (actionAfterParse == 'save')
+					{
+						actionAfterParse = 'saveCompleted';
+						var txtQuery = document.getElementById('txtAdvQuery');
+						url='{/literal}{$rootUrl}{literal}/search2/ajax/saveExpr.php?iSavedId={/literal}{$iSavedSearchId}{literal}';
+						$.ajax({
+							url : url,
+							type : 'GET',
+							data : {txtQuery: txtQuery.value}
+						})
+						.done(gotSearchParseStatus)
+						.fail(gotNoStatus);
+					}
+					else if (actionAfterParse == 'saveCompleted')
+					{
+						document.getElementById('saved').classList.add('d-block');
+					}
+				}
+				else
+				{
+					if (actionAfterParse == 'none' || actionAfterParse == 'save')
+					{
+						alert('{/literal}{i18n}There is a problem with the expression.{/i18n}{literal}\n\n' + resp.message );
+					}
+					else  if (actionAfterParse == 'saveCompleted')
+					{
+						alert('{/literal}{i18n}There is a problem saving the expression.{/i18n}{literal}\n\n' + resp.message );
+					}
+					parseSuccess = false;
+				}
+			}
+		}
+
+		var gotNoStatus = function callBack(o)
+		{
+			alert('{/literal}{i18n}There is a problem communicating with the server.{/i18n}{literal}' +  o.responseText);
+		}
+
+		function startParsing()
+		{
+			if (!parseSuccess)
+			{
+				alert('{/literal}{i18n}There has been a parsing problem. Please check the search expression.{/i18n}{literal}');
+				return;
+			}
+			var txtQuery = document.getElementById("txtAdvQuery");
+			url='{/literal}{$rootUrl}{literal}/search2/ajax/parseExpr.php';
+			$.ajax({
+				url : url,
+				type : 'GET',
+				data : { txtQuery: txtQuery.value }
+			})
+			.done(gotSearchParseStatus)
+			.fail(gotNoStatus);
+		}
+
+		function butParseClick()
+		{
+			actionAfterParse = 'none';
+			parseSuccess = true;
+			startParsing();
+		}
+
+		function butClearClick()
+		{
+			var txtQuery = document.getElementById('txtAdvQuery');
+			txtQuery.value = '';
+		}
+
+		function butSearchClick()
+		{
+			actionAfterParse = 'search';
+			startParsing();
+		}
+
+		function butSaveClick()
+		{
+			actionAfterParse = 'save';
+			startParsing();
+		}
+		function txtQueryChange(el)
+		{
+			if($('saved') != null){
+			$('saved').style.display='none';
+			}
+		}
+
+		function wordclicked(word)
+		{
+			var sq = document.getElementById('txtAdvQuery');
+			if (sq.value != '') sq.value += ' ';
+			sq.value += word + ' ';
+		}
+	</script>
+{/literal}
