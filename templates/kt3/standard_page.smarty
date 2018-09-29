@@ -14,7 +14,10 @@
 	<link rel="stylesheet" type="text/css" href="{$rootUrl}/resources/css/kt-print.css" media="print" />
     <link rel="icon" href="{$rootUrl}/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="{$rootUrl}/favicon.ico" type="image/x-icon">
-    <link rel="search" type="application/opensearchdescription+xml" title="KnowledgeTree Quick Search" href="{$rootUrl}/plugins/search2/openSearchDescription.php">
+    <link rel="search" 
+			type="application/opensearchdescription+xml" 
+			title="Documentor Quick Search" 
+			href="{$rootUrl}/plugins/search2/openSearchDescription.php">
 	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css">
 
     <!-- Standalone CSS. -->
@@ -263,11 +266,13 @@
 {/foreach}
 
 <!-- Standalone Javascript. -->
-{foreach item=sJavascript from=$page->getJSStandalone()}
+
 	<script type="text/javascript">
 		var rootURL = "{$absoluteRootUrl}";
 		var quickQuery = "{$search2_quickQuery}";
+		{foreach item=sJavascript from=$page->getJSStandalone()}
 		{$sJavascript}
+		{/foreach}
 	</script>
-{/foreach}
+
 </html>
