@@ -89,6 +89,7 @@ $oRegistry =& KTPluginRegistry::getSingleton();
 $oRegistry->registerPlugin('KTSubscriptionPlugin', 'ktstandard.subscriptions.plugin', __FILE__);
 
 function wrapString($str, $length = 20){
+    return $str;
     // Wrap string to given character length (content rendered from ajax doesn't render correctly in ie)
     $len = mb_strlen($str);
     $out = '';
@@ -105,7 +106,7 @@ function wrapString($str, $length = 20){
 }
 
 // {{{ KTSubscriptionPortlet
-/*
+
 class KTSubscriptionPortlet extends KTPortlet {
     function KTSubscriptionPortlet() {
         parent::KTPortlet(_kt("Subscriptions"));
@@ -150,48 +151,53 @@ class KTSubscriptionPortlet extends KTPortlet {
                 }
             }
         }
-
         // Create js script
         $url = $base_url.$aInfo['url'];
         $script = '<script type="text/javascript">
-            function doSubscribe(action){
-                var respDiv = document.getElementById("response");
+            function doSubscribe1(action){
+                console.log(action);
+                //var respDiv = document.getElementById("response");
                 var link = document.getElementById("subscribeLink");
 
-                Ext.Ajax.request({
-                    url: "'.$url.'",
-                    success: function(response) {
-                        respDiv.innerHTML = response.responseText;
-                        respDiv.style.display = "block";
-                        link.style.display = "none";
-                        if(document.getElementById("subLink")){
-                            document.getElementById("subLink").style.display = "none";
-                        }
-                    },
-                    failure: function() {
-                        respDiv.innerHTML = "'._kt('There was a problem with the subscription, please refresh the page and try again.').'";
-                        respDiv.style.display = "block";
-                    },
-                    params: {
-                        action: action
+                $.ajax({
+                    url : "'.$url.'",
+                    type : "POST",
+                    data : { action }
+                })
+                .done(function(response) {
+                    alert(response);
+                    //respDiv.innerHTML = response;
+                    //respDiv.style.display = "block";
+                    link.style.display = "none";
+                    if(document.getElementById("subLink")){
+                        document.getElementById("subLink").style.display = "none";
                     }
+                })
+                .fail(function() {
+                    alert("'._kt('There was a problem with the subscription, please refresh the page and try again.').'");
+                    //respDiv.innerHTML = "'._kt('There was a problem with the subscription, please refresh the page and try again.').'";
+                    //respDiv.style.display = "block";
                 });
             }
         </script>';
 
-        $script .= "<a id='subscribeLink' style='cursor:pointer' onclick='javascript: doSubscribe(\"ajax\")'>{$aInfo['name']}</a>";
+        $script .= "<a id=\"subscribeLink\" class=\"list-group-item list-group-item-action pt-1 pb-1\" href=\"#\" onclick=\"javascript: doSubscribe1('ajax')\">".
+                        "<i class=\"fa fa-chevron-right\"></i> ".$aInfo['name'].
+                    "</a>";
 
         $aInfo['js'] = $script;
         $this->actions[] = $aInfo;
 
         if(isset($aInfo['subaction'])){
             $subInfo = array();
-            $subInfo['js'] = "<a id='subLink' style='cursor:pointer' onclick='javascript: doSubscribe(\"add_subfolders\")'>{$aInfo['subaction']}</a>";
+            $subInfo['js'] = "<a id=\"subLink\" class=\"list-group-item list-group-item-action pt-1 pb-1\" href=\"#\" onclick=\"javascript: doSubscribe1('add_subfolders')\">".
+                            "<i class=\"fa fa-chevron-right\"></i> ".$aInfo['subaction'].
+                            "</a>";
             $this->actions[] = $subInfo;
         }
 
         $this->actions[] = array("name" => _kt("Manage subscriptions"), "url" => $this->oPlugin->getPagePath('manage'));
-        $btn = '<div id="response" style="padding: 2px; margin-right: 10px; margin-left: 10px; background: #CCC; display:none;"></div>';
+        $btn = ""; //'<div id="response" class="alert alert-info d-none"></div>';
 
         $oTemplating =& KTTemplating::getSingleton();
         $oTemplate = $oTemplating->loadTemplate("kt3/portlets/actions_portlet");
@@ -202,7 +208,7 @@ class KTSubscriptionPortlet extends KTPortlet {
         return $oTemplate->render($aTemplateData);
     }
 }
-*/
+
 // }}}
 
 // {{{ KTDocumentSubscriptionAction
@@ -268,7 +274,7 @@ class KTDocumentUnsubscriptionAction extends KTDocumentAction {
 
     function getInfo() {
         $aInfo = parent::getInfo();
-        if (!Subscription::exists($this->oUser->getID(), $this->oDocument->getID(), SubscriptionEvent::subTypes('Document'))) {
+        if (!Subscription::exists($this->oUser->getId(), $this->oDocument->getId(), SubscriptionEvent::subTypes('Document'))) {
             $aInfo['active'] = 'no';
         }
         return $aInfo;
@@ -279,8 +285,8 @@ class KTDocumentUnsubscriptionAction extends KTDocumentAction {
         if (!Subscription::exists($this->oUser->getId(), $this->oDocument->getId(), $iSubscriptionType)) {
             $str = _kt('You are not subscribed to this document');
         } else {
-            $oSubscription = new Subscription($this->oUser->getId(), $this->oDocument->getId(), $iSubscriptionType);
-            $res = $oSubscription->create();
+            $oSubscription = & Subscription::getByIDs($this->oUser->getId(), $this->oDocument->getId(), $iSubscriptionType);
+            $res = $oSubscription->delete();
             if ($res) {
                 $str = _kt('You have been unsubscribed from this document');
             } else {
@@ -417,8 +423,6 @@ class KTArchiveSubscriptionTrigger {
     }
 }
 // }}}
-
-
 
 class KTDiscussionSubscriptionTrigger {
     var $aInfo = null;

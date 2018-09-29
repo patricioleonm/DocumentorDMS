@@ -1,9 +1,9 @@
     {foreach item=action from=$btn }
         {if $action != null}
             {if $action.js}
-            	{$action.js} / js
+            	{$action.js}
             {else}
-                <a href="{$action.url}" class="btn btn-success btn-block mt-1 mb-1"> <!--border border-warning list-group-item list-group-item-action d-flex list-group-item-warning pt-2 pb-2 justify-content-between align-item-center" {if $action.description}title="{$action.description}"{/if}-->
+                <a href="{$action.url}" class="btn btn-success btn-block mt-1 mb-1">
                     {$action.name} <i class="{$action.icon}"></i>
                 </a>
             {/if}
@@ -13,7 +13,7 @@
     {foreach item=action from=$context->actions }
         {if $action != null}
             {if $action.js}
-            	{$action.js} / js
+            	{$action.js}
             {else}
                 {if ($action.url)}
                     <a href="{$action.url}" class="list-group-item list-group-item-action pt-1 pb-1" {if $action.description}title="{$action.description}"{/if}>
