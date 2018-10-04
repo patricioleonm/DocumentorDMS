@@ -32,11 +32,9 @@ if(dropElement != null ){
         e.stopPropagation();
         dropable.classList.remove("d-block");
         document.getElementById("upload_form").classList.add("d-block");
-        counter = 0;
         fileElement.files = e.dataTransfer.files;
         fileElement.dispatchEvent(new Event("change"));
-        console.log(e.dataTransfer);
-        console.log(fileElement.files);
+        counter = 0;
     };
 
     function getFileName (e){
