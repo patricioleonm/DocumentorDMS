@@ -61,6 +61,7 @@ class MultiDocumentAddAction extends KTFolderAction {
 	 * iNET Process
 	 */
     function getDisplayName() {
+        $this->oPage->requireJSResource("/assets/js/upload_document.js");
         return _kt('Add Document');
     }
 
@@ -129,6 +130,7 @@ class MultiDocumentAddAction extends KTFolderAction {
         }
 
         // Onchange gets the name of the file and inserts it as the document title.
+        /*
         $sFileOnchange = "javascript:
             var doc = document.getElementById('document_name');
             if(doc.value == ''){
@@ -147,14 +149,14 @@ class MultiDocumentAddAction extends KTFolderAction {
                 var title=name.join('.');
                 doc.value=title;
             }";
-
+*/
         $oForm->setWidgets(array(
             array('ktcore.widgets.file',array(
                 'label' => _kt('File'),
                 'description' => _kt('The contents of the document to be added to the document management system.'),
                 'name' => 'file',
                 'required' => true,
-                'onchange' => $sFileOnchange,
+                //'onchange' => $sFileOnchange,
             )),
             array('ktcore.widgets.string',array(
                 'label' => _kt('Document Title'),

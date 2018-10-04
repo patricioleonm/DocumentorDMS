@@ -262,6 +262,14 @@ class BrowseDispatcher extends KTStandardDispatcher {
             'show_documents' => true,
 		));
 
+		//document types
+        $aTypes = array();
+        foreach (DocumentType::getListForUserAndFolder($this->oUser, $this->oFolder) as $oDocumentType) {
+            if(!$oDocumentType->getDisabled()) {
+                $aTypes[] = $oDocumentType;
+            }
+        }
+
 		// get bulk actions
 		$aBulkActions = KTBulkActionUtil::getAllBulkActions();
 
@@ -274,7 +282,8 @@ class BrowseDispatcher extends KTStandardDispatcher {
               'isEditable' => $this->editable,
               'bulkactions' => $aBulkActions,
               'browseutil' => new KTBrowseUtil(),
-              'returnaction' => 'browse',
+			  'returnaction' => 'browse',
+			  'document_types' => $aTypes,
 		);
 		if ($this->oFolder) {
 			$aTemplateData['returndata'] = $this->oFolder->getId();

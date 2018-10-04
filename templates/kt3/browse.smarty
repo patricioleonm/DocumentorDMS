@@ -1,3 +1,4 @@
+
 {if ($custom_title != null)}
     <h2>{$custom_title|sanitize}</h2>
 {/if}
@@ -21,29 +22,78 @@
     </div>
 </div>
 {/if}
-
-<form action="{$browseutil->getActionBaseUrl()}" method="post">
-{if ($isEditable)}
-    {if ($context->oFolder)}
-    <input type="hidden" name="fFolderId" value="{$context->oFolder->getId()}" />
-    {/if}
-{/if}
-
-    {$collection->render()}
-
-    {if ($isEditable)}
-    <div class="form_actions">
-        <input type="hidden" name="sListCode" value="{$code}" />
-        <input type="hidden" name="action" value="bulkaction" />
-        <input type="hidden" name="fReturnAction" value="{$returnaction}" />
-        <input type="hidden" name="fReturnData" value="{$returndata|sanitize}" />
-    {foreach from=$bulkactions item=bulkaction}
-        {assign var=info value=$bulkaction->getInfo()}
-        <button type="submit" name="submit[{$bulkaction->getName()}]" title="{$bulkaction->getDisplayName()}" class="btn btn-primary"><i class="{$info.icon_class}"></i> <span class="d-none d-sm-inline">{$bulkaction->getDisplayName()}</span></button>
-    {/foreach}
+<div id="draging_zone">
+    <div class="card card-body card-primary border border-secondary text-center text-secondary d-none" id="dropable">
+        <span class="display-4">{i18n}Add Document{/i18n} <i class="fa fa-file-upload"></i></span>
     </div>
+    <form method="post" action="action.php?kt_path_info=inet.multiselect.actions.document.addDocument&postExpected=1&fFolderId={$context->oFolder->getId()}" enctype="multipart/form-data">
+        <div class="card mb-2 d-none" id="upload_form">
+            <div class="card-header">{i18n}Add a document{/i18n}</div>
+            <div class="card-body">
+                <input type="hidden" name="action" value="processInitialData">
+                <input type="hidden" name="fFolderId" value="{$context->oFolder->getId()}">
+                <input type="hidden" name="postReceived" value="1">
+                <div class="form-group">
+                    <label for="_kt_attempt_unique_file">File <span class="text-danger">* {i18n}Required{/i18n}</span></label>
+                    <div class="clearfix"></div>
+                    <!--p class="errorMessage"></p-->
+                    <div class="custom-file">
+                        <input type="file" name="_kt_attempt_unique_file" id="0" />
+                        <label class="custom-file-label" for="0">{i18n}Browse{/i18n}</label>
+                    </div>
+                    <div class="clearfix"></div>
+                    <span class="text-muted">{i18n}The contents of the document to be added to the document management system.{/i18n}</span>
+                </div>     
+                <div class="form-group">
+                    <label for="data[document_name]">{i18n}Document Title{/i18n} <span class="text-danger">* {i18n}Required{/i18n}</span></label>
+                    <div class="clearfix"></div>
+                    <!--p class="errorMessage"></p-->
+                    <input type="text" name="data[document_name]" id="document_name" class="form-control form-control-sm"/>
+                    <div class="clearfix"></div>
+                    <span class="text-muted">{i18n}The document title is used as the main name of a document throughout Documentor.{/i18n}</span>
+                </div>     
+                <div class="form-group">
+                    <label for="data[document_type]">{i18n}Document Type{/i18n} <span class="text-danger">* {i18n}Required{/i18n}</span></label>
+                    <div class="clearfix"></div>
+                    <!--p class="errorMessage"></p-->
+                    <select name="data[document_type]" class="form-control form-control-sm">
+                        {foreach item=doc_type from=$document_types}
+                            <option value="{$doc_type->getId()}">{$doc_type->getName()}</option>
+                        {/foreach}
+                    </select>
+                    <div class="clearfix"></div>
+                    <span class="text-muted">{i18n}Document Types, defined by the administrator, are used to categorise documents. Please select a Document Type from the list below.{/i18n}</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" class="btn btn-primary float-right" name="" value="{i18n}Add{/i18n}" />
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </form>
+    <form action="{$browseutil->getActionBaseUrl()}" method="post">
+    {if ($isEditable)}
+        {if ($context->oFolder)}
+        <input type="hidden" name="fFolderId" value="{$context->oFolder->getId()}" />
+        {/if}
     {/if}
-</form>
+            {$collection->render()}
+
+        {if ($isEditable)}
+        <div class="form_actions">
+            <input type="hidden" name="sListCode" value="{$code}" />
+            <input type="hidden" name="action" value="bulkaction" />
+            <input type="hidden" name="fReturnAction" value="{$returnaction}" />
+            <input type="hidden" name="fReturnData" value="{$returndata|sanitize}" />
+        {foreach from=$bulkactions item=bulkaction}
+            {assign var=info value=$bulkaction->getInfo()}
+            <button type="submit" name="submit[{$bulkaction->getName()}]" title="{$bulkaction->getDisplayName()}" class="btn btn-primary"><i class="{$info.icon_class}"></i> <span class="d-none d-sm-inline">{$bulkaction->getDisplayName()}</span></button>
+        {/foreach}
+        </div>
+        {/if}
+    </form>
+</div>
 
 {if ($save_fields)}
 <form action="{$smarty.server.PHP_SELF}" method="post">

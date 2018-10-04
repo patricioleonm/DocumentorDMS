@@ -221,7 +221,9 @@
 							</div>
 							{/if}
 							<div class="col-12 pt-2 pb-2">
+								<div class="container-fluid">
 								{$page->contents}
+								</div>
 							</div>
 						</div>
 					</div>
