@@ -46,12 +46,14 @@ require_once(KT_LIB_DIR . '/plugins/KTAdminNavigation.php');
 class AdminSplashDispatcher extends KTAdminDispatcher {
     var $category = '';
     var $sSection = 'administration';
+    var $oRegistry = null;
 
     function AdminSplashDispatcher() {
         $this->aBreadcrumbs = array(
             array('url' => KTUtil::getRequestScriptName($_SERVER), 'name' => _kt('Administration')),
         );
-
+        // are we categorised, or not?
+        $this->oRegistry =& KTAdminNavigationRegistry::getSingleton();
         parent::KTAdminDispatcher();
     }
 
@@ -59,23 +61,12 @@ class AdminSplashDispatcher extends KTAdminDispatcher {
         if ($this->category !== '') {
             return $this->do_viewCategory();
         };
-
-
-        // are we categorised, or not?
-        $oRegistry =& KTAdminNavigationRegistry::getSingleton();
-        $categories = $oRegistry->getCategories();
+        
 		$KTConfig =& KTConfig::getSingleton();
         $condensed_admin = $KTConfig->get('condensedAdminUI');
 
-        $aAllItems = array();
-        // we need to investigate sub_url solutions.
-        if ($condensed_admin) {
-            foreach ($categories as $aCategory) {
-                $aItems = $oRegistry->getItemsForCategory($aCategory['name']);
-                $aAllItems[$aCategory['name']] = $aItems;
-            }
-        }
-
+        $aAllItems = $this->getOptions();
+        
         $this->oPage->title = _kt('Administration') . ': ';
         $oTemplating =& KTTemplating::getSingleton();
 
@@ -89,6 +80,7 @@ class AdminSplashDispatcher extends KTAdminDispatcher {
               'context' => $this,
               'categories' => $categories,
               'all_items' => $aAllItems,
+              'assigned_namespaces' => $assigned_namespaces,
               'baseurl' => $_SERVER['PHP_SELF'],
         );
         return $oTemplate->render($aTemplateData);
@@ -101,16 +93,13 @@ class AdminSplashDispatcher extends KTAdminDispatcher {
         //Removing bad documents/fieldmanagement links from the Document Metadata and Workflow Configuration page.
 		if ($category == 'documents') {
 	        $oPage =& $GLOBALS['main'];			
-			//$aJavascript[] = 'thirdpartyjs/jquery/jquery-1.3.2.js';
 			$oPage->requireJSResource('resources/js/kt_hideadminlink.js');
-			//$jscript .= "<script src='resources/js/kt_hideadminlink.js' type='text/javascript'></script>";
 		}
         
-        $oRegistry =& KTAdminNavigationRegistry::getSingleton();
-        $aCategory = $oRegistry->getCategory($category);
+        $aCategory = $this->oRegistry->getCategory($category);
 		
-        $aItems = $oRegistry->getItemsForCategory($category);
-        asort($aItems);
+        $aItems = $this->getOptions($aCategory);
+
         $this->aBreadcrumbs[] = array('name' => $aCategory['title'], 'url' => KTUtil::ktLink('admin.php',$category));
 		
         $this->oPage->title = _kt('Administration') . ': ' . $aCategory['title'];
@@ -119,11 +108,50 @@ class AdminSplashDispatcher extends KTAdminDispatcher {
         $aTemplateData = array(
               'context' => $this,
               'category' => $aCategory,
-              'items' => $aItems,
+              'items' => ($aItems != null) ? $aItems[0] : null,
               'baseurl' =>  $_SERVER['PHP_SELF'],
-        	  'jscript' => $jscript,
         );
         return $oTemplate->render($aTemplateData);
+    }
+
+    function getOptions($category = null){
+        if($category != null){
+            $categories[] = $category;
+        }else{
+            $categories = $this->oRegistry->getCategories();
+        }
+        
+        $aAllItems = null;
+
+        //added by subadmin plugin
+        $sql = "SELECT namespace
+        FROM subadmin_helper";
+
+        $result = DBUtil::getResultArray($sql);
+
+        foreach($result as $row){
+            $assigned_namespaces[] = $row["namespace"];
+        }
+
+        $user_id = $this->oUser->getId();
+
+        foreach ($categories as $aCategory) {
+			$aItems = $this->oRegistry->getItemsForCategory($aCategory['name']);
+			$category['title'] = $aCategory['title'];
+			$category["description"] = $aCategory["description"];
+			$items = array();
+			foreach($aItems as $item){
+                if($user_id == 1 || in_array($item["fullname"], $assigned_namespaces)){
+                    $items[] = array("title" => $item["title"], "description" => $item["description"], "fullname" => $item["fullname"]);
+                }
+            }
+            asort($items);
+            $category['items'] = $items;
+            if(count($category["items"])>0){
+                $aAllItems[] = $category;
+            }			
+        }
+        return $aAllItems;
     }
 }
 
