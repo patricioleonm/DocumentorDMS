@@ -331,10 +331,9 @@ class InetDocumentFieldDispatcher extends KTAdminDispatcher {
 	            $oSubDispatcher = new InetBasicFieldsetManagementDispatcher;
 			}
 			else
-			{
-				
+			{				
 				require_once(KT_DIR.'/plugins/ktcore/admin/fieldsets/basic.inc.php');
-            $oSubDispatcher = new BasicFieldsetManagementDispatcher;
+                $oSubDispatcher = new BasicFieldsetManagementDispatcher;
         }
 			// multiselect change end
 			
