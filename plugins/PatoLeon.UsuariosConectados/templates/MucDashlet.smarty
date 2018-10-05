@@ -1,0 +1,27 @@
+{if $is_root}
+<div class="table-resonsive">
+	<table class="table table-sm table-striped">
+		<thead>
+			<tr>
+				<th>Nombre de Usuario</th>
+				<th>Nombre</th>
+				<th>&Uacute;ltimo login</th>
+				<th>IP</th>
+				<th>Sesiones</th>
+				<th>-</th>
+			</tr>
+		</thead>
+		{foreach from=$userlist key=key item=value}
+			<tr class="{$value.class}">
+				<td>{$value.username}</td>
+				<td>{$value.name}</td>
+				<td>{$value.last_login}</td>
+				<td>{$value.ip}</td>
+				<td>{$value.counter}</td>
+				<td><a href="plugins/PatoLeon.UsuariosConectados/kill.php?id={$value.ses_id}"><i class="fa fa-times-circle"></i> <span class="sr-only">{i18n}Close{/i18n}</span></a></td>
+			</tr>
+		{/foreach}
+		</tbody>
+	</table>
+</div>
+{/if}
