@@ -77,7 +77,7 @@ class KTSearchPortlet extends KTPortlet {
 }
 */
 
-
+/*
 class KTBrowseModePortlet extends KTPortlet {
 
     function KTBrowseModePortlet($sTitle = null) {
@@ -116,7 +116,7 @@ class KTBrowseModePortlet extends KTPortlet {
         return $oTemplate->render($aTemplateData);
     }
 }
-
+*/
 /*
 class KTAdminModePortlet extends KTPortlet {
 
