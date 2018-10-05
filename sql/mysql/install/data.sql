@@ -173,7 +173,7 @@ UNLOCK TABLES;
 LOCK TABLES `config_settings` WRITE;
 /*!40000 ALTER TABLE `config_settings` DISABLE KEYS */;
 INSERT INTO `config_settings` VALUES
-(1, 'ui', 'OEM Application Name', 'Specifies the application name used by KnowledgeTree OEM partners. This name replaces \'KnowledgeTree\' wherever the application name displays in the interface.', 'appName', 'KnowledgeTree', 'KnowledgeTree', 'string', NULL, 1),
+(1, 'ui', 'OEM Application Name', 'Specifies the application name used by KnowledgeTree OEM partners. This name replaces \'KnowledgeTree\' wherever the application name displays in the interface.', 'appName', 'Documentor', 'Documentor', 'string', NULL, 1),
 (2, 'KnowledgeTree', 'Scheduler Interval', 'Defines the frequency, in seconds, at which the Scheduler is set to run.', 'schedulerInterval', 'default', '30', 'numeric_string', NULL, 1),
 (3, 'dashboard', 'Always Display \'Your Checked-out Documents\'', 'Defines whether to display the \'Your Checked-out Documents\' dashlet, even when there is no data to display. Default is \'False\'.', 'alwaysShowYCOD', 'default', 'false', 'boolean', NULL, 1),
 (4, 'urls', 'Graphics Url', 'The path to the user interface graphics.', 'graphicsUrl', 'default', '${rootUrl}/graphics', 'string', NULL, 1),
