@@ -124,7 +124,7 @@ class MultiSelectPlugin extends KTPlugin {
              _kt('Document Fieldsets'),
             _kt('Manage the different types of information with multiselect functionality that can be associated with classes of documents.'),
 			'InetdocumentFieldsv2.php', null);
-		$this->oPage->requireJSResource('resources/js/kt_hideadminlink.js');
+		//$this->oPage->requireJSResource('resources/js/kt_hideadminlink.js');
 	}
 }
 $oPluginRegistry =& KTPluginRegistry::getSingleton();
