@@ -53,6 +53,7 @@ class RSSFolderLinkAction extends KTFolderAction {
     var $sDisplayName = 'RSS';
     
     function getDisplayName() {
+        return "RSS";
         //get folder object
         $oFolder = $this->oFolder;
         
