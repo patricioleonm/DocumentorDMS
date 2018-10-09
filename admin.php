@@ -138,7 +138,8 @@ class AdminSplashDispatcher extends KTAdminDispatcher {
         foreach ($categories as $aCategory) {
 			$aItems = $this->oRegistry->getItemsForCategory($aCategory['name']);
 			$category['title'] = $aCategory['title'];
-			$category["description"] = $aCategory["description"];
+            $category["description"] = $aCategory["description"];
+            $category['name'] = $aCategory["name"];
 			$items = array();
 			foreach($aItems as $item){
                 if($user_id == 1 || in_array($item["fullname"], $assigned_namespaces)){
