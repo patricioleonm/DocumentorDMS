@@ -1,6 +1,29 @@
+function getFileName (e){
+    var doc = document.getElementById('document_name');
+    //if(doc.value == ''){
+        var arrPath=this.value.split('/');
+        if(arrPath.length == 1){
+            var arrPath=this.value.split('\\');
+        }
+        var name=arrPath[arrPath.length-1];
+        var name=name.split('.');
+        var len = name.length;
+        if(len > 1){
+            if(name[len-1].length <= 4){
+                name.pop();
+            }
+        }
+        var title=name.join('.');
+        doc.value=title;
+    //}
+};
+var fileElement = document.querySelector("input[type=file]","input[id=0]");
+fileElement.addEventListener("change", getFileName);
+
 var dropElement = document.getElementById("draging_zone");
+
 if(dropElement != null ){
-    var fileElement = document.querySelector("input[type=file]","input[id=0]");
+
     var dropable = document.getElementById("dropable");
     var counter = 0;
     function dropEnter(e){
@@ -35,26 +58,6 @@ if(dropElement != null ){
         fileElement.files = e.dataTransfer.files;
         fileElement.dispatchEvent(new Event("change"));
         counter = 0;
-    };
-
-    function getFileName (e){
-        var doc = document.getElementById('document_name');
-        //if(doc.value == ''){
-            var arrPath=this.value.split('/');
-            if(arrPath.length == 1){
-                var arrPath=this.value.split('\\');
-            }
-            var name=arrPath[arrPath.length-1];
-            var name=name.split('.');
-            var len = name.length;
-            if(len > 1){
-                if(name[len-1].length <= 4){
-                    name.pop();
-                }
-            }
-            var title=name.join('.');
-            doc.value=title;
-        //}
     };
     
     fileElement.addEventListener("change", getFileName);
