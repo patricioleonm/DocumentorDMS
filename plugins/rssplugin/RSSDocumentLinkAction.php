@@ -53,9 +53,11 @@ class RSSDocumentLinkAction extends KTDocumentAction {
     var $sDisplayName = "RSS";
     
     function getDisplayName() {
+        return $this->sDisplayName;
         //get document object
         $oDocument = $this->oDocument;
         
+
         // get document id
         if(!isset($oDocument)){
         	return 'RSS';
