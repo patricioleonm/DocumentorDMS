@@ -80,8 +80,11 @@ class BrowseDispatcher extends KTStandardDispatcher {
 
 	function BrowseDispatcher() {
 		$this->aBreadcrumbs = array(
-		array('action' => 'browse', 'name' => _kt('Browse')),
-		);
+									array(
+										'action' => 'browse',
+										'name' => _kt('Browse')
+									),);
+									
 		return parent::KTStandardDispatcher();
 	}
 
@@ -263,18 +266,20 @@ class BrowseDispatcher extends KTStandardDispatcher {
 		));
 
 		//document types
+		/*
         $aTypes = array();
         foreach (DocumentType::getListForUserAndFolder($this->oUser, $this->oFolder) as $oDocumentType) {
             if(!$oDocumentType->getDisabled()) {
                 $aTypes[] = $oDocumentType;
             }
         }
-
+*/
 		// get bulk actions
 		$aBulkActions = KTBulkActionUtil::getAllBulkActions();
 
 		$oTemplating =& KTTemplating::getSingleton();
 		$oTemplate = $oTemplating->loadTemplate('kt3/browse');
+		$this->oPage->requireCSSResource('assets/file-icon-vector/file-icon-square-o.min.css');
 		$aTemplateData = array(
               'context' => $this,
               'collection' => $collection,

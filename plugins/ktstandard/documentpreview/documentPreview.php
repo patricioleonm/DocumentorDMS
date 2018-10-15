@@ -119,8 +119,9 @@ class DocumentPreview {
         $iMimeId = $this->_iMimeId;
 
         $sIconPath = $this->getIconPath();
-        $sIconPath = $default->rootUrl.$sIconPath;
-        return "<img src='$sIconPath' title='$sTitle' width=\"32px\"/>";
+        //$sIconPath = $default->rootUrl.$sIconPath;
+        //return "<img src='$sIconPath' title='$sTitle' width=\"32px\"/>";
+        return "<i class=\"".$sIconPath." h1\"></i>";
     }
 
     /**
@@ -158,11 +159,11 @@ class DocumentPreview {
      */
     function getIconPath() {
 
-        $sIconPath = KTMime::getIconPath($this->_iMimeId);
+        //$sIconPath = KTMime::getIconPath($this->_iMimeId);
 
         // Get mime type icon
-        $sIconPath = '/resources/mimetypes/big/'.$sIconPath.'.png';
-
+        //$sIconPath = '/resources/mimetypes/big/'.$sIconPath.'.png';
+        /*
         if(!file_exists(KT_DIR.$sIconPath)){
             // See if there is an icon for the extension
             $sMimeType = KTMime::getMimeTypeName($this->_iMimeId);
@@ -177,8 +178,9 @@ class DocumentPreview {
                     $sIconPath = '/resources/mimetypes/big/'.$generic.'.png';
                 }
             }
-        }
-        return $sIconPath;
+        }*/
+        $sIconPath = KTMime::getFileType($this->_iMimeId);
+        return "fiv-sqo fiv-icon-".$sIconPath;
     }
 
     /**
@@ -279,7 +281,7 @@ class DocumentPreview {
 
         /* Create table */
 
-        $sInfo = "<table class=\"table table-condensed table-striped\">
+        $sInfo = "<table class=\"table table-sm table-condensed table-striped\">
             <tr><td>{$sFilenameLb}</td><td><b>{$sFilename}</b></td></tr>
             <tr><td>{$sMimeTypeLb}</td><td><b>{$sMimeType}</b></td></tr>
             <tr><td>{$sVersionLb}</td><td><b>{$iVersion}</b></td></tr>

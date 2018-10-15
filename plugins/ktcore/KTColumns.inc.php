@@ -168,17 +168,17 @@ class AdvancedTitleColumn extends AdvancedColumn {
 
             // If folder is a shortcut display the shortcut mime icon
             if($aDataRow['folder']->isSymbolicLink()){
-                $contenttype .= '_shortcut';
+            //    $contenttype .= '_shortcut';
             }
             // Separate the link from the mime icon to allow for right-to-left languages
             //return "<div style='float: left' class='contenttype $contenttype'>&nbsp;</div>$link";
-            return "<i class=\"fa fa-".$contenttype."\"></i> ".$link;
+            return "<i class=\"fiv-sqo fiv-icon-".$contenttype."\"></i> ".$link;
         } else {
             $type = '';
             $size = '';
             if($aDataRow['document']->isSymbolicLink()){
                 // If document is a shortcut - display the shortcut mime type
-                $type = 'shortcut';
+                //$type = 'shortcut';
             }else{
                 // Display the document size if it is not a shortcut
                 $size = $this->prettySize($aDataRow["document"]->getSize());
@@ -190,7 +190,7 @@ class AdvancedTitleColumn extends AdvancedColumn {
 
             // Separate the link from the mime icon and the size to allow for right-to-left languages
             //return "<div style='float: left' class='contenttype $contenttype'>&nbsp;</div><div style='float: left'>$link</div>$size";
-            return "<i class=\"fa fa-file-".$contenttype."\"></i> ".$link." ".$size;
+            return "<i class=\"fiv-sqo fiv-icon-".$contenttype."\"></i> ".$link." ".$size;
         }
     }
 
@@ -205,7 +205,7 @@ class AdvancedTitleColumn extends AdvancedColumn {
 
     function _mimeHelper($iMimeTypeId, $type = null) {
         require_once(KT_LIB_DIR . '/mime.inc.php');
-        return KTMime::getIconPath($iMimeTypeId, $type);
+        return KTMime::getFileType($iMimeTypeId);
     }
 }
 

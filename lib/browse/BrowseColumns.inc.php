@@ -168,7 +168,8 @@ class TitleColumn extends BrowseColumn {
 
     function _mimeHelper($iMimeTypeId) {
         require_once(KT_LIB_DIR . '/mime.inc.php');
-        return KTMime::getIconPath($iMimeTypeId);
+        return KTMime::getFileType($iMimeTypeId);
+        //return KTMime::getIconPath($iMimeTypeId);
     }
 }
 
@@ -212,7 +213,8 @@ class DateColumn extends BrowseColumn {
 
     function _mimeHelper($iMimeTypeId) {
         // FIXME lazy cache this.
-        $sQuery = 'SELECT icon_path FROM mime_types WHERE id = ?';
+        //$sQuery = 'SELECT icon_path FROM mime_types WHERE id = ?';
+        $sQuery = 'SELECT filetypes FROM mime_types WHERE id = ?';
         $res = DBUtil::getOneResult(array($sQuery, array($iMimeTypeId)));
 
         if ($res[0] !== null) {
