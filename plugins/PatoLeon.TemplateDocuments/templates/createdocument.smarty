@@ -1,0 +1,100 @@
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Create new document{/i18n}</h4>
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Blank document</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">From MS Office/OpenOffice Template</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">From Metadata Template</a>
+  </div>
+</nav>
+<form action="{addQS context=$context}{/addQS}" method="POST" id="main_form">
+<div class="tab-content" id="nav-tabContent">
+
+    <input type="hidden" name="action" value="create"/>
+    <input type="hidden" name="type" value="" />
+    <input type="hidden" name="filename" value="" />
+    <input type="hidden" name="format" value=""/>
+    <input type="hidden" name="template_id" value="" />
+    <input type="hidden" name="doctype_id" value="" />
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="card card-body">
+            <div class="card-deck no-link">
+                <a class="col-12 col-sm-6 col-md-4 card card-body card-secondary text-center" href="#" data-type="new" data-format="document">
+                    <p>
+                        <i class="fa fa-file-word fa-4x clearfix"></i>
+                        <h4 class="h-4">Text Document</h4>
+                        <p>New document in MS Office Word (doc, docx), OpenOffice Writer (odt) or RTF format.</p>
+                    </p>
+                </a>                
+                <a class="col-12 col-sm-6 col-md-4 card card-body card-secondary text-center" href="#" data-type="new" data-format="spreadsheet">
+                    <p>
+                        <i class="fa fa-file-excel fa-4x clearfix"></i>
+                        <h4 class="h-4">Spreadsheet</h4>
+                        <p>New Spreadsheet in MS Office Excel (xls, xlsx) or OpenOffice Calc (ods) format.</p>
+                    </p>
+                </a>   
+                <a class="col-12 col-sm-6 col-md-4 card card-body card-secondary text-center" href="#" data-type="new" data-format="presentation">
+                    <p>
+                        <i class="fa fa-file-powerpoint fa-4x clearfix"></i>
+                        <h4 class="h-4">Presentation</h4>
+                        <p>New presentation in MS Office Powerpoint (ppt,pptx) or OpenOffice Impress (odp).</p>
+                    </p>
+                </a>   
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="card card-body">
+            <div class="card-deck no-link">
+            {foreach from=$zoho_templates item=template}
+                <a class="col-12 col-sm-6 col-md-4 card card-body card-secondary text-center" href="#" data-type="template" data-template-id="{$template.id}">
+                    <p>
+                        <i class="fiv-sqo fiv-icon-{$template.filetype} h1"></i>
+                        <h5 class="h-4">{$template.filename}</h5>
+                    </p>
+                </a>
+            {/foreach}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+
+</div>
+</form>
+<div class="modal fade" id="name_format" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{i18n}Create Document{/i18n}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="control-group">
+            <label for="filename">{i18n}Filename{/i18n}</label>
+            <input type="text" class="form-control form-control-sm" name="modal_filename" id="modal_filename" required>
+        </div>
+        <div class="control-group" id="format_field">
+            <label for="select_format">{i18n}Format{/i18n}</label>
+            <select class="form-control" name="modal_select_format" id="modal_select_format">
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="doc_type">{i18n}Document Type{/i18n}</label>
+            <select class="form-control form-control-sm" name="modal_doctype" id="modal_doctype">
+            {foreach from=$document_types item=document_type}
+                {if $document_type->getDisabled() == FALSE}<option value="{$document_type->getId()}">{$document_type->getName()}</option>{/if}
+            {/foreach}
+            </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="d-block col-12">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">{i18n}Close{/i18n}</button>
+        <button type="button" class="btn btn-primary float-right" onclick="validate()">{i18n}Create{/i18n}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
