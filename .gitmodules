@@ -1,3 +1,6 @@
 [submodule "plugins/commercial"]
 	path = plugins/commercial
 	url = git@github.com:ktgit/commercial-plugins.git
+[submodule "plugins/PatoLeon.TemplateDocuments"]
+	path = plugins/PatoLeon.TemplateDocuments
+	url = https://gitlab.com/patricioleonm/patoleon.templatedocuments.git
