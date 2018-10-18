@@ -627,7 +627,7 @@ class KTRoleAllocationPlugin extends KTFolderAction {
         $oRole = Role::get($oRoleAllocation->getRoleId());
         $this->oPage->setBreadcrumbDetails(_kt('Manage Groups for Role'));
         $this->oPage->setTitle(sprintf(_kt('Manage Groups for Role "%s"'), $oRole->getName()));
-/*
+        /*
         $initJS = 'var optGroup = new OptionTransfer("groupSelect","chosenGroups"); ' .
         'function startTrans() { var f = getElement("grouproleform"); ' .
         ' optGroup.saveNewRightOptions("groupFinal"); ' .
@@ -648,7 +648,7 @@ class KTRoleAllocationPlugin extends KTFolderAction {
             //$aRoleUsers[$oGroup->getId()] = $oGroup;
             $aRoleUsers[] = $oGroup->getId();
         }
-  //      print_r($aRoleUsers);
+        //      print_r($aRoleUsers);
         foreach ($aAllUsers as $oGroup) {
             $aFreeUsers[$oGroup->getId()] = array("id" => $oGroup->getId(), "displayName" => $oGroup->getName(), "name" => $oGroup->getName(), "selected" => 0);
             if(in_array($oGroup->getId(), $aRoleUsers)){
@@ -660,7 +660,7 @@ class KTRoleAllocationPlugin extends KTFolderAction {
             }
             */
         }
-//print_r($aFreeUsers);
+        //print_r($aFreeUsers);
         // Include the electronic signature on the permissions action
         global $default;
         if($default->enableESignatures){
