@@ -16,7 +16,8 @@ class PatoLeonSubAdminDispatcher extends KTAdminDispatcher {
 		foreach($helpers as $helper){
 			mysql_query("INSERT INTO subadmin_helper(namespace) values('".$helper."')");
 		}
-		return $this->successRedirectToMain(_kt("Item updated"));
+		$this->successRedirectToMain(_kt("Item updated"));
+		exit(0);
 	}
 	
     function do_main () {
