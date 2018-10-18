@@ -21,3 +21,7 @@ ul.actionlist li:before {
 .font-1em {
     font-size: 1em;
 }
+
+.no-link a:hover{
+    text-decoration: none;
+}
