@@ -42,9 +42,7 @@ require_once(KT_LIB_DIR . "/widgets/portlet.inc.php");
 require_once(KT_LIB_DIR . '/templating/kt3template.inc.php');
 require_once(KT_LIB_DIR . '/authentication/authenticationutil.inc.php');
 require_once(KT_DIR . "/thirdparty/pear/JSON.php");
-
 require_once(KT_DIR . '/thirdparty/pear/Net/URL.php');
-
 
 class KTDispatchStandardRedirector {
     function redirect($url) {
@@ -559,5 +557,3 @@ class KTErrorDispatcher extends KTStandardDispatcher {
     }
 }
 
-
-?>
