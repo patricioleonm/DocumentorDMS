@@ -1,4 +1,4 @@
-<h2>{i18n}Move Files and Folders{/i18n}</h2>
+<h4>{i18n}Move Files and Folders{/i18n}</h4>
 
 
 <form method="POST" action="{$smarty.server.PHP_SELF}">
