@@ -11,5 +11,4 @@
         {if $has_id} id="{$id}"{/if}
         {if $options.rows} rows="{$options.rows}"{else} rows="7"{/if}
         {if $options.cols} cols="{$options.cols}"{else} cols="45"{/if}
-         class="form-control form-control-sm">
-    {if $has_value}{$value|sanitize_input}{/if}</textarea>
+         class="form-control form-control-sm">{if $has_value}{$value|sanitize_input}{/if}</textarea>
