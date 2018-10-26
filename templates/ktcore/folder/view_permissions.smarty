@@ -1,4 +1,4 @@
-<h2><i class="fa fa-caret-right text-warning"></i> {i18n}View Permissions for{/i18n}: <span class="text-muted">{$context->oFolder->getName()|sanitize}</span></h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}View Permissions for{/i18n}: <span class="text-muted">{$context->oFolder->getName()|sanitize}</span></h4>
 
 <p class="alert alert-info">{i18n}This page shows the permissions that apply to
 this specific folder.  Only the roles or groups which have permissions

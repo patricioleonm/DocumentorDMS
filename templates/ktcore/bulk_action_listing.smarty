@@ -1,4 +1,4 @@
-<h2><img src="{if $config->get("ui/morphEnabled") == '1'}{$rootUrl}/skins/kts_{$config->get("ui/morphTo")}/title_bullet.png{else}{$rootUrl}/resources/graphics/title_bullet.png{/if}"/>{$context->getDisplayName()}</h2>
+<h3><i class="fa fa-caret-right text-warning"></i> {$context->getDisplayName()}</h3>
 
 {if count($failed.folders) || (count($failed.documents))}
 <p class="descriptiveText">{i18n}The following list shows documents and folders in your list which cannot be acted on by this bulk action{/i18n}:</p>
@@ -57,29 +57,29 @@
 <p class="descriptiveText">{i18n}The action will be performed on the following documents and folders{/i18n}:</p>
 
 {if (count($folders))}
-<h3>{i18n}Folders{/i18n}</h3>
-<ul>
-{foreach from=$folders item=folder}
-<li>{$folder.name|sanitize}
-{if $folder.notice}
-	<b>({$folder.notice})</b>
-{/if}
-</li>
-{/foreach}
-</ul>
+    <h3>{i18n}Folders{/i18n}</h3>
+    <ul>
+        {foreach from=$folders item=folder}
+        <li>{$folder.name|sanitize}
+        {if $folder.notice}
+            <b>({$folder.notice})</b>
+        {/if}
+        </li>
+        {/foreach}
+    </ul>
 {/if}
 
 {if count($documents)}
-<h3>{i18n}Documents{/i18n}</h3>
-<ul>
-{foreach from=$documents item=document}
-<li>{$document.name|sanitize}
-{if $document.notice}
-	<b>({$document.notice})</b>
-{/if}
-</li>
-{/foreach}
-</ul>
+    <h5>{i18n}Documents{/i18n}</h5>
+    <ul>
+        {foreach from=$documents item=document}
+        <li>{$document.name|sanitize}
+        {if $document.notice}
+            <b>({$document.notice})</b>
+        {/if}
+        </li>
+        {/foreach}
+    </ul>
 {/if}
 {/if}
 

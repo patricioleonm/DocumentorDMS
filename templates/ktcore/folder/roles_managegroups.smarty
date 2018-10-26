@@ -1,4 +1,4 @@
-<h2>{i18n arg_rolename=$rolename}Allocate Groups to Role: #rolename#{/i18n}</h2>
+<h4>{i18n arg_rolename=$rolename}Allocate Groups to Role: #rolename#{/i18n}</h4>
 
 {$context->oPage->requireJSResource('assets/js/knockout.js')}
 {$context->oPage->requireJSResource('assets/js/element_selection.js')}

@@ -1,3 +1,3 @@
-<h2>{$context->getDisplayName()}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {$context->getDisplayName()}</h4>
 
 {$form->render()}

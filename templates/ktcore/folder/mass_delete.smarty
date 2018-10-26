@@ -1,4 +1,4 @@
-<h2>{i18n}Delete Files and Folders{/i18n}</h2>
+<h4><i class="fa fa-caret-right text-warning"></i> {i18n}Delete Files and Folders{/i18n}</h4>
 
 <form action="{$smarty.server.PHP_SELF}" method="POST">
 <fieldset>
