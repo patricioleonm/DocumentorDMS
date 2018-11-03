@@ -128,6 +128,12 @@ class Session {
 
 		$sTable = KTUtil::getTableName('sessions');
 		$res = DBUtil::whereDelete($sTable, array('session_id' => $sSessionID));
+              // ### beginn VAO Plugin Patch ###
+              // remove the random password to prevent login
+              $oUser =& User::get($iUserId);
+              $oUser->setAuthenticationDetails('nologin');
+              $oUser->update();
+              // ### end VAO Plugin Patch ###
 
         $aParams = array(
             'userid' => $iUserId,
