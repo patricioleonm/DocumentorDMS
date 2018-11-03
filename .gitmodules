@@ -4,3 +4,6 @@
 [submodule "plugins/PatoLeon.TemplateDocuments"]
 	path = plugins/PatoLeon.TemplateDocuments
 	url = https://gitlab.com/patricioleonm/patoleon.templatedocuments.git
+[submodule "plugins/vao"]
+	path = plugins/vao
+	url = https://gitlab.com/patricioleonm/vao.git
