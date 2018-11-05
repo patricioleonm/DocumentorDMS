@@ -115,7 +115,7 @@ class KTDocumentUtil {
         }
 
         // create the document transaction record
-        $oDocumentTransaction = new DocumentTransaction($oDocument, $sCheckInComment, 'ktcore.transactions.check_in');
+        $oDocumentTransaction = new DocumentTransaction($oDocument, $sCheckInComment, 'ktcore.transactions.check_in', array("user" => $oUser));
         $oDocumentTransaction->create();
 
         $oKTTriggerRegistry = KTTriggerRegistry::getSingleton();
