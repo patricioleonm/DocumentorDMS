@@ -266,14 +266,14 @@ class BrowseDispatcher extends KTStandardDispatcher {
 		));
 
 		//document types
-		/*
+		
         $aTypes = array();
         foreach (DocumentType::getListForUserAndFolder($this->oUser, $this->oFolder) as $oDocumentType) {
             if(!$oDocumentType->getDisabled()) {
                 $aTypes[] = $oDocumentType;
             }
         }
-*/
+
 		// get bulk actions
 		$aBulkActions = KTBulkActionUtil::getAllBulkActions();
 
