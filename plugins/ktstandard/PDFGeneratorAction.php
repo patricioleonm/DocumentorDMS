@@ -244,21 +244,6 @@ class PDFGeneratorAction extends KTDocumentAction {
             }
             exit();
         }
-
-        // Check if this is a office 2007 doc
-        $mime = $this->getMimeExtension();
-
-        $o2007_types[] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    	$o2007_types[] = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-    	$o2007_types[] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-
-        if(in_array($mime, $o2007_types)){
-            $error = _kt('The document is an MS Office 2007 format. This may not be supported by your version of OpenOffice. Please contact your System Administrator for assistance');
-            $default->log->error('PDF Generator: Document is an MS Office 2007 format. OpenOffice must be version 3.0 or higher to support this format. Please upgrade to the latest version.');
-        }else{
-            $error = _kt('PDF file could not be generated. The format may not be supported by your version of OpenOffice. Please contact your System Administrator for assistance');
-            $default->log->error('PDF Generator: PDF file could not be generated. The format may not be supported by your version of OpenOffice. Please check that you have the latest version installed.');
-        }
         $this->errorRedirectToMain($error);
         exit();
     }
