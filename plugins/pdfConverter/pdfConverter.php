@@ -46,8 +46,7 @@ class pdfConverter extends BaseProcessor
 {
     public $order = 2;
     protected $namespace = 'pdf.converter.processor';
-    private $ooHost = '127.0.0.1';
-    private $ooPort = 8100;
+    private $config = NULL;
 
     /**
      * Constructor gets the connection to the java server
@@ -56,12 +55,7 @@ class pdfConverter extends BaseProcessor
      */
     public function pdfConverter()
     {
-        $config =& KTConfig::getSingleton();
-		$javaServerUrl = $config->get('indexer/javaLuceneURL');
-		$this->ooHost = $config->get('openoffice/host','127.0.0.1');
-		$this->ooPort = $config->get('openoffice/port','8100');
-
-		$this->xmlrpc = XmlRpcLucene::get($javaServerUrl);
+        $this->config =& KTConfig::getSingleton();
     }
 
     /**
@@ -97,16 +91,6 @@ class pdfConverter extends BaseProcessor
             return sprintf(_kt("The document, id: %s, does not exist at the given storage path: %s") , $this->document->iId,$path);
         }
 
-        // check for OO
-        $available = $this->checkOO();
-
-        // do pdf conversion
-        if(!$available){
-            global $default;
-            $default->log->error("PDF Converter: Cannot connect to Open Office Server on host {$this->ooHost} : {$this->ooPort}");
-            return _kt('Cannot connect to Open Office Server.');
-        }
-
         $res = $this->convertFile($path, $ext);
 
         if($res !== true){
@@ -123,14 +107,13 @@ class pdfConverter extends BaseProcessor
      *
      * @return array
      */
-	public function getSupportedMimeTypes()
-	{
-//	    $aAcceptedMimeTypes = array('doc', 'ods', 'odt', 'ott', 'txt', 'rtf', 'sxw', 'stw',
-//            //                                    'html', 'htm',
-//            'xml' , 'pdb', 'psw', 'ods', 'ots', 'sxc',
-//            'stc', 'dif', 'dbf', 'xls', 'xlt', 'slk', 'csv', 'pxl',
-//            'odp', 'otp', 'sxi', 'sti', 'ppt', 'pot', 'sxd', 'odg',
-//            'otg', 'std', 'asc');
+	public function getSupportedMimeTypes(){
+        //	    $aAcceptedMimeTypes = array('doc', 'ods', 'odt', 'ott', 'txt', 'rtf', 'sxw', 'stw',
+        //            //                                    'html', 'htm',
+        //            'xml' , 'pdb', 'psw', 'ods', 'ots', 'sxc',
+        //            'stc', 'dif', 'dbf', 'xls', 'xlt', 'slk', 'csv', 'pxl',
+        //            'odp', 'otp', 'sxi', 'sti', 'ppt', 'pot', 'sxd', 'odg',
+        //            'otg', 'std', 'asc');
 
         // work around for ms office xp and 2003 templates - the mime type is identical but the templates aren't supported
         if(!empty($fileType)){
@@ -193,25 +176,24 @@ class pdfConverter extends BaseProcessor
 	 * @param string $ext The extension of the file
 	 * @return boolean
 	 */
-	function convertFile($filename, $ext)
-	{
+	function convertFile($filename, $ext){
 	    global $default;
 	    $tempDir = $default->tmpDirectory;
 
 	    // Create temporary copy of document
-	    $sourceFile = tempnam($tempDir, 'pdfconverter') . '.' .$ext;
-	    $res = @copy($filename, $sourceFile);
-
-	    // Create a temporary file to store the converted document
-	    $targetFile = tempnam($tempDir, 'pdfconverter') . '.pdf';
+	    $sourceFile = tempnam($tempDir, 'pdfconverter');
+        $res = @copy($filename, $sourceFile . "." . $ext);
 
 	    // Get contents and send to converter
-        $result = $this->xmlrpc->convertDocument($sourceFile, $targetFile, $this->ooHost, $this->ooPort);
-
-        if(is_string($result)){
+        $cmd = sprintf("%s/%s --headless --convert-to pdf --outdir \"%s\" \"%s\"", $this->config->get("openoffice/programPath"), $this->config->get("externalBinary/ooffice") ,$tempDir, $sourceFile.".".$ext);
+        $result = KTUtil::pexec($cmd);
+        $result = $result['ret'];
+        $default->log->error($ret);
+        if($result != 0){
             $default->log->error('PDF Converter Plugin: Conversion to PDF Failed');
             @unlink($sourceFile);
-            @unlink($targetFile);
+            @unlink($sourceFile.".pdf");
+            @unlink($sourceFile.".".$ext);
             return $result;
         }
 
@@ -225,16 +207,16 @@ class pdfConverter extends BaseProcessor
         }
 
         $pdfFile = $pdfDir .'/'. $this->document->iId.'.pdf';
-
         // if a previous version of the pdf exists - delete it
         if(file_exists($pdfFile)){
             @unlink($pdfFile);
         }
 
         // Copy the generated pdf into the pdf directory
-        $res = @copy($targetFile, $pdfFile);
+        $res = @copy($sourceFile.".pdf", $pdfFile);
         @unlink($sourceFile);
-        @unlink($targetFile);
+        @unlink($sourceFile.".pdf");
+        @unlink($sourceFile.".".$ext);
         return true;
 
     }
