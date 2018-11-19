@@ -145,16 +145,6 @@ class thumbnailGenerator extends BaseProcessor
 	 */
 	private function generateThumbnail()
 	{
-	    /*
-	       The thumbnail is displayed in the info panel and the document view
-	       The info panel is in the plugin ktcore/documentpreview/
-	           - add a hook in there but build the functionality in this plugin ie keep the plugins separate and don't create dependencies
-	           - if the thumbnail plugin is disabled then maybe display a normal sized info panel
-
-           The document view will display the thumbnail on the right in a document viewlet similar to the workflow viewlet
-               - check out ktcore/KTDocumentViewlets.php
-               - viewlet class is below
-	    */
 		global $default;
 
         $mimeTypeId = $this->document->getMimeTypeID();
@@ -198,12 +188,11 @@ class thumbnailGenerator extends BaseProcessor
         $pathConvert = (!empty($default->convertPath)) ? $default->convertPath : 'convert';
         // windows path may contain spaces
         if (stristr(PHP_OS,'WIN')) {
-		$cmd = "{$pathConvert} \"{$pdfFile}[0]\" -resize 300 -despeckle -set option:deskew:auto-crop 90 -deskew 40 -bordercolor black -border 1 -fuzz 95% -trim +repage -fill white -draw \"color 0,0 floodfill\" -alpha off -shave 2x2 \"$thumbnailfile\"";
+            $cmd = "\"{$pathConvert}\" \"{$pdfFile}[0]\" -resize 300 -despeckle \"$thumbnailfile\"";
         }
 		else {
-			$cmd = "{$pathConvert} {$pdfFile}[0]  -resize 300 -despeckle -set option:deskew:auto-crop 90 -deskew 40 -bordercolor black -border 1 -fuzz 95% -trim +repage -fill white -draw \"color 0,0 floodfill\" -alpha off -shave 2x2 $thumbnailfile";
+			$cmd = "{$pathConvert} {$pdfFile}[0] -resize 300 -despeckle  $thumbnailfile";
 		}
-        $default->log->error($cmd);
 		$result = KTUtil::pexec($cmd);
         return true;
     }
@@ -251,15 +240,7 @@ class ThumbnailViewlet extends KTDocumentViewlet {
                 return '';
             }
 		}
-
-		// check for existence and status of the instant view plugin
-		$url = '';
-        if (KTPluginUtil::pluginIsActive('instaview.processor.plugin'))
-        {
-             require_once KTPluginUtil::getPluginPath('instaview.processor.plugin') . 'instaViewLinkAction.php';
-             $ivLinkAction = new instaViewLinkAction();
-             $url = $ivLinkAction->getViewLink($documentId, 'document');
-        }
+        $url = KTUtil::ktLink('action.php', 'ktstandard.pdf.generate', array( 'fDocumentId' => $this->oDocument->getId(), 'action' => 'showpdf'));
 
         // Get the url to the thumbnail and render it
         // Ensure url has correct slashes
@@ -267,8 +248,8 @@ class ThumbnailViewlet extends KTDocumentViewlet {
 		$plugin_path = KTPluginUtil::getPluginPath('thumbnails.generator.processor.plugin');
 		$thumbnailUrl = $plugin_path . 'thumbnail_view.php?documentId='.$documentId;
 		$thumbnailUrl = str_replace('\\', '/', $thumbnailUrl);
-		$thumbnailUrl = str_replace(KT_DIR, $sHostPath, $thumbnailUrl);
-
+        $thumbnailUrl = str_replace(KT_DIR, $sHostPath, $thumbnailUrl);
+        
 		$oTemplate->setData(array(
             'thumbnail' => $thumbnailUrl,
             'url' => $url
@@ -287,6 +268,7 @@ class ThumbnailViewlet extends KTDocumentViewlet {
 		//$size = getimagesize($thumbnailfile);
 		//return $size[0];
     }
+
 }
 
 ?>
