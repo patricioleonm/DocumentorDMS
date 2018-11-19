@@ -48,9 +48,6 @@ class PreviewColumn extends AdvancedColumn {
     function PreviewColumn() {
         $this->label = null;
 
-        $oConfig = KTConfig::getSingleton();
-        $this->sActivation = $oConfig->get('browse/previewActivation', 'onclick');
-
         // Get file path
         $this->sPluginPath = 'plugins/ktstandard/documentpreview';
     }
@@ -104,7 +101,9 @@ class PreviewColumn extends AdvancedColumn {
             $link .= 'onclick = "'.$sJs.'" title="'.$sTitle.'">';
         }
         */
-        return '<a href="#" onClick="documentPreview('.$iDocumentId.');" data-id="'.$iDocumentId.'"><i class="fa fa-search"></i> <span class="sr-only">'.$sTitle.'</span></a>';
+        return '<a href="#" onClick="documentPreview('.$iDocumentId.');" data-id="'.$iDocumentId.'">
+                <i class="fa fa-search"></i> <span class="sr-only">'.$sTitle.'</span>
+                </a>';
     }
 
     function getName() { return _kt('Property Preview'); }
