@@ -184,8 +184,16 @@ class pdfConverter extends BaseProcessor
 	    $sourceFile = tempnam($tempDir, 'pdfconverter');
         $res = @copy($filename, $sourceFile . "." . $ext);
 
-	    // Get contents and send to converter
-        $cmd = sprintf("%s/%s --headless --convert-to pdf --outdir \"%s\" \"%s\"", $this->config->get("openoffice/programPath"), $this->config->get("externalBinary/ooffice") ,$tempDir, $sourceFile.".".$ext);
+        // Get contents and send to converter
+        $oofficeBinary = $this->config->get("openoffice/programPath");
+        if (strpos(PHP_OS, 'WIN') !== false) {
+			$oofficeBinary .= DIRECTORY_SEPARATOR . "soffice.exe";
+		}else{
+            $oofficeBinary .= DIRECTORY_SEPARATOR . "soffice";
+        }
+        
+        $cmd = sprintf("\"%s\" --headless --convert-to pdf --outdir \"%s\" \"%s\"", $oofficeBinary ,$tempDir, $sourceFile.".".$ext);
+
         $result = KTUtil::pexec($cmd);
         $result = $result['ret'];
         $default->log->error($ret);
