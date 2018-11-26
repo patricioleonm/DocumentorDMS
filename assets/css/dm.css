@@ -1,5 +1,27 @@
 body {
     background-color: #f8f3f3;
+    font-size: 12px;
+}
+
+a {
+    color: #212529;
+}
+
+.btn-outline-primary:hover {
+    background-color: white;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active,
+.show > .btn-outline-primary.dropdown-toggle {
+  background-color: white;
+}
+
+#bd-docs-nav h6 {
+    font-size: 14px;
+}
+
+#bd-docs-nav .btn {
+    font-size: 12px;
 }
 
 .actionlist {

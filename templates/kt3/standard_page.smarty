@@ -8,9 +8,10 @@
     {foreach item=sResourceURL from=$page->getCSSResources()}
        <link rel="stylesheet" type="text/css" href="{$rootUrl}/{$sResourceURL}" />
     {/foreach}
-
-    <link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/bootstrap.min.css">
+	
+    <link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/docs.min.css">
+	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css">
 	<link rel="stylesheet" type="text/css" href="{$rootUrl}/resources/css/kt-print.css" media="print" />
     <link rel="icon" href="{$rootUrl}/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="{$rootUrl}/favicon.ico" type="image/x-icon">
@@ -18,7 +19,6 @@
 			type="application/opensearchdescription+xml" 
 			title="Documentor Quick Search" 
 			href="{$rootUrl}/plugins/search2/openSearchDescription.php">
-	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css">
 
     <!-- Standalone CSS. -->
 {foreach item=sCSS from=$page->getCSSStandalone()}
@@ -50,7 +50,7 @@
 		<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fa fa-user fa-2x mr-1"></i>
+				<i class="fa fa-user mr-1"></i>
 				{if ($page->user)}
 					{$page->user->getName()|mb_truncate:40:"..."}
 				{/if}
@@ -74,7 +74,7 @@
 			</li>
 		{if ($page->getHelpURL() != null)}
 			<li class="nav-item">
-				<a class="nav-link" href="{$page->getHelpURL()}"><i class="fa fa-question-circle fa-2x"></i></a>
+				<a class="nav-link" href="{$page->getHelpURL()}"><i class="fa fa-question-circle"></i></a>
 			</li>
 		{/if}
 		</ul>
@@ -83,15 +83,15 @@
 	<div class="container-fluid">
 		<div class="row flex-xl-nowrap">
 			{if $page->portlets != NULL && $page->show_portlets}		
-            <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
-					<button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3" type="button" data-toggle="collapse" data-target="#bd-docs-nav"
-                        aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation"><svg
-                            xmlns="http://www.w3.org/2000/svg" viewbox="0 0 30 30" width="30" height="30" focusable="false"><title>Menu</title>
-                            <path
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"
-                            /></svg>
-						Menu
-                    </button>
+            <div id="bd-sidebar" class="col-12 col-md-3 col-xl-2 bd-sidebar d-xs-block d-sm-none">
+				<button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3" type="button" data-toggle="collapse" data-target="#bd-docs-nav"
+					aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation"><svg
+						xmlns="http://www.w3.org/2000/svg" viewbox="0 0 30 30" width="30" height="30" focusable="false"><title>Menu</title>
+						<path
+							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"
+						/></svg>
+					Menu
+				</button>
 
                 <nav class="collapse bd-links" id="bd-docs-nav">
 					{foreach item=oPortlet from=$page->portlets name=obj}
@@ -111,11 +111,26 @@
                 </nav>
             </div>
 			{/if}
-			<main class="col-12 {if $page->portlets != NULL && $page->show_portlets}col-md-9 col-xl-10{/if} py-md-10 pl-md-1 bd-content" role="main">
+			<!-- class="col-12 {if $page->portlets != NULL && $page->show_portlets}col-md-9 col-xl-10{/if} py-md-10 pl-md-1 bd-content" role="main"> -->
+			<main id="bd-content" class="col" role="main">
 				<input type="hidden" name="kt-core-baseurl" id="kt-core-baseurl" value="{$rootUrl}" />
 				<div class="row">
-					<div class="col"></div>
-					<div class="col-12 col-md-10">
+					{if $page->portlets != NULL && $page->show_portlets}
+					<div class="col-1 col-md-1 bd-search d-none d-sm-block">
+						<button class="btn btn-secondary border-left-0" id="btn-show-sidebar">
+							<span>
+								<i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>
+							</span>
+						</button>
+
+						<button class="btn btn-secondary border-left-0" style="display: none;" id="btn-hide-sidebar">
+							<span>
+								<i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>
+							</span>
+						</button>
+					</div>
+					{/if}
+					<div class="col-10 col-md-10">
 						<form id="frmQuickSearch" class="bd-search d-flex align-items-center" method="post" action="{$rootUrl}/search2.php?action=process">
 							<input id="txtQuery" name="txtQuery" type="hidden">
 							<input type="hidden" name="cbQuickQuery" id="cbQuickQuery" value="1">
