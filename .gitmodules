@@ -7,3 +7,6 @@
 [submodule "plugins/vao"]
 	path = plugins/vao
 	url = https://gitlab.com/patricioleonm/vao.git
+[submodule "plugins/scandocument"]
+	path = plugins/scandocument
+	url = https://gitlab.com/patricioleonm/scandocument.git

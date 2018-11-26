@@ -18,7 +18,7 @@ function getFileName (e){
     //}
 };
 var fileElement = document.querySelector("input[type=file]","input[id=0]");
-fileElement.addEventListener("change", getFileName);
+if(fileElement != null){ fileElement.addEventListener("change", getFileName); }
 
 var dropElement = document.getElementById("draging_zone");
 
