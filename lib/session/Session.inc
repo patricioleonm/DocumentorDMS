@@ -201,7 +201,7 @@ class Session {
                 'datetime' => formatDateTime($iTime),
                 'actionnamespace' => 'ktcore.user_history.timeout',
                 'comments' => 'Session timed out',
-                'sessionid' => $sSessionId,
+                'sessionid' => (is_numeric($sSessionId)) ? $sSessionId : NULL,
             );
             require_once(KT_LIB_DIR . '/users/userhistory.inc.php');
             $res = KTUserHistory::createFromArray($aParams);
