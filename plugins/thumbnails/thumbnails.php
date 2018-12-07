@@ -37,13 +37,13 @@
 
 require_once(KT_LIB_DIR . "/actions/documentviewlet.inc.php");
 require_once(KT_DIR . '/search2/documentProcessor/documentProcessor.inc.php');
+require_once(KT_DIR . '/plugins/pdfConverter/pdfConverter.php');
 
 /**
  * Generates thumbnails of documents using the pdf converter output
  * Dependent on the pdfConverter
  */
-class thumbnailGenerator extends BaseProcessor
-{
+class thumbnailGenerator extends BaseProcessor{
     public $order = 3;
     protected $namespace = 'thumbnails.generator.processor';
 
@@ -52,8 +52,7 @@ class thumbnailGenerator extends BaseProcessor
      *
      * @return thumbnailGenerator
      */
-    public function thumbnailGenerator()
-    {
+    public function thumbnailGenerator(){
     }
 
     /**
@@ -61,8 +60,7 @@ class thumbnailGenerator extends BaseProcessor
      *
      * @return boolean
      */
-    public function processDocument()
-    {
+    public function processDocument(){
         // do the generation
         $res = $this->generateThumbnail();
         return $res;
@@ -73,15 +71,13 @@ class thumbnailGenerator extends BaseProcessor
      *
      * @return array
      */
-	public function getSupportedMimeTypes()
-	{
-//	    $aAcceptedMimeTypes = array('doc', 'ods', 'odt', 'ott', 'txt', 'rtf', 'sxw', 'stw',
-//            //                                    'html', 'htm',
-//            'xml' , 'pdb', 'psw', 'ods', 'ots', 'sxc',
-//            'stc', 'dif', 'dbf', 'xls', 'xlt', 'slk', 'csv', 'pxl',
-//            'odp', 'otp', 'sxi', 'sti', 'ppt', 'pot', 'sxd', 'odg',
-//            'otg', 'std', 'asc');
-
+	public function getSupportedMimeTypes(){
+        //	    $aAcceptedMimeTypes = array('doc', 'ods', 'odt', 'ott', 'txt', 'rtf', 'sxw', 'stw',
+        //            //                                    'html', 'htm',
+        //            'xml' , 'pdb', 'psw', 'ods', 'ots', 'sxc',
+        //            'stc', 'dif', 'dbf', 'xls', 'xlt', 'slk', 'csv', 'pxl',
+        //            'odp', 'otp', 'sxi', 'sti', 'ppt', 'pot', 'sxd', 'odg',
+        //            'otg', 'std', 'asc');
         // work around for ms office xp and 2003 templates - the mime type is identical but the templates aren't supported
         if(!empty($fileType)){
             $types = array('dot', 'xlt', 'pot');
@@ -143,8 +139,7 @@ class thumbnailGenerator extends BaseProcessor
 	 *
 	 * @return boolean
 	 */
-	private function generateThumbnail()
-	{
+	private function generateThumbnail(){
 		global $default;
 
         $mimeTypeId = $this->document->getMimeTypeID();
@@ -157,6 +152,12 @@ class thumbnailGenerator extends BaseProcessor
 	    } else {
     	    $pdfDir = $default->pdfDirectory;
             $pdfFile = $pdfDir .DIRECTORY_SEPARATOR. $this->document->iId.'.pdf';
+            //check if pdf exist, if not then call pdfGenerator
+            if(!file_exists($pdfFile)){
+                $converter = new pdfConverter();
+                $converter->setDocument($this->document);
+                $res = $converter->processDocument();
+            }
 	    }
 
         $thumbnaildir = $default->varDirectory.DIRECTORY_SEPARATOR.'thumbnails';
@@ -188,11 +189,12 @@ class thumbnailGenerator extends BaseProcessor
         $pathConvert = (!empty($default->convertPath)) ? $default->convertPath : 'convert';
         // windows path may contain spaces
         if (stristr(PHP_OS,'WIN')) {
-            $cmd = "\"{$pathConvert}\" \"{$pdfFile}[0]\" -resize 300 -despeckle \"$thumbnailfile\"";
+            $cmd = "\"{$pathConvert}\" \"{$pdfFile}[0]\" -resize 300 -background white -alpha remove \"$thumbnailfile\"";
         }
 		else {
-			$cmd = "{$pathConvert} {$pdfFile}[0] -resize 300 -despeckle  $thumbnailfile";
-		}
+			$cmd = "{$pathConvert} {$pdfFile}[0] -resize 300 -background white -alpha remove  $thumbnailfile";
+        }
+        $default->log->error($cmd);
 		$result = KTUtil::pexec($cmd);
         return true;
     }
@@ -271,4 +273,4 @@ class ThumbnailViewlet extends KTDocumentViewlet {
 
 }
 
-?>
+/** */

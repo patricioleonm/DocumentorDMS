@@ -56,6 +56,8 @@ class pdfConverter extends BaseProcessor
     public function pdfConverter()
     {
         $this->config =& KTConfig::getSingleton();
+        global $default;
+        $default->log->error('pdfConverter');
     }
 
     /**
@@ -63,8 +65,7 @@ class pdfConverter extends BaseProcessor
      *
      * @return boolean
      */
-    private function checkOO()
-    {
+    private function checkOO()    {
         $available = SearchHelper::checkOpenOfficeAvailablity();
 
         if(is_null($available)){
@@ -79,8 +80,7 @@ class pdfConverter extends BaseProcessor
      *
      * @return boolean
      */
-    public function processDocument()
-    {
+    public function processDocument(){
         $oStorage = KTStorageManagerUtil::getSingleton();
         $path = $oStorage->temporaryFile($this->document);
         $ext = KTMime::getFileType($this->document->getMimeTypeID());
@@ -226,7 +226,7 @@ class pdfConverter extends BaseProcessor
         @unlink($sourceFile.".pdf");
         @unlink($sourceFile.".".$ext);
         return true;
-
     }
 }
-?>
+
+/* */
