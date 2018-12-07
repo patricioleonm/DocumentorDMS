@@ -29,9 +29,9 @@
 </head>
 <body {if (!$page->show_portlets)}class="noportlets"{/if} {if $page->onload}onload="{$page->getBodyOnload()}"{/if} >
 	<!-- navbar begin-->
-	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar bg-dark bg-primary">
+	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar bg-primary">
 		<a class="navbar-brand mr-0 mr-md-2" href="{$page->systemURL}">
-			<img src="{$rootUrl}/assets/images/logoh.png" title="{$page->systemName}"/>
+			<img src="{$rootUrl}/assets/images/logod.png" title="{$page->systemName}"/>
 		</a>
 		<div class="navbar-nav-scroll">
 			<ul class="navbar-nav bd-navbar-nav flex-row">

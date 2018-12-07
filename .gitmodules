@@ -10,3 +10,6 @@
 [submodule "plugins/scandocument"]
 	path = plugins/scandocument
 	url = https://gitlab.com/patricioleonm/scandocument.git
+[submodule "plugins/documentviewer"]
+	path = plugins/documentviewer
+	url = https://gitlab.com/patricioleonm/documentviewer.git
