@@ -17,9 +17,45 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <iframe src="{$url}" width="100%" height="1000px" style="max-height: 1000px!important;"></iframe>
+                    <div id="documentViewer" class="flowpaper_viewer" style="width:100%;height:500px"></div>
                 </div>
             </div>
         </div>
     </div>
 
+{literal}
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded",() => {
+        $('#documentViewer').FlowPaperViewer(
+                { config : {
+                    PDFFile : '{/literal}{$url}{literal}',
+
+                    Scale : 0.6,
+                    ZoomTransition : 'easeOut',
+                    ZoomTime : 0.5,
+                    ZoomInterval : 0.1,
+                    FitPageOnLoad : true,
+                    FitWidthOnLoad : true,
+                    FullScreenAsMaxWindow : false,
+                    ProgressiveLoading : false,
+                    MinZoomSize : 0.2,
+                    MaxZoomSize : 5,
+                    SearchMatchAll : false,
+                    InitViewMode : '',
+                    RenderingOrder : 'html5,html',
+                    StartAtPage : '',
+
+                    EnableWebGL : true,
+                    ViewModeToolsVisible : true,
+                    ZoomToolsVisible : true,
+                    NavToolsVisible : true,
+                    CursorToolsVisible : true,
+                    SearchToolsVisible : true,
+                    WMode : 'transparent',
+                    localeChain: 'en_US'
+                }}
+        );
+    });
+    
+</script>
+{/literal}

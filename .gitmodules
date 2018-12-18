@@ -1,12 +1,15 @@
+[submodule "plugins/commercial"]
+	path = plugins/commercial
+	url = git@github.com:ktgit/commercial-plugins.git
 [submodule "plugins/PatoLeon.TemplateDocuments"]
 	path = plugins/PatoLeon.TemplateDocuments
 	url = https://gitlab.com/patricioleonm/patoleon.templatedocuments.git
+[submodule "plugins/vao"]
+	path = plugins/vao
+	url = https://gitlab.com/patricioleonm/vao.git
 [submodule "plugins/scandocument"]
 	path = plugins/scandocument
 	url = https://gitlab.com/patricioleonm/scandocument.git
 [submodule "plugins/documentviewer"]
 	path = plugins/documentviewer
 	url = https://gitlab.com/patricioleonm/documentviewer.git
-[submodule "plugins/vao"]
-	path = plugins/vao
-	url = https://gitlab.com/patricioleonm/vao.git
