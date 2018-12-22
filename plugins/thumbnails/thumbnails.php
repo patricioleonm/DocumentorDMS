@@ -242,8 +242,11 @@ class ThumbnailViewlet extends KTDocumentViewlet {
                 return '';
             }
 		}
-        $url = KTUtil::ktLink('action.php', 'ktstandard.pdf.generate', array( 'fDocumentId' => $this->oDocument->getId(), 'action' => 'showpdf'));
-
+        //$url = KTUtil::ktLink('action.php', 'ktstandard.pdf.generate', array( 'fDocumentId' => $this->oDocument->getId(), 'action' => 'showpdf'));
+        $url = "";
+        if (KTPluginUtil::pluginIsActive('patoleon.documentviewer.plugin')){
+            $url = KTUtil::ktLink('plugin.php', 'patoleon.documentviewer.plugin/documentviewerpage', array( 'fDocumentId' => $this->oDocument->getId()));
+        }
         // Get the url to the thumbnail and render it
         // Ensure url has correct slashes
 		$sHostPath = KTUtil::kt_url();
@@ -267,8 +270,6 @@ class ThumbnailViewlet extends KTDocumentViewlet {
 		    return 200;
 		}
 		return 0;
-		//$size = getimagesize($thumbnailfile);
-		//return $size[0];
     }
 
 }
