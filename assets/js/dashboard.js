@@ -1,4 +1,5 @@
   $(document).ready(() => {
+    var init = true;
     //add dashlet buttons
     var template_button = document.getElementById("dashlets-button");
     var content = template_button.content.cloneNode(true);
@@ -8,6 +9,7 @@
     //sortable
     $("#dashboard-columns").sortable({
       beforeStop: (event, ui) => {
+        if(!init){ ajaxUpdate(); }
       }
     });
 
@@ -21,23 +23,13 @@
       showDashlet(e.currentTarget.attributes["data-id"].value);
     });
 
-    window.addEventListener("beforeunload", function (event) {
-      $.ajax({
-        url : window.location.pathname,
-        type: "POST",
-        data: {"action" :"json", "json_action":"saveDashboardState", "state" : JSON.stringify(getDashletsArray())}        
-      });
-
-      (event || window.event).returnValue = null;
-      return null;
-    });
-
     function showDashlet(dashlet){
       document.getElementById(dashlet).classList.remove("d-none");
       document.getElementById(dashlet).classList.add("d-inline-block");
       document.querySelector("a[data-id='"+dashlet+"']").classList.remove("d-block");    
       document.querySelector("a[data-id='"+dashlet+"']").classList.add("d-none");
       dashboard_state[dashlet] = true;
+      if(!init){ ajaxUpdate(); }
     }
 
     function hideDashlet(dashlet){
@@ -46,6 +38,15 @@
       document.querySelector("a[data-id='"+dashlet+"']").classList.remove("d-none");    
       document.querySelector("a[data-id='"+dashlet+"']").classList.add("d-block");
       dashboard_state[dashlet] = false;
+      if(!init){ ajaxUpdate(); }
+    }
+
+    function ajaxUpdate(){
+      $.ajax({
+        url : window.location.pathname,
+        type: "POST",
+        data: {"action" :"json", "json_action":"saveDashboardState", "state" : JSON.stringify(getDashletsArray())}        
+      });
     }
 
     function getDashletsArray(){
@@ -67,6 +68,7 @@
           hideDashlet(element[0]);
         }
       });
+      init = false;
     }
 
     doUpdates();
