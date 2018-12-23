@@ -76,7 +76,6 @@ class DashboardDispatcher extends KTStandardDispatcher {
         $this->oPage->requireJSResource('assets/js/jquery-ui.min.js');
         $this->oPage->requireJSResource('assets/js/dashboard.js');        
 
-
         $oDashletRegistry =& KTDashletRegistry::getSingleton();
         $oDashlets = $oDashletRegistry->getDashlets($this->oUser);
         $aDashlets = NULL;        
@@ -89,7 +88,9 @@ class DashboardDispatcher extends KTStandardDispatcher {
 
         foreach($sDashboardState as $key => $value){
             $index = array_search($key, $dashletNames);
-            $aDashlets[] = $oDashlets[$index];
+            if(is_numeric($index)){
+                $aDashlets[] = $oDashlets[$index];
+            }            
         }
 
         // render

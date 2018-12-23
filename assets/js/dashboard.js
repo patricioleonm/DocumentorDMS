@@ -24,21 +24,27 @@
     });
 
     function showDashlet(dashlet){
-      document.getElementById(dashlet).classList.remove("d-none");
-      document.getElementById(dashlet).classList.add("d-inline-block");
-      document.querySelector("a[data-id='"+dashlet+"']").classList.remove("d-block");    
-      document.querySelector("a[data-id='"+dashlet+"']").classList.add("d-none");
-      dashboard_state[dashlet] = true;
-      if(!init){ ajaxUpdate(); }
+      var eDashlet = document.getElementById(dashlet);
+      if(eDashlet != undefined){
+        eDashlet.classList.remove("d-none");
+        eDashlet.classList.add("d-inline-block");
+        document.querySelector("a[data-id='"+dashlet+"']").classList.remove("d-block");    
+        document.querySelector("a[data-id='"+dashlet+"']").classList.add("d-none");
+        dashboard_state[dashlet] = true;
+        if(!init){ ajaxUpdate(); }
+      }
     }
 
     function hideDashlet(dashlet){
-      document.getElementById(dashlet).classList.remove("d-inline-block");
-      document.getElementById(dashlet).classList.add("d-none");
-      document.querySelector("a[data-id='"+dashlet+"']").classList.remove("d-none");    
-      document.querySelector("a[data-id='"+dashlet+"']").classList.add("d-block");
-      dashboard_state[dashlet] = false;
-      if(!init){ ajaxUpdate(); }
+      var eDashlet = document.getElementById(dashlet);
+      if(eDashlet != undefined){
+        eDashlet.classList.remove("d-inline-block");
+        eDashlet.classList.add("d-none");
+        document.querySelector("a[data-id='"+dashlet+"']").classList.remove("d-none");    
+        document.querySelector("a[data-id='"+dashlet+"']").classList.add("d-block");
+        dashboard_state[dashlet] = false;
+        if(!init){ ajaxUpdate(); }
+      }
     }
 
     function ajaxUpdate(){
