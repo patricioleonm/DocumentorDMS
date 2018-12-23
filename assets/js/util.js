@@ -40,16 +40,20 @@ var bdcontent = document.getElementById("bd-content");
 var btnshowsidebar = document.getElementById("btn-show-sidebar");
 var btnhidesidebar = document.getElementById("btn-hide-sidebar");
 
-btnshowsidebar.addEventListener("click", (e) => {
-    bdsidebar.classList.remove("d-sm-none");
-    bdsidebar.classList.add("d-block");
-    $(btnshowsidebar).hide();
-    $(btnhidesidebar).show();
-});
+if(btnshowsidebar != undefined){
+    btnshowsidebar.addEventListener("click", (e) => {
+        bdsidebar.classList.remove("d-sm-none");
+        bdsidebar.classList.add("d-block");
+        $(btnshowsidebar).hide();
+        $(btnhidesidebar).show();
+    });
+}
 
-btnhidesidebar.addEventListener("click", (e) => {
-    bdsidebar.classList.remove("d-block");
-    bdsidebar.classList.add("d-sm-none");
-    $(btnhidesidebar).hide();
-    $(btnshowsidebar).show();
-});
+if(btnhidesidebar != undefined){
+    btnhidesidebar.addEventListener("click", (e) => {
+        bdsidebar.classList.remove("d-block");
+        bdsidebar.classList.add("d-sm-none");
+        $(btnhidesidebar).hide();
+        $(btnshowsidebar).show();
+    });
+}
