@@ -205,14 +205,15 @@ class User extends KTEntity {
         }else{
             $dashlets = unserialize($state);
         }
+
         $knowlist = NULL;
 
         foreach($dashlets as $key => $value){
-            $knowlist[] = $key;
+            $knowlist[] = "'".$key."'";
         }
-
-        $aDashlets = $dashletRegistry->getNewDashlets($this, $sKnownlist);
-
+        
+        $aDashlets = $dashletRegistry->getNewDashlets($this, implode(",",$knowlist));
+        
         if(!empty($aDashlets)){        	
         	foreach($aDashlets as $class)
         	{
