@@ -30,7 +30,7 @@
 <body {if (!$page->show_portlets)}class="noportlets"{/if} {if $page->onload}onload="{$page->getBodyOnload()}"{/if} >
 	<!-- navbar begin-->
 	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar bg-primary">
-		<a class="navbar-brand mr-0 mr-md-2" href="{$page->systemURL}">
+		<a class="navbar-brand mr-0 mr-md-2" href="#">
 			<img src="{$rootUrl}/assets/images/logod.png" title="{$page->systemName}"/>
 		</a>
 		<div class="navbar-nav-scroll">
@@ -248,15 +248,12 @@
 		</div>
 
     	<!-- Start footer -->
-		<div class="row bg-dark text-white">
-			<div class="col mt-2">
-				<a href="{$rootUrl}">
-					<img src="{$rootUrl}/resources/powered-by-kt.png" alt="Powered by KnowledgeTree" title="Powered by KnowledgeTree"/>
-				</a>
+		<div class="row bg-primary text-white">
+			<div class="col mt-2">				
 			</div>
 			<div class="col">
-				{i18n}&copy; 2008, 2009 <a href="http://www.knowledgetree.com/about/legal" target="_blank">KnowledgeTree Inc.</a>{/i18n}
-				{i18n}All rights reserved.{/i18n}
+				&copy; 2018 Documentor
+				<br>{i18n}All rights reserved.{/i18n}
 				<br>{i18n arg_timing=$page->getReqTime()}Request created in #timing#s{/i18n}
 			</div>
 			<div class="col">
