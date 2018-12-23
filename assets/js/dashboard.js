@@ -27,7 +27,9 @@
         type: "POST",
         data: {"action" :"json", "json_action":"saveDashboardState", "state" : JSON.stringify(getDashletsArray())}        
       });
-      event.returnValue = '';
+
+      (event || window.event).returnValue = null;
+      return null;
     });
 
     function showDashlet(dashlet){
