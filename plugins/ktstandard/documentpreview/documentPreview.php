@@ -46,6 +46,7 @@ class DocumentPreview {
     var $_iMimeId;
     var $_oFolder;
     var $_iFolderId;
+    var $_thumbnail;
 
     /**
      * Constructer - creates the document object
@@ -87,23 +88,12 @@ class DocumentPreview {
         $sTitle = htmlentities($this->_oDocument->getName(), ENT_NOQUOTES, 'utf-8');
         $iLen = strlen($sTitle);
 
-        /*
-        if($iLen > 60){
-            $sFull = $sTitle;
-            if($iLen >= 99){
-                $sTitle = substr($sTitle, 0, 97).'...';
-            }
-            $sTitle = '<p title="'.$sFull.'">'.$sTitle.'</b>';
-        }else{
-            $sTitle = '<p>'.$sTitle.'</b>';
-        }
-        */
         // Get the icon
         $sIcon = $this->getMimeIcon();
 
         $sTitle = '<div class="row">
                 <div class="col-1">'.$sIcon.'</div>
-                <div class="col-11"><p class="text-truncate">'.$sTitle.'</p></div>
+                <div class="col-11"><h4 class="text-truncate">'.$sTitle.'</h4></div>
             </div>';
         return $sTitle;
     }
@@ -117,10 +107,7 @@ class DocumentPreview {
     function getMimeIcon() {
         global $default;
         $iMimeId = $this->_iMimeId;
-
         $sIconPath = $this->getIconPath();
-        //$sIconPath = $default->rootUrl.$sIconPath;
-        //return "<img src='$sIconPath' title='$sTitle' width=\"32px\"/>";
         return "<i class=\"".$sIconPath." h1\"></i>";
     }
 
@@ -171,13 +158,8 @@ class DocumentPreview {
         if($this->_oDocument === false){
             return '<p>'._kt('A problem occured while loading the property preview.').'</p>';
         }
-
+        $this->thumbnail = $this->getThumbnail();
         $sInfo = $this->getMetadata();
-
-        //$sInfo = '<div id="preview" class="preview" onclick="javascript: destroyPanel();">'.$sInfo.'</div>';
-
-        $sInfo .= $this->getThumbnail();
-
         return $sInfo;
     }
 
@@ -261,26 +243,35 @@ class DocumentPreview {
         /* Create table */
 
         $sInfo = "<table class=\"table table-sm table-condensed table-striped\">
-            <tr><td>{$sFilenameLb}</td><td><b>{$sFilename}</b></td></tr>
-            <tr><td>{$sMimeTypeLb}</td><td><b>{$sMimeType}</b></td></tr>
-            <tr><td>{$sVersionLb}</td><td><b>{$iVersion}</b></td></tr>
-            <tr><td>{$sCreatedByLb}</td><td><b>{$sCreatedBy}</b></td></tr>
-            <tr><td>{$sOwnedByLb}</td><td><b>{$sOwnedBy}</b></td></tr>";
+            <tr><td>{$sFilenameLb}<br><b>{$sFilename}</b></td></tr>
+            <tr><td>{$sMimeTypeLb}<br><b>{$sMimeType}</b></td></tr>
+            <tr><td>{$sVersionLb}<br><b>{$iVersion}</b></td></tr>
+            <tr><td>{$sCreatedByLb}<br><b>{$sCreatedBy}</b></td></tr>
+            <tr><td>{$sOwnedByLb}<br><b>{$sOwnedBy}</b></td></tr>";
 
         if(!empty($sLastUpdatedBy)){
-            $sInfo .= "<tr><td>{$sLastUpdatedByLb}</td><td><b>{$sLastUpdatedBy}</b></td></tr>";
+            $sInfo .= "<tr><td>{$sLastUpdatedByLb}<br><b>{$sLastUpdatedBy}</b></td></tr>";
         }
-            $sInfo .= "<tr><td>{$sDocTypeLb}</td><td><b>{$sDocType}</b></td></tr>";
+            $sInfo .= "<tr><td>{$sDocTypeLb}<br><b>{$sDocType}</b></td></tr>";
         if(!empty($sWF)){
-            $sInfo .= "<tr><td>{$sWFLb}</td><td><b>{$sWF}</b></td></tr>";
+            $sInfo .= "<tr><td>{$sWFLb}<br><b>{$sWF}</b></td></tr>";
         }
         if(!empty($sCheckedOutBy)){
-            $sInfo .= "<tr><td>{$sCheckedLb}</td><td><b>{$sCheckedOutBy}</b></td></tr>";
+            $sInfo .= "<tr><td>{$sCheckedLb}<br><b>{$sCheckedOutBy}</b></td></tr>";
         }
 
-        $sInfo .= "<tr><td>{$sIdLb}</td><td><b>{$sId}</b></td></tr>";
+        $sInfo .= "<tr><td>{$sIdLb}<br><b>{$sId}</b></td></tr>";
         $sInfo .= " </table>";
-
+        if($this->thumbnail != ""){
+            $sInfo = "<div class=\"row\">
+                        <div class=\"col\">".$sInfo."</div>
+                        <div class=\"col\">".$this->thumbnail."</div>
+                    </div>";
+        }else{
+            $sInfo = "<div class=\"row\">
+                        <div class=\"col\">".$sInfo."</div>
+                    </div>";
+        }
         return $sInfo;
     }
 
@@ -297,7 +288,7 @@ class DocumentPreview {
             $thumbnailDisplay = $thumbnailer->renderThumbnail($this->_IDocId);
             if ($thumbnailDisplay != '')
             {
-        		$sInfo = "<div>$thumbnailDisplay</div>";
+        		$sInfo = $thumbnailDisplay;
         	}
         }
         return $sInfo;
@@ -315,7 +306,6 @@ $oPreview = new DocumentPreview($iDocumentId);
 $sTitle = $oPreview->getTitle();
 $sContent = $oPreview->renderPreview();
 
-//echo $sTitle.'<br />'.$sContent;
-echo $sTitle.'<br />'.$sContent;
+echo $sTitle.''.$sContent;
 exit;
 ?>
