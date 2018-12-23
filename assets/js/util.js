@@ -1,24 +1,24 @@
 
 //confirm dialog
-/*
-document.addEventListener('click', (e) => {
-    console.log("click");
-    if(e.target.classList.contains('ktDelete')){
-        var msg = e.target.getAttribute('kt:deleteMessage');
-        var v = confirm(msg);
- 
-        if (v == false) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-                e.preventDefault();
-            }
-            else if (window.event)
-                return false;
+
+function confirmMessage(e){
+    var msg = e.target.getAttribute('data-deleteMessage');
+    var v = confirm(msg);
+
+    if (v == false) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+            e.preventDefault();
         }
-        return v;
+        else if (window.event)
+            return false;
     }
+    return v;
+};
+
+Object.values(document.querySelectorAll(".ktDelete")).forEach(element => {
+    element.addEventListener("click", confirmMessage);
 });
-*/
 
 document.addEventListener("DOMContentLoaded", () => {
     var searchForm = document.getElementById("frmQuickSearch");
@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 });
 
+//sidebar buttons
 var bdsidebar = document.getElementById("bd-sidebar");
 var bdcontent = document.getElementById("bd-content");
 var btnshowsidebar = document.getElementById("btn-show-sidebar");
