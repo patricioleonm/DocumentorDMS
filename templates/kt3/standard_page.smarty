@@ -163,7 +163,8 @@
 							</div>
 						</form>
 					</div>
-					<div class="col"></div>
+					<div class="col" id="dashboard-col">
+					</div>
 				</div>
 				<div class="row">
 					{if (!$page->hide_section)}

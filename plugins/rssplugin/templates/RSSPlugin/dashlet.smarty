@@ -1,15 +1,15 @@
 <div>
 	{if $internalrss or $feedlist}
-	<form name='nullForm' id='nullForm' action=''>
-		<select id='feedSelect' name='feedSelect' onchange='loadFeed({$user})'>
+	<form name="nullForm" id="nullForm" action="">
+		<select id="feedSelect" name="feedSelect" onchange="loadFeed({$user})">
 			{if $internalrss}
-				<option selected='selected' value='{$internalrss}'>{i18n arg_appname="$appname"}#appname# RSS{/i18n}</option>
+				<option selected="selected" value="{$internalrss}">{i18n arg_appname="$appname"}#appname# RSS{/i18n}</option>
 			{else}
-				<option selected='selected' value='null'>{i18n}Select External RSS Feed{/i18n}</option>
+				<option selected="selected" value="null">{i18n}Select External RSS Feed{/i18n}</option>
 			{/if}
 			{if $feedlist}
 			{section name=feed loop=$feedlist}
-			<option value='{$feedlist[feed].url|sanitize}'>{$feedlist[feed].title|sanitize}</option>
+			<option value="{$feedlist[feed].url|sanitize}">{$feedlist[feed].title|sanitize}</option>
 			{/section}
 			{/if}
 		</select>
@@ -21,7 +21,7 @@
 	{if ($internalrss)}
 	<h3>{$internalrss.channel.title}</h3>
  	<div class="outerContainer" id="outerContainer">
-		<table width='90%'>
+		<table width="90%">
 		    {section name=i start=0 loop=$itemcount}
 			<tr>
 				<td>

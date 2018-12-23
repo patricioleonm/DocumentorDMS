@@ -1,9 +1,8 @@
 {if empty($tags)}
 	{i18n}<div class="alert alert-warning">There are no tags defined or accessible.{/i18n}</div>
 {else}
-	<div id="tagcloud">
-	</div>
+	<div id="tagcloud"></div>
 {/if}
 <script type="text/javascript">
-var tags_data = {$tags|@json_encode nofilter};
+	var tags_data = {$tags|@json_encode nofilter};
 </script>

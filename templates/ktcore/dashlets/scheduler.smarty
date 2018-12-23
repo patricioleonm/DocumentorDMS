@@ -2,18 +2,18 @@
 
 <p>
 {if $lasttime}
-    <span class=''>{i18n  arg_time=$lasttime}The last time these tasks were performed was on #time#.{/i18n}</span>
+    <span>{i18n  arg_time=$lasttime}The last time these tasks were performed was on #time#.{/i18n}</span>
 {else}
-    <span class=''>{i18n}No tasks have been run yet.{/i18n}</span>
+    <span>{i18n}No tasks have been run yet.{/i18n}</span>
 {/if}
 </p>
 
 <p>
 {if !$lasttime}
     {if $isDue}
-        <span class=''>{i18n  arg_time=$timedif}The tasks were scheduled to be run #time# ago.{/i18n}</span>
+        <span>{i18n  arg_time=$timedif}The tasks were scheduled to be run #time# ago.{/i18n}</span>
     {else}
-        <span class=''>{i18n  arg_time=$timedif}The tasks are scheduled to be run in #time#.{/i18n}</span>
+        <span>{i18n  arg_time=$timedif}The tasks are scheduled to be run in #time#.{/i18n}</span>
     {/if}
 {/if}
 </p>
@@ -24,7 +24,6 @@
     {i18n}Note: The stack install uses its own service for task scheduling. To check if this service has been installed and is running, open the <i>Control Panel</i>, go to
     <i>Administrative Tools</i> and open the list of <i>Services</i>. The scheduler service is called <i>KTScheduler</i>. For further information on this service,
     please refer to the documentation.{/i18n}
-
 {else}
     <p>
         {i18n}Note: The stack install uses its own service for task scheduling and the following is only for source installs.{/i18n}<br>

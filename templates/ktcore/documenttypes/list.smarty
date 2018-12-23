@@ -54,12 +54,12 @@ its details, or use the enable/disable buttons to change its availability state.
                     {if $oDocumentType->getDisabled()}
                         <a title="{i18n}Enable document type.{/i18n}" href="{addQS}action=enable&fDocumentTypeId={$oDocumentType->getId()}{/addQS}"><i class="fa fa-toggle-off fa-2x text-muted"></i> <span class="sr-only">{i18n}Enable{/i18n}</span></a>
                     {else}
-                        <a title="{i18n}Disable document type.{/i18n}" class="ktDelete" kt:deleteMessage="{i18n}Are you sure you wish to disable this document type?{/i18n}" href="{addQS}action=disable&fDocumentTypeId={$oDocumentType->getId()}{/addQS}"><i class="fa fa-toggle-on fa-2x"></i> <span class="sr-only">{i18n}Disable{/i18n}</span></a>
+                        <a title="{i18n}Disable document type.{/i18n}" class="ktDelete" data-deleteMessage="{i18n}Are you sure you wish to disable this document type?{/i18n}" href="{addQS}action=disable&fDocumentTypeId={$oDocumentType->getId()}{/addQS}"><i class="fa fa-toggle-on fa-2x"></i> <span class="sr-only">{i18n}Disable{/i18n}</span></a>
                     {/if}
                 </td>
                 <td class="text-center">
                     {if $oDocumentType->checkDelete($associated_types, $oDocumentType->getId())}
-                        <a title="{i18n}Delete document type.{/i18n}" kt:deleteMessage="{i18n}Are you sure you wish to delete this document type? It will be permanently removed from the system.{/i18n}" href="{addQS}action=delete&fDocumentTypeId={$oDocumentType->getId()}{/addQS}" class="ktDelete"><i class="fa fa-trash fa-2x"></i> <span class="sr-only">{i18n}Delete{/i18n}</span></a>
+                        <a title="{i18n}Delete document type.{/i18n}" data-deleteMessage="{i18n}Are you sure you wish to delete this document type? It will be permanently removed from the system.{/i18n}" href="{addQS}action=delete&fDocumentTypeId={$oDocumentType->getId()}{/addQS}" class="ktDelete"><i class="fa fa-trash fa-2x"></i> <span class="sr-only">{i18n}Delete{/i18n}</span></a>
                     {else}
                         <span title="{i18n}Document type cannot be deleted{/i18n}"><i class="fa fa-trash fa-2x text-muted"></i></span> 
                     {/if}

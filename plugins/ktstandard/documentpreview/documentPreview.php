@@ -158,27 +158,6 @@ class DocumentPreview {
      * @return string
      */
     function getIconPath() {
-
-        //$sIconPath = KTMime::getIconPath($this->_iMimeId);
-
-        // Get mime type icon
-        //$sIconPath = '/resources/mimetypes/big/'.$sIconPath.'.png';
-        /*
-        if(!file_exists(KT_DIR.$sIconPath)){
-            // See if there is an icon for the extension
-            $sMimeType = KTMime::getMimeTypeName($this->_iMimeId);
-            $aMimeInfo = KTMime::getFriendlyNameAndExtension($sMimeType);
-            if(!PEAR::isError($aMimeInfo) && !empty($aMimeInfo)){
-                $sExt = $aMimeInfo[0]['filetypes'];
-                $sIconPath = '/resources/mimetypes/big/'.$sExt.'.png';
-
-                if(!file_exists(KT_DIR.$sIconPath)){
-                    $generic = $this->checkForGeneric($sExt);
-                    // if all else fails, use the default icon
-                    $sIconPath = '/resources/mimetypes/big/'.$generic.'.png';
-                }
-            }
-        }*/
         $sIconPath = KTMime::getFileType($this->_iMimeId);
         return "fiv-sqo fiv-icon-".$sIconPath;
     }

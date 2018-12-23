@@ -9,13 +9,12 @@
             {else}
                 <span class="descriptiveText">{i18n}Folder is no longer available{/i18n}</span>
             {/if}
-    &nbsp;|&nbsp;
-
+            &nbsp;|&nbsp;
         </div>
         <div>
             <a href="{ktLink base="notify.php" query="id=`$info.notify_id`&notify_action=clear"}">
-            <span class="ktAction ktInline ktDelete"></span>{i18n}Clear Alert{/i18n}</a>
+                <span class="ktAction ktInline ktDelete"></span>{i18n}Clear Alert{/i18n}
+            </a>
         </div>
-
     </div>
 </dd>

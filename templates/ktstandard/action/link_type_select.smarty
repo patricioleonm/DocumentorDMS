@@ -1,10 +1,10 @@
 <h4>{i18n}Add Link{/i18n}</h4>
 
-<form method='POST' action="{$smarty.server.PHP_SELF}">
-    <input type='hidden' name='action' value='make_link' />
-    <input type='hidden' name='fDocumentId' value='{$parent_id}' />
-    <input type='hidden' name='fTargetDocumentId' value='{$target_id}' />
-    <input type='hidden' name='fTargetUrl' value='{$target_url}' />
+<form method="POST" action="{$smarty.server.PHP_SELF}">
+    <input type="hidden" name="action" value="make_link" />
+    <input type="hidden" name="fDocumentId" value="{$parent_id}" />
+    <input type="hidden" name="fTargetDocumentId" value="{$target_id}" />
+    <input type="hidden" name="fTargetUrl" value="{$target_url}" />
 
     <fieldset>
         <legend>{i18n}Select a link type.{/i18n}</legend>
@@ -14,9 +14,9 @@
         {/foreach}
         </fieldset>
 
-        <div class='form_actions'>
+        <div class="form_actions">
             <hr>
-            <input type='submit' name='submit[move]' value="{i18n}Link{/i18n}" class="btn btn-primary float-right"/>
+            <input type="submit" name="submit[move]" value="{i18n}Link{/i18n}" class="btn btn-primary float-right"/>
         </div>
     </fieldset>
 </form>

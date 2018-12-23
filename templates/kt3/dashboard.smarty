@@ -1,5 +1,5 @@
 	<div class="row" id="dashboard">
-		<div class="card-columns">
+		<div class="card-columns" id="dashboard-columns">
     {foreach item=oDashlet from=$dashlets}
 		{if $oDashlet->sClass == 'ktBlock'}
 			{assign var=card_type value='bg-light'}
@@ -8,11 +8,12 @@
 		{else}
 			{assign var=card_type value='bg-warning text-white'}
 		{/if}
-			<div class="card {$card_type}" id="{$context->_getDashletId($oDashlet)}">
-				<div class="card-header">{$oDashlet->sTitle}
-				<button type="button" class="close" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+			<div class="card ui-state-default {$card_type}" id="{$context->_getDashletId($oDashlet)}">
+				<div class="card-header">
+					{$oDashlet->sTitle}
+					<button type="button" class="close" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="card-body">
 					{$oDashlet->render()}
@@ -21,3 +22,16 @@
 	{/foreach}
 		</div>
 	</div>
+
+<template id="dashboard_button">
+	<div class="btn-group btn-block mt-3">
+		<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			{i18n}Add Dashlet{/i18n}
+		</button>
+		<div class="dropdown-menu">
+		{foreach item=oDashlet from=$dashlets}
+			<a class="dropdown-item" href="#" data-id="{$context->_getDashletId($oDashlet)}">{$oDashlet->sTitle}</a>
+		{/foreach}
+		</div>
+	</div>
+</template>

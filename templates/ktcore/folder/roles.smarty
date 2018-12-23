@@ -50,9 +50,9 @@
                 </td>
                 {if !$is_root}
                 <td>
-                    <a href="{$aRole.href}" onclick="{$aRole.onclick}" class="btn btn-warning btn-sm"
-                    kt:deleteMessage="{i18n}Are you sure you wish to remove this role allocation?{/i18n}"
-                    title="{i18n}Use parent's allocation{/i18n}">{i18n}Use parent's allocation{/i18n}</a>
+                    <a href="{$aRole.href}" onclick="{$aRole.onclick}" class="btn btn-warning btn-sm" data-deleteMessage="{i18n}Are you sure you wish to remove this role allocation?{/i18n}" title="{i18n}Use parent's allocation{/i18n}">
+                        {i18n}Use parent's allocation{/i18n}
+                    </a>
                 </td>
                 {/if}
                 {/if}

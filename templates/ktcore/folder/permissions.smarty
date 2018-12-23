@@ -25,9 +25,10 @@
       {if ($can_inherit)}
         <div class="ktInfoMessage">
           <span>{i18n}This folder defines its own permissions.{/i18n}
-          <a class="ktActionLink ktDelete"
-            kt:deleteMessage="{i18n}Are you sure you wish to reinstate inherited permissions?{/i18n}"
-            href="{addQS context=$context}action=inheritPermissions{/addQS}">{i18n}Inherit permissions{/i18n}</a></span>
+            <a class="ktActionLink ktDelete" data-deleteMessage="{i18n}Are you sure you wish to reinstate inherited permissions?{/i18n}" href="{addQS context=$context}action=inheritPermissions{/addQS}">
+              {i18n}Inherit permissions{/i18n}
+            </a>
+          </span>
         </div>
       {/if}
       {$context->oPage->requireJSResource('assets/select2/select2.min.js')}
