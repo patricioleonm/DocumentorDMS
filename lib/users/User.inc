@@ -196,80 +196,34 @@ class User extends KTEntity {
 
     function refreshDashboadState()
     {
-    	require_once(KT_DIR . "/thirdparty/pear/JSON.php");
-    	$dashletRegistry = & KTDashletRegistry::getSingleton();
+        $dashletRegistry = & KTDashletRegistry::getSingleton();
+        $state = $this->getDashboardState();
+        $update = FALSE;
+        $dashlets = NULL;
+        if($state == NULL){
+            $dashlets["KTInfoDashlet"] = TRUE;
+        }else{
+            $dashlets = unserialize($state);
+        }
+        $knowlist = NULL;
 
-    	$update = false;
-    	$knownlist = array();
+        foreach($dashlets as $key => $value){
+            $knowlist[] = $key;
+        }
 
-    	$oJSON = new Services_JSON();
-    	$state = $this->getDashboardState();
-    	$dashlets = $oJSON->decode($state);
+        $aDashlets = $dashletRegistry->getNewDashlets($this, $sKnownlist);
 
-    	if (!isset($dashlets->left)) $dashlets->left = array();
-    	if (!isset($dashlets->right)) $dashlets->right = array();
-    	$mergedlist = kt_array_merge($dashlets->left,$dashlets->right);
-
-    	foreach($mergedlist as $dashlet)
-    	{
-    		array_push($knownlist,"'".$dashlet->id."'");
-    	}
-
-    	$sKnownlist = implode(',', $knownlist);
-    	$aDashlets = $dashletRegistry->getNewDashlets($this, $sKnownlist);
-
-    	if(!empty($aDashlets)){
-        	$column=1;
+        if(!empty($aDashlets)){        	
         	foreach($aDashlets as $class)
         	{
-        		$column = ($column + 1) %2;
-        	    $obj = new stdClass();
-        		$obj->id=$class;
-        		$obj->state=0;
-
-        		if ($column == 0)
-        			array_push($dashlets->left,$obj);
-    			else
-        			array_push($dashlets->right,$obj);
+                $dashlets[$class] = TRUE;
         		$update=true;
         	}
     	}
 
-    	// Check if the KT Info dashlet is being displayed
-    	// If it's not in the top left corner, move it there.
-    	if((!(strpos($sKnownlist, 'KTInfoDashlet') === false) && $knownlist[0] != "'KTInfoDashlet'") || empty($knownlist)){
-    	    $left = $dashlets->left;
-    	    $right = $dashlets->right;
-
-    	    $found = false;
-    	    $update = true;
-    	    foreach($left as $key => $item){
-    	        if($item->id == 'KTInfoDashlet'){
-    	            // found the dashlet
-    	            $found = 'true';
-    	            array_splice($dashlets->left, $key, 1);
-    	            array_unshift($dashlets->left, $item);
-    	            continue;
-    	        }
-    	    }
-    	    if(!$found){
-    	        foreach($right as $key => $item){
-        	        if($item->id == 'KTInfoDashlet'){
-        	            // found the dashlet
-        	            $found = 'true';
-    	                array_splice($dashlets->right, $key, 1);
-        	            array_unshift($dashlets->left, $item);
-        	            continue;
-        	        }
-        	    }
-    	    }
-    	}
-
-    	if ($update)
-    	{
-    		$state = $oJSON->encode($dashlets);
-	    	$this->setDashboardState($state);
-    	}
+        if($update){
+            $this->setDashboardState(serialize($dashlets));
+        }
     }
 
 

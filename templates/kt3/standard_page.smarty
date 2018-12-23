@@ -163,7 +163,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="col" id="dashboard-col">
+					<div class="col" id="dashlets-col">
 					</div>
 				</div>
 				<div class="row">

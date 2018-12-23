@@ -67,79 +67,38 @@ class DashboardDispatcher extends KTStandardDispatcher {
     function do_main() {
         $this->oPage->setShowPortlets(FALSE);
         $this->oPage->hide_section = TRUE;
-        // retrieve action items for the user.
-        // FIXME what is the userid?
+        $this->oUser->refreshDashboadState();        
+
+        $this->sSection = "dashboard";
+        $this->oPage->setBreadcrumbDetails(_kt("Home"));
+        $this->oPage->title = _kt("Dashboard");
+        $this->oPage->requireCSSResource('assets/css/jquery-ui.min.css');
+        $this->oPage->requireJSResource('assets/js/jquery-ui.min.js');
+        $this->oPage->requireJSResource('assets/js/dashboard.js');        
 
 
         $oDashletRegistry =& KTDashletRegistry::getSingleton();
-        $aDashlets = $oDashletRegistry->getDashlets($this->oUser);
+        $oDashlets = $oDashletRegistry->getDashlets($this->oUser);
+        $aDashlets = NULL;        
+        $sDashboardState = unserialize($this->oUser->getDashboardState());
 
-        $this->sSection = 'dashboard';
-        $this->oPage->setBreadcrumbDetails(_kt('Home'));
-        $this->oPage->title = _kt('Dashboard');
-
-        // simplistic improvement over the standard rendering:  float half left
-        // and half right.  +Involves no JS -can leave lots of white-space at the bottom.
-
-        $aDashletsLeft = array();
-        $aDashletsRight = array();
-
-        $i = 0;
-        foreach ($aDashlets as $oDashlet) {
-            if(strpos(strtolower($oDashlet->sTitle), 'welcome to knowledgetree') !== false && !empty($aDashletsLeft)){
-                array_unshift($aDashletsLeft, $oDashlet);
-            }else{
-                if ($i == 0) { $aDashletsLeft[] = $oDashlet; }
-                else {$aDashletsRight[] = $oDashlet; }
-            }
-            $i += 1;
-            $i %= 2;
+        //sort dashlets array based on user preferences
+        foreach($oDashlets as $key => $value){
+            $dashletNames[] = get_class($value);
         }
 
-        // javascript - broken input focus
-        // using this code causes focus problems in the Go To Document dashlet:
-        // while the input can be focused, it requires clicking the text to the LEFT
-        // of the input, which is not expected nor obvious nor user friendly
-        /*
-        $this->oPage->requireJSResource('thirdpartyjs/extjs/adapter/yui/yui-utilities.js');
-        $this->oPage->requireJSResource('resources/js/DDList.js');
-        */
-
-        // javascript - working input focus - restoring yui fixes the focus problem
-        // yahoo
-        /*
-        $this->oPage->requireJSResource('thirdpartyjs/yui/yahoo/yahoo.js');
-        $this->oPage->requireJSResource('thirdpartyjs/yui/event/event.js');
-        $this->oPage->requireJSResource('thirdpartyjs/yui/dom/dom.js');
-        $this->oPage->requireJSResource('thirdpartyjs/yui/dragdrop/dragdrop.js');
-        $this->oPage->requireJSResource('resources/js/DDList.js');
-        */
-        $this->oPage->requireJSResource('assets/js/masonry.pkgd.min.js');
-        $this->oPage->requireJSResource('assets/js/dashboard.js');
-        $this->oUser->refreshDashboadState();
-
-        // dashboard
-        $sDashboardState = $this->oUser->getDashboardState();
-        $sDSJS = 'var savedState = ';
-        if($sDashboardState == null) {
-            $sDSJS .= 'false';
-            $sDashboardState = false;
-        } else {
-            $sDSJS .= $sDashboardState;
+        foreach($sDashboardState as $key => $value){
+            $index = array_search($key, $dashletNames);
+            $aDashlets[] = $oDashlets[$index];
         }
-        /*
-        $sDSJS .= ';';
-        $this->oPage->requireJSStandalone($sDSJS);
-        $this->oPage->requireJSResource('resources/js/dashboard.js');
-*/
+
         // render
         $oTemplating =& KTTemplating::getSingleton();
         $oTemplate = $oTemplating->loadTemplate('kt3/dashboard');
         $aTemplateData = array(
               'context' => $this,
               'dashlets' => $aDashlets,
-              'dashlets_left' => $aDashletsLeft,
-              'dashlets_right' => $aDashletsRight,
+              'dashboard_state' => json_encode($sDashboardState),
         );
         return $oTemplate->render($aTemplateData);
     }
@@ -177,7 +136,8 @@ class DashboardDispatcher extends KTStandardDispatcher {
 
     function json_saveDashboardState() {
         $sState = KTUtil::arrayGet($_REQUEST, 'state', array('error'=>true));
-        $this->oUser->setDashboardState($sState);
+        $state = json_decode($sState, TRUE);
+        $this->oUser->setDashboardState(serialize($state));
         return array('success' => true);
     }
 }

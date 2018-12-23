@@ -23,15 +23,19 @@
 		</div>
 	</div>
 
-<template id="dashboard_button">
+<template id="dashlets-button">
 	<div class="btn-group btn-block mt-3">
 		<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			{i18n}Add Dashlet{/i18n}
 		</button>
-		<div class="dropdown-menu">
+		<div class="dropdown-menu font-1em">
 		{foreach item=oDashlet from=$dashlets}
 			<a class="dropdown-item" href="#" data-id="{$context->_getDashletId($oDashlet)}">{$oDashlet->sTitle}</a>
 		{/foreach}
 		</div>
 	</div>
 </template>
+
+<script type="text/javascript">
+	var dashboard_state = {$dashboard_state};
+</script>
