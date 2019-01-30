@@ -181,8 +181,8 @@ class KTSubscriptionPortlet extends KTPortlet {
             }
         </script>';
 
-        $script .= "<a id=\"subscribeLink\" class=\"list-group-item list-group-item-action pt-1 pb-1\" href=\"#\" onclick=\"javascript: doSubscribe1('ajax')\">".
-                        "<i class=\"fa fa-chevron-right\"></i> ".$aInfo['name'].
+        $script .= "<a id=\"subscribeLink\" class=\"nav-link\" href=\"#\" onclick=\"javascript: doSubscribe1('ajax')\">".
+                        $aInfo['name'].
                     "</a>";
 
         $aInfo['js'] = $script;
@@ -190,9 +190,9 @@ class KTSubscriptionPortlet extends KTPortlet {
 
         if(isset($aInfo['subaction'])){
             $subInfo = array();
-            $subInfo['js'] = "<a id=\"subLink\" class=\"list-group-item list-group-item-action pt-1 pb-1\" href=\"#\" onclick=\"javascript: doSubscribe1('add_subfolders')\">".
-                            "<i class=\"fa fa-chevron-right\"></i> ".$aInfo['subaction'].
-                            "</a>";
+            $subInfo['js'] = "<a id=\"subLink\" class=\"nav-link\" href=\"#\" onclick=\"javascript: doSubscribe1('add_subfolders')\">".
+                            $aInfo['subaction'].
+                            "</a>"; 
             $this->actions[] = $subInfo;
         }
 
