@@ -22,6 +22,7 @@
     </div>
 </div>
 {/if}
+{if $context->oFolder != NULL}
 <div id="draging_zone">
     <div class="card card-body card-primary border border-secondary text-center text-secondary d-none" id="dropable">
         <span class="display-4">{i18n}Add Document{/i18n} <i class="fa fa-file-upload"></i></span>
@@ -94,7 +95,7 @@
         {/if}
     </form>
 </div>
-
+{/if}
 {if ($save_fields)}
 <form action="{$smarty.server.PHP_SELF}" method="post">
     <fieldset>

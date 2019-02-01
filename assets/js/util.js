@@ -34,27 +34,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 });
-
-//sidebar buttons
-var bdsidebar = document.getElementById("bd-sidebar");
-var bdcontent = document.getElementById("bd-content");
-var btnshowsidebar = document.getElementById("btn-show-sidebar");
-var btnhidesidebar = document.getElementById("btn-hide-sidebar");
-
-if(btnshowsidebar != undefined){
-    btnshowsidebar.addEventListener("click", (e) => {
-        bdsidebar.classList.remove("d-sm-none");
-        bdsidebar.classList.add("d-block");
-        $(btnshowsidebar).hide();
-        $(btnhidesidebar).show();
-    });
-}
-
-if(btnhidesidebar != undefined){
-    btnhidesidebar.addEventListener("click", (e) => {
-        bdsidebar.classList.remove("d-block");
-        bdsidebar.classList.add("d-sm-none");
-        $(btnhidesidebar).hide();
-        $(btnshowsidebar).show();
-    });
-}

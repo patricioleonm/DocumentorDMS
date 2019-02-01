@@ -9,9 +9,11 @@
        <link rel="stylesheet" type="text/css" href="{$rootUrl}/{$sResourceURL}" />
     {/foreach}
 	
-    <link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/docs.min.css">
-	<link rel="stylesheet" href="{$rootUrl}/assets/css/dm.css">
+	<link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/fonts/feather/feather.min.css">
+    <link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/libs/highlight.js/styles/vs2015.css">
+    <!-- Theme CSS -->
+      
+    <link rel="stylesheet" href="{$rootUrl}/assets/bootstrap/css/theme.min.css" id="stylesheetLight">
 	<link rel="stylesheet" type="text/css" href="{$rootUrl}/resources/css/kt-print.css" media="print" />
     <link rel="icon" href="{$rootUrl}/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="{$rootUrl}/favicon.ico" type="image/x-icon">
@@ -29,251 +31,249 @@
 </head>
 <body {if (!$page->show_portlets)}class="noportlets"{/if} {if $page->onload}onload="{$page->getBodyOnload()}"{/if} >
 	<!-- navbar begin-->
-	<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar bg-primary">
-		<a class="navbar-brand mr-0 mr-md-2" href="#">
-			<img src="{$rootUrl}/assets/images/logod.png" title="{$page->systemName}"/>
-		</a>
-		<div class="navbar-nav-scroll">
-			<ul class="navbar-nav bd-navbar-nav flex-row">
-			{foreach item=aMenuItem from=$page->menu}
-				<li class="nav-item">
-				{if ($aMenuItem.active == 1)}
-					<a class="nav-link active" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
-				{else}
-					<a class="nav-link" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
-				{/if}
-				</li>
-			{/foreach}
-			</ul>
-		</div>
-				
-		<ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fa fa-user mr-1"></i>
-				{if ($page->user)}
-					{$page->user->getName()|mb_truncate:40:"..."}
-				{/if}
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					{if ($admin_mode.show == TRUE)}
-					{if ($admin_mode.toggleMode == 'enableAdminMode')}
-					<a class="dropdown-item text-danger" href="{$admin_mode.url}?fDocumentId={$admin_mode.fDocumentId}&fFolderId={$admin_mode.fFolderId}&action={$admin_mode.toggleMode}"><i class="fa fa-lock"></i> {i18n}Disable Admin Mode{/i18n}</a>
-					{else}
-					<a class="dropdown-item text-success" href="{$admin_mode.url}?fDocumentId={$admin_mode.fDocumentId}&fFolderId={$admin_mode.fFolderId}&action={$admin_mode.toggleMode}"><i class="fa fa-unlock-alt"></i> {i18n}Enable Admin Mode{/i18n}</a>
-					{/if}
-					{/if}
-				{foreach item=aMenuItem from=$page->userMenu name=prefmenu}
-					{if ($aMenuItem.active == 1)}
-					<a class="dropdown-item active" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
-					{else}
-					<a class="dropdown-item" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
-					{/if}
-				{/foreach}
-				</div>
-			</li>
-		{if ($page->getHelpURL() != null)}
-			<li class="nav-item">
-				<a class="nav-link" href="{$page->getHelpURL()}"><i class="fa fa-question-circle"></i></a>
-			</li>
-		{/if}
-		</ul>
-	</header>
-	<!-- navbar end -->
-	<div class="container-fluid">
-		<div class="row flex-xl-nowrap">
-			{if $page->portlets != NULL && $page->show_portlets}		
-            <div id="bd-sidebar" class="col-12 col-md-3 col-xl-2 bd-sidebar d-xs-block d-sm-none">
-				<button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3" type="button" data-toggle="collapse" data-target="#bd-docs-nav"
-					aria-controls="bd-docs-nav" aria-expanded="false" aria-label="Toggle docs navigation"><svg
-						xmlns="http://www.w3.org/2000/svg" viewbox="0 0 30 30" width="30" height="30" focusable="false"><title>Menu</title>
-						<path
-							stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"
-						/></svg>
-					Menu
-				</button>
+	<nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            	<span class="navbar-toggler-icon"></span>
+          	</button>
+			<a class="navbar-brand" href="{$rootUrl}">
+				<img class="navbar-brand-img mx-auto" src="{$rootUrl}/assets/images/logodocucenter.jpg" alt="DocucenterKT">
+			</a>
 
-                <nav class="collapse bd-links" id="bd-docs-nav">
+			<div id="sidebarCollapse" class="collapse navbar-collapse">
+				<!-- site menu -->
+				<ul class="navbar-nav">
+				{foreach item=aMenuItem from=$page->menu}
+					<li class="nav-item">
+				{if ($aMenuItem.active == 1)}
+						<a class="nav-link active" href="{$aMenuItem.url}"><i class="{$aMenuItem.icon}"></i> {$aMenuItem.label}</a>
+				{else}
+						<a class="nav-link" href="{$aMenuItem.url}"><i class="{$aMenuItem.icon}"></i> {$aMenuItem.label}</a>
+				{/if}
+					</li>
+				{/foreach}
+				</ul>
+				<!-- end site menu -->
+			
+				<hr class="navbar-divider my-3">
+				<ul class="navbar-nav mb-md-4">
 					{foreach item=oPortlet from=$page->portlets name=obj}
 					{assign var=portlet_output value=$oPortlet->render()}
 					{if $portlet_output}
-					<!--div class="portlet {if $oPortlet->getActive()}expanded{/if}"-->
-					<div class="bd-toc-item">
-						<a class="bd-toc-link pt-2 pb-2 border bg-secondary text-light" data-toggle="collapse" data-target="#p{$smarty.foreach.obj.iteration}" aria-controls="p{$smarty.foreach.obj.iteration}">
-							<h6><i class="fa fa-chevron-circle-down"></i> {$oPortlet->getTitle()}</h6>
+					<li class="nav-item">
+						<a class="nav-link collapsed" href="#p{$smarty.foreach.obj.iteration}" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="p{$smarty.foreach.obj.iteration}">
+							<i class="fe fe-clipboard"></i> {$oPortlet->getTitle()}
 						</a>
-						<div class="card collapse{if $oPortlet->getActive()} show{/if}" id="p{$smarty.foreach.obj.iteration}">
+						<div id="p{$smarty.foreach.obj.iteration}" class="collapse">
 							{$portlet_output}
 						</div>
-					</div>
+					</li>
 					{/if}
 					{/foreach}
-                </nav>
-            </div>
-			{/if}
-			<!-- class="col-12 {if $page->portlets != NULL && $page->show_portlets}col-md-9 col-xl-10{/if} py-md-10 pl-md-1 bd-content" role="main"> -->
-			<main id="bd-content" class="col" role="main">
-				<input type="hidden" name="kt-core-baseurl" id="kt-core-baseurl" value="{$rootUrl}" />
-				<div class="row">
-					{if $page->portlets != NULL && $page->show_portlets}
-					<div class="col-1 col-md-1 bd-search d-none d-sm-block">
-						<button class="btn btn-secondary border-left-0" id="btn-show-sidebar">
-							<span>
-								<i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>
-							</span>
-						</button>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
-						<button class="btn btn-secondary border-left-0" style="display: none;" id="btn-hide-sidebar">
-							<span>
-								<i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>
-							</span>
-						</button>
-					</div>
-					{/if}
-					<div class="col-10 col-md-10">
-						<form id="frmQuickSearch" class="bd-search d-flex align-items-center" method="post" action="{$rootUrl}/search2.php?action=process">
-							<input id="txtQuery" name="txtQuery" type="hidden">
-							<input type="hidden" name="cbQuickQuery" id="cbQuickQuery" value="1">
-							<input type="hidden" name="cbQuickGeneral" id="cbQuickGeneral" value="1">
-							<div class="input-group">
-								<input type="search" class="form-control btn-outline-primary" aria-label="{i18n}Enter search criteria...{/i18n}" placeholder="{i18n}Enter search criteria...{/i18n}">
-								<div class="input-group-append">
-									<button type="submit" class="btn btn-primary" title="{i18n}search{/i18n}"><i class="fa fa-search"></i><span class="sr-only">{i18n}search{/i18n}</span></button>
-									<button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<span class="sr-only">Toggle Dropdown</span>
-									</button>
-									<div class="dropdown-menu font-1em">
-										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=guiBuilder">{i18n}Advanced Search{/i18n}</a>
-										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=searchResults">{i18n}Previous Search Results{/i18n}</a>
-										<div role="separator" class="dropdown-divider"></div>
-										<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Quick Search Options{/i18n}</span>
-										<a class="dropdown-item active" href="#">{i18n}content and metadata{/i18n}</a>
-										<a class="dropdown-item" href="#">{i18n}metadata{/i18n}</a>
-										<div role="separator" class="dropdown-divider"></div>
-										<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Toggle search results format{/i18n}</span>
-										<a class="dropdown-item active" href="{$rootUrl}/search2.php?action=searchResults&format=searchengine">{i18n}Search engine format{/i18n}</a>
-										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=oldSearchResults">{i18n}Browse view format{/i18n}</a>
-										<div role="separator" class="dropdown-divider"></div>
-										<span class="dropdown-item-text"><i class="fa fa-chevron-down"></i> {i18n}Saved Searches{/i18n}</span>
-									{foreach item=searchitem from=$savedSearches}
-										<a class="dropdown-item" href="{$rootUrl}/search2.php?action=processSaved&fSavedSearchId={$searchitem.id}">{$searchitem.name|sanitize}</a>
-									{/foreach}
+	<!-- navbar end -->
+	<div class="main-content" id="content">	
+		<nav id="topbar" class="navbar navbar-expand-md navbar-light d-none d-md-flex">
+			<div class="container-fluid">
+				<form id="frmQuickSearch" class="form-inline mr-4 d-none d-md-flex" method="post" action="{$rootUrl}/search2.php?action=process">
+					<input id="txtQuery" name="txtQuery" type="hidden">
+					<input type="hidden" name="cbQuickQuery" id="cbQuickQuery" value="1">
+					<input type="hidden" name="cbQuickGeneral" id="cbQuickGeneral" value="1">
+					<!--div class="input-group"-->
+					<div class="input-group input-group-flush input-group-merge" data-toggle="lists" data-lists-values="[&quot;name&quot;]" style="width:500px; border: grey dotted 1px;">
+						<!--input type="search" class="form-control btn-outline-primary" aria-label="{i18n}Enter search criteria...{/i18n}" placeholder="{i18n}Enter search criteria...{/i18n}"-->
+						<div class="input-group-prepend">
+							<div class="input-group-text">
+								<i class="fe fe-search"></i>
+							</div>
+						</div>
+						<input type="search" class="form-control form-control-prepended dropdown-toggle search" data-toggle="dropdown" placeholder="{i18n}Enter search criteria...{/i18n}" aria-label="{i18n}Enter search criteria...{/i18n}">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-secondary" title="{i18n}search{/i18n}"><span>{i18n}search{/i18n}</span></button>
+							<div class="dropdown-menu" style="font-size: 0.85em;">
+								<a class="dropdown-item" href="{$rootUrl}/search2.php?action=guiBuilder">{i18n}Advanced Search{/i18n}</a>
+								<a class="dropdown-item" href="{$rootUrl}/search2.php?action=searchResults">{i18n}Previous Search Results{/i18n}</a>
+								<div role="separator" class="dropdown-divider"></div>
+								<span class="dropdown-item-text"><i class="fe fe-list"></i> {i18n}Quick Search Options{/i18n}</span>
+								<a class="dropdown-item active" href="#">{i18n}content and metadata{/i18n}</a>
+								<a class="dropdown-item" href="#">{i18n}metadata{/i18n}</a>
+								<div role="separator" class="dropdown-divider"></div>
+								<span class="dropdown-item-text"><i class="fe fe-list"></i> {i18n}Toggle search results format{/i18n}</span>
+								<a class="dropdown-item active" href="{$rootUrl}/search2.php?action=searchResults&format=searchengine">{i18n}Search engine format{/i18n}</a>
+								<a class="dropdown-item" href="{$rootUrl}/search2.php?action=oldSearchResults">{i18n}Browse view format{/i18n}</a>
+								<div role="separator" class="dropdown-divider"></div>
+								<div class="dropright">
+									<a class="dropdown-item dropdown-toggle" href="#" id="dropdownSubmenuButton" data-toggle="dropdown">{i18n}Saved Searches{/i18n}</a>
+									<div class="dropdown-menu" aria-labelledby="dropdownSubmenuButton">
+								{foreach item=searchitem from=$savedSearches}
+									<a class="dropdown-item" href="{$rootUrl}/search2.php?action=processSaved&fSavedSearchId={$searchitem.id}">{$searchitem.name|sanitize}</a>
+								{/foreach}
 									</div>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
-					<div class="col" id="dashlets-col">
-					</div>
-				</div>
-				<div class="row">
-					{if (!$page->hide_section)}
-					<div class="col-12 pt-2">			
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><span>{i18n}You are here{/i18n}: </span></li>
-						{if ($page->breadcrumbSection !== false)}
-						{if ($page->breadcrumbSection.url) }
-							<li class="breadcrumb-item"><a href="{$page->breadcrumbSection.url}">{$page->breadcrumbSection.label|sanitize}</a></li>
-						{else}
-							<li class="breadcrumb-item">{$page->breadcrumbSection.label|sanitize}</li>
-						{/if}
-						{/if}
-						{if ($page->breadcrumbs !== false)}
-						{foreach item=aCrumb from=$page->breadcrumbs name=bc}
-							{if ($aCrumb.url) }
-								<li class="breadcrumb-item"><a href="{$aCrumb.url}">{$aCrumb.label|mb_truncate:40:"...":true|sanitize}</a></li>
+				</form>
+
+				<div class="navbar-user">
+					<div class="dropdown">
+						<a class="avatar avatar-sm avatar-online dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopu="true" aria-expanded="false">					
+							<img src="{$rootUrl}/assets/images/genericUser.png" alt="..." class="avatar-img rounded-circle">
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+						{if ($admin_mode.show == TRUE)}
+							{if ($admin_mode.toggleMode == 'enableAdminMode')}
+							<a class="dropdown-item text-danger" href="{$admin_mode.url}?fDocumentId={$admin_mode.fDocumentId}&fFolderId={$admin_mode.fFolderId}&action={$admin_mode.toggleMode}"><i class="fa fa-lock"></i> {i18n}Disable Admin Mode{/i18n}</a>
 							{else}
-								<li class="breadcrumb-item">{$aCrumb.label|mb_truncate:40:"...":true|sanitize}</li>
+							<a class="dropdown-item text-success" href="{$admin_mode.url}?fDocumentId={$admin_mode.fDocumentId}&fFolderId={$admin_mode.fFolderId}&action={$admin_mode.toggleMode}"><i class="fa fa-unlock-alt"></i> {i18n}Enable Admin Mode{/i18n}</a>
+							{/if}
+						{/if}
+						{foreach item=aMenuItem from=$page->userMenu name=prefmenu}
+							{if ($aMenuItem.active == 1)}
+							<a class="dropdown-item active" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
+							{else}
+							<a class="dropdown-item" href="{$aMenuItem.url}">{$aMenuItem.label}</a>
 							{/if}
 						{/foreach}
-						{/if}
-						{if ($page->breadcrumbDetails !== false)}
-							<li class="breadcrumb-item active">({$page->breadcrumbDetails|sanitize})</li>
-						{/if}
-						</ol>
+						</div>
 					</div>
-					{/if}
-					<div class="col-12">
-						<div class="row">
-							{if (!$page->hide_section)}
-							<!--
-							<div class="col-12">
-								<h2>
-									<i class="fa fa-caret-right text-warning"></i> 
-									<span>{$page->componentLabel}</span>
-									{if ($page->getHelpURL() != null)}<a href="{$page->getHelpURL()}"><i class="fa fa-question-circle"></i><span class="sr-only">Help</span></a> {/if}
-								</h2>
-								<hr>
-							</div>
-							-->
-							{/if}
-							{if (!empty($page->errStack))}
-							<div class="col-12">
-								<div class="alert alert-danger">
-									<ul>
-									{foreach item=sError from=$page->errStack}
-										<li>
-										{if ($page->booleanLink == '0')}
-											{$sError|sanitize}
-										{else}
-											{$sError}
-										{/if}
-										</li>
-									{/foreach}
-									</ul>
-								</div>
-							</div>
-							{/if}
+				</div>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+			<!-- class="col-12 {if $page->portlets != NULL && $page->show_portlets}col-md-9 col-xl-10{/if} py-md-10 pl-md-1 bd-content" role="main"> -->
+				<main id="bd-content" class="col" role="main">
+					<input type="hidden" name="kt-core-baseurl" id="kt-core-baseurl" value="{$rootUrl}" />
+					<div class="row">
+						{if $page->portlets != NULL && $page->show_portlets}
+						{/if}
+						<div class="col-10 col-md-10">
 
-							{if (!empty($page->infoStack))}
-							<div class="col-12">
-								<div class="alert alert-warning">
-									<ul>
-									{foreach item=sInfo from=$page->infoStack}
-										<li>{$sInfo|sanitize}</li>
-									{/foreach}
-									</ul>
-								</div>
-							</div>
+						</div>
+						<div class="col" id="dashlets-col">
+						</div>
+					</div>
+					<div class="row">
+						{if (!$page->hide_section)}
+						<div class="col-12 pt-2">			
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><span>{i18n}You are here{/i18n}: </span></li>
+							{if ($page->breadcrumbSection !== false)}
+							{if ($page->breadcrumbSection.url) }
+								<li class="breadcrumb-item"><a href="{$page->breadcrumbSection.url}">{$page->breadcrumbSection.label|sanitize}</a></li>
+							{else}
+								<li class="breadcrumb-item">{$page->breadcrumbSection.label|sanitize}</li>
 							{/if}
-							<div class="col-12 pt-2 pb-2">
-								<div class="container-fluid">
-								{$page->contents}
+							{/if}
+							{if ($page->breadcrumbs !== false)}
+							{foreach item=aCrumb from=$page->breadcrumbs name=bc}
+								{if ($aCrumb.url) }
+									<li class="breadcrumb-item"><a href="{$aCrumb.url}">{$aCrumb.label|mb_truncate:40:"...":true|sanitize}</a></li>
+								{else}
+									<li class="breadcrumb-item">{$aCrumb.label|mb_truncate:40:"...":true|sanitize}</li>
+								{/if}
+							{/foreach}
+							{/if}
+							{if ($page->breadcrumbDetails !== false)}
+								<li class="breadcrumb-item active">({$page->breadcrumbDetails|sanitize})</li>
+							{/if}
+							</ol>
+						</div>
+						{/if}
+						<div class="col-12">
+							<div class="row">
+								{if (!$page->hide_section)}
+								<!--
+								<div class="col-12">
+									<h2>
+										<i class="fa fa-caret-right text-warning"></i> 
+										<span>{$page->componentLabel}</span>
+										{if ($page->getHelpURL() != null)}<a href="{$page->getHelpURL()}"><i class="fa fa-question-circle"></i><span class="sr-only">Help</span></a> {/if}
+									</h2>
+									<hr>
+								</div>
+								-->
+								{/if}
+								{if (!empty($page->errStack))}
+								<div class="col-12">
+									<div class="alert alert-danger">
+										<ul>
+										{foreach item=sError from=$page->errStack}
+											<li>
+											{if ($page->booleanLink == '0')}
+												{$sError|sanitize}
+											{else}
+												{$sError}
+											{/if}
+											</li>
+										{/foreach}
+										</ul>
+									</div>
+								</div>
+								{/if}
+
+								{if (!empty($page->infoStack))}
+								<div class="col-12">
+									<div class="alert alert-warning">
+										<ul>
+										{foreach item=sInfo from=$page->infoStack}
+											<li>{$sInfo|sanitize}</li>
+										{/foreach}
+										</ul>
+									</div>
+								</div>
+								{/if}
+								<div class="col-12 pt-2 pb-2">
+									<div class="container-fluid">
+									{$page->contents}
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</main>
-		</div>
+				</main>
+			</div>
 
-    	<!-- Start footer -->
-		<div class="row bg-primary text-white">
-			<div class="col mt-2">				
-			</div>
-			<div class="col">
-				&copy; 2018 Documentor
-				<br>{i18n}All rights reserved.{/i18n}
-				<br>{i18n arg_timing=$page->getReqTime()}Request created in #timing#s{/i18n}
-			</div>
-			<div class="col">
-				<div>
-					{assign var=disclaimer value=$page->getDisclaimer()}
-					{if $disclaimer}
-					<div class="col mt-2">
-						{$disclaimer}
+			<!-- Start footer -->
+			<div class="row bg-primary text-white">
+				<div class="col mt-2">				
+				</div>
+				<div class="col">
+					&copy; 2018 Docucenter
+					<br>{i18n}All rights reserved.{/i18n}
+					<br>{i18n arg_timing=$page->getReqTime()}Request created in #timing#s{/i18n}
+				</div>
+				<div class="col">
+					<div>
+						{assign var=disclaimer value=$page->getDisclaimer()}
+						{if $disclaimer}
+						<div class="col mt-2">
+							{$disclaimer}
+						</div>
+						{/if}			
 					</div>
-					{/if}			
 				</div>
 			</div>
+			<!-- End Footer -->
 		</div>
-    	<!-- End Footer -->
 	</div>
 </body>
 <!-- Javascript Files. -->
-    <script type="text/javascript" src="{$rootUrl}/assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="{$rootUrl}/assets/js/popper.min.js"></script>
-    <script type="text/javascript" src="{$rootUrl}/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{$rootUrl}/assets/bootstrap/libs/jquery/dist/jquery.min.js"></script>
+    <script src="{$rootUrl}/assets/bootstrap/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="{$rootUrl}/assets/bootstrap/libs/highlightjs/highlight.pack.min.js"></script>
+    <script src="{$rootUrl}/assets/bootstrap/libs/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+	<script src="{$rootUrl}/assets/bootstrap/js/dropdowns.js"></script>
+    <!--script src="{$rootUrl}/assets/bootstrap/libs/list.js/dist/list.min.js"></script-->
+	<!--script src="{$rootUrl}/assets/bootstrap/libs/dropzone/dist/min/dropzone.min.js"></script-->
+    <!-- Theme JS -->
+    <script src="{$rootUrl}/assets/bootstrap/js/theme.min.js"></script>
+
 	<script type="text/javascript" src="{$rootUrl}/assets/fontawesome/js/all.js"></script>
 	<script type="text/javascript" src="{$rootUrl}/assets/js/util.js"></script>
 {foreach item=sResourceURL from=$page->getJSResources()}

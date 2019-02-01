@@ -157,9 +157,9 @@ class KTPage {
     	$sBaseUrl = KTUtil::kt_url();
 
     	$this->menu = array();
-    	$this->menu['dashboard'] = array('label' => _kt("Dashboard"), 'url' => $sBaseUrl.'/dashboard.php');
-		$this->menu['browse'] = array('label' => _kt("Browse Documents"), 'url' => $sBaseUrl.'/browse.php');
-		$this->menu['administration'] = array('label' => _kt("Administration"));
+    	$this->menu['dashboard'] = array('label' => _kt("Dashboard"), 'url' => $sBaseUrl.'/dashboard.php','icon' => 'fe fe-home');
+		$this->menu['browse'] = array('label' => _kt("Browse Documents"), 'url' => $sBaseUrl.'/browse.php', 'icon' => 'fe fe-folder');
+		$this->menu['administration'] = array('label' => _kt("Administration"), 'icon' => 'fe fe-settings');
 
 		// Implement an electronic signature for accessing the admin section, it will appear every 10 minutes
     	global $default;

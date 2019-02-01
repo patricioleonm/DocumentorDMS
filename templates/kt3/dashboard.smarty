@@ -1,25 +1,29 @@
 	<div class="row" id="dashboard">
-		<div class="card-columns" id="dashboard-columns">
-    {foreach item=oDashlet from=$dashlets}
-		{if $oDashlet->sClass == 'ktBlock'}
-			{assign var=card_type value='bg-light'}
-		{elseif $oDashlet->sClass == 'ktError'}
-			{assign var=card_type value='bg-danger text-white'}
-		{else}
-			{assign var=card_type value='bg-warning text-white'}
-		{/if}
-			<div class="card ui-state-default {$card_type}" id="{$context->_getDashletId($oDashlet)}">
-				<div class="card-header">
-					{$oDashlet->sTitle}
-					<button type="button" class="close" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+		<div class="container-fluid">
+			<div class="card-columns" id="dashboard-columns">
+		{foreach item=oDashlet from=$dashlets}
+			{if $oDashlet->sClass == 'ktBlock'}
+				{assign var=card_type value='bg-light'}
+			{elseif $oDashlet->sClass == 'ktError'}
+				{assign var=card_type value='bg-danger text-white'}
+			{else}
+				{assign var=card_type value='bg-warning text-white'}
+			{/if}
+				<div class="card ui-state-default {$card_type}" id="{$context->_getDashletId($oDashlet)}">
+					<div class="card-header">
+						<span>
+							{$oDashlet->sTitle}
+							<button type="button" class="close float-right" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</span>
+					</div>
+					<div class="card-body">
+						{$oDashlet->render()}
+					</div>
 				</div>
-				<div class="card-body">
-					{$oDashlet->render()}
-				</div>
+		{/foreach}
 			</div>
-	{/foreach}
 		</div>
 	</div>
 

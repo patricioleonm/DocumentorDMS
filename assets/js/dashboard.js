@@ -15,7 +15,7 @@
 
     //close buttons
     $(".close").on("click", (e) => {
-      var card = e.currentTarget.parentNode.parentNode;      
+      var card = e.currentTarget.parentNode.parentNode.parentNode;      
       hideDashlet(card.id);
     });
 
