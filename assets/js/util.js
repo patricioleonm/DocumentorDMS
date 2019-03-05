@@ -34,3 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 });
+
+var newwindowlinks = document.querySelectorAll(".newwindow");
+
+Object.values(newwindowlinks).forEach(x => x.addEventListener("click", openInNewWindow));
+
+function openInNewWindow(e){
+    e.preventDefault();
+    window.open(e.target.href,"_blank","toolbar=no,resizable=yes");
+}

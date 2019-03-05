@@ -102,7 +102,7 @@ class AdvancedTitleColumn extends AdvancedColumn {
         $filename = htmlentities($aDataRow["document"]->getName(), ENT_NOQUOTES, 'UTF-8');
 
         if($this->link_documents) {
-            return  sprintf("<a href=\"%s\" title=\"%s\">%s</a>", 
+            return  sprintf("<a class=\"newwindow\" href=\"%s\" title=\"%s\">%s</a>", 
                                     $this->buildDocumentLink($aDataRow),
                                     $filename,
                                     $filename
